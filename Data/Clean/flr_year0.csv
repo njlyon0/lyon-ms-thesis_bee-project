@@ -1,0 +1,345 @@
+"Sampling.Event.ID","Julian","Site","SiteCode","Fescue.Treatment","Nectar.Common.Name","TransectTotals"
+1,149,"PYW","PYW-S","Con","red clover",79
+1,149,"PYW","PYW-S","Con","white clover",48
+1,149,"PYW","PYW-S","Con","birdsfoot trefoil",5
+1,149,"PYW","PYW-S","Con","alsike clover",3
+1,149,"PYW","PYW-S","Con","yellow oxalis",1
+2,149,"STE","STE-N","Spr","white clover",33
+2,149,"STE","STE-N","Spr","red clover",62
+2,149,"STE","STE-N","Spr","black medick",218
+2,149,"STE","STE-N","Spr","yellow sweet clover",34
+2,149,"STE","STE-N","Spr","broadleaf plantain",10
+2,149,"STE","STE-N","Spr","alsike clover",7
+3,149,"RIS","RIS-S","Ref","black medick",20
+3,149,"RIS","RIS-S","Ref","red clover",11
+3,149,"RIS","RIS-S","Ref","blackberry",337
+3,149,"RIS","RIS-S","Ref","white clover",1
+3,149,"RIS","RIS-S","Ref","dandelion",1
+3,149,"RIS","RIS-S","Ref","chickweed",9
+4,149,"GIL","GIL-C","SnS","white clover",317
+4,149,"GIL","GIL-C","SnS","yellow oxalis",25
+4,149,"GIL","GIL-C","SnS","black medick",87
+4,149,"GIL","GIL-C","SnS","alsike clover",10
+4,149,"GIL","GIL-C","SnS","multiflora rose",180
+4,149,"GIL","GIL-C","SnS","yarrow",10
+4,149,"GIL","GIL-C","SnS","daisy fleabane",1
+4,149,"GIL","GIL-C","SnS","broadleaf plantain",4
+4,149,"GIL","GIL-C","SnS","chickweed",6
+4,149,"GIL","GIL-C","SnS","field cress",7
+4,149,"GIL","GIL-C","SnS","red clover",1
+4,149,"GIL","GIL-C","SnS","dandelion",1
+5,151,"KLN","KLN-E","Ref","white clover",9
+5,151,"KLN","KLN-E","Ref","red clover",1
+5,151,"KLN","KLN-E","Ref","dandelion",2
+6,151,"PYW","PYW-N","SnS","white clover",313
+6,151,"PYW","PYW-N","SnS","birdsfoot trefoil",64
+6,151,"PYW","PYW-N","SnS","red clover",70
+6,151,"PYW","PYW-N","SnS","white lobelia",12
+6,151,"PYW","PYW-N","SnS","oxeye daisy",44
+6,151,"PYW","PYW-N","SnS","black medick",31
+7,151,"LTR","LTR-C","Spr","black medick",29
+7,151,"LTR","LTR-C","Spr","yarrow",13
+7,151,"LTR","LTR-C","Spr","multiflora rose",30
+7,151,"LTR","LTR-C","Spr","white clover",2
+8,151,"GIL","GIL-S","Con","dandelion",8
+8,151,"GIL","GIL-S","Con","multiflora rose",70
+8,151,"GIL","GIL-S","Con","wild parsnip",1
+8,151,"GIL","GIL-S","Con","white clover",8
+9,161,"STE","STE-W","Con","birdsfoot trefoil",20
+9,161,"STE","STE-W","Con","black medick",66
+9,161,"STE","STE-W","Con","red clover",10
+9,161,"STE","STE-W","Con","yellow sweet clover",4
+9,161,"STE","STE-W","Con","white clover",2
+9,161,"STE","STE-W","Con","ribwort plantain",5
+9,161,"STE","STE-W","Con","daisy fleabane",2
+9,161,"STE","STE-W","Con","yarrow",1
+10,161,"GIL","GIL-N","Spr","birdsfoot trefoil",135
+10,161,"GIL","GIL-N","Spr","deptford pink",66
+10,161,"GIL","GIL-N","Spr","alsike clover",268
+10,161,"GIL","GIL-N","Spr","daisy fleabane",41
+10,161,"GIL","GIL-N","Spr","ribwort plantain",39
+10,161,"GIL","GIL-N","Spr","red clover",10
+10,161,"GIL","GIL-N","Spr","black medick",5
+11,161,"LTR","LTR-E","SnS","black medick",51
+11,161,"LTR","LTR-E","SnS","white clover",79
+11,161,"LTR","LTR-E","SnS","red clover",7
+11,161,"LTR","LTR-E","SnS","daisy fleabane",1
+12,161,"PYS","PYS-W","Ref","red clover",591
+12,161,"PYS","PYS-W","Ref","birdsfoot trefoil",260
+12,161,"PYS","PYS-W","Ref","alsike clover",21
+12,161,"PYS","PYS-W","Ref","yarrow",1
+12,161,"PYS","PYS-W","Ref","oxeye daisy",14
+12,161,"PYS","PYS-W","Ref","white lobelia",13
+12,161,"PYS","PYS-W","Ref","yellow sweet clover",1
+13,172,"PYN","PYN-N","Ref","birdsfoot trefoil",2198
+13,172,"PYN","PYN-N","Ref","white clover",125
+13,172,"PYN","PYN-N","Ref","daisy fleabane",1
+13,172,"PYN","PYN-N","Ref","red clover",290
+13,172,"PYN","PYN-N","Ref","white sweet clover",27
+13,172,"PYN","PYN-N","Ref","ribwort plantain",2
+13,172,"PYN","PYN-N","Ref","butterfly milkweed",2
+13,172,"PYN","PYN-N","Ref","wild parsnip",6
+14,172,"STE","STE-S","SnS","birdsfoot trefoil",287
+14,172,"STE","STE-S","SnS","white clover",11
+14,172,"STE","STE-S","SnS","alsike clover",62
+14,172,"STE","STE-S","SnS","red clover",5
+15,172,"LTR","LTR-W","Con","daisy fleabane",59
+15,172,"LTR","LTR-W","Con","white clover",6
+15,172,"LTR","LTR-W","Con","birdsfoot trefoil",7
+15,172,"LTR","LTR-W","Con","black medick",1
+15,172,"LTR","LTR-W","Con","ribwort plantain",5
+16,172,"PYW","PYW-C","Spr","slender mountain mint",7
+16,172,"PYW","PYW-C","Spr","birdsfoot trefoil",248
+16,172,"PYW","PYW-C","Spr","red clover",52
+16,172,"PYW","PYW-C","Spr","sweet black-eyed susan",4
+16,172,"PYW","PYW-C","Spr","yarrow",4
+16,172,"PYW","PYW-C","Spr","horse nettle",2
+16,172,"PYW","PYW-C","Spr","white clover",56
+16,172,"PYW","PYW-C","Spr","daisy fleabane",10
+16,172,"PYW","PYW-C","Spr","sulfur cinquefoil",7
+17,173,"RIS","RIS-S","Ref","birdsfoot trefoil",824
+17,173,"RIS","RIS-S","Ref","red clover",83
+17,173,"RIS","RIS-S","Ref","white clover",33
+17,173,"RIS","RIS-S","Ref","deptford pink",12
+17,173,"RIS","RIS-S","Ref","daisy fleabane",13
+17,173,"RIS","RIS-S","Ref","blackberry",3
+17,173,"RIS","RIS-S","Ref","yellow sweet clover",5
+17,173,"RIS","RIS-S","Ref","yarrow",2
+17,173,"RIS","RIS-S","Ref","swamp vervain",1
+18,173,"STE","STE-N","Spr","birdsfoot trefoil",2270
+18,173,"STE","STE-N","Spr","red clover",162
+18,173,"STE","STE-N","Spr","white clover",8
+18,173,"STE","STE-N","Spr","broadleaf plantain",135
+18,173,"STE","STE-N","Spr","black-eyed susan",54
+18,173,"STE","STE-N","Spr","yellow sweet clover",11
+18,173,"STE","STE-N","Spr","daisy fleabane",312
+18,173,"STE","STE-N","Spr","deptford pink",1
+18,173,"STE","STE-N","Spr","sweet black-eyed susan",8
+18,173,"STE","STE-N","Spr","ribwort plantain",47
+18,173,"STE","STE-N","Spr","black medick",5
+18,173,"STE","STE-N","Spr","white lobelia",3
+18,173,"STE","STE-N","Spr","prairie petunia",2
+19,173,"PYW","PYW-S","Con","birdsfoot trefoil",2655
+19,173,"PYW","PYW-S","Con","red clover",910
+19,173,"PYW","PYW-S","Con","alsike clover",400
+19,173,"PYW","PYW-S","Con","oxeye daisy",2
+19,173,"PYW","PYW-S","Con","sulfur cinquefoil",3
+19,173,"PYW","PYW-S","Con","sweet black-eyed susan",1
+20,173,"GIL","GIL-C","SnS","birdsfoot trefoil",878
+20,173,"GIL","GIL-C","SnS","daisy fleabane",468
+20,173,"GIL","GIL-C","SnS","yarrow",10
+20,173,"GIL","GIL-C","SnS","white clover",655
+20,173,"GIL","GIL-C","SnS","ribwort plantain",180
+20,173,"GIL","GIL-C","SnS","deptford pink",118
+20,173,"GIL","GIL-C","SnS","red clover",23
+21,185,"KLN","KLN-E","Ref","white clover",191
+21,185,"KLN","KLN-E","Ref","alsike clover",118
+21,185,"KLN","KLN-E","Ref","black medick",4
+21,185,"KLN","KLN-E","Ref","horse nettle",10
+21,185,"KLN","KLN-E","Ref","birdsfoot trefoil",39
+21,185,"KLN","KLN-E","Ref","red clover",8
+21,185,"KLN","KLN-E","Ref","dandelion",1
+22,185,"LTR","LTR-C","Spr","red clover",27
+22,185,"LTR","LTR-C","Spr","white clover",44
+22,185,"LTR","LTR-C","Spr","horse nettle",3
+22,185,"LTR","LTR-C","Spr","daisy fleabane",67
+22,185,"LTR","LTR-C","Spr","black medick",8
+22,185,"LTR","LTR-C","Spr","yellow sweet clover",2
+22,185,"LTR","LTR-C","Spr","swamp vervain",1
+22,185,"LTR","LTR-C","Spr","white sweet clover",1
+22,185,"LTR","LTR-C","Spr","yarrow",2
+23,185,"GIL","GIL-S","Con","white clover",342
+23,185,"GIL","GIL-S","Con","birdsfoot trefoil",621
+23,185,"GIL","GIL-S","Con","chicory",12
+23,185,"GIL","GIL-S","Con","dandelion",2
+23,185,"GIL","GIL-S","Con","ribwort plantain",2
+23,185,"GIL","GIL-S","Con","wild parsnip",7
+23,185,"GIL","GIL-S","Con","horse nettle",2
+24,185,"GIL","GIL-N","Spr","birdsfoot trefoil",1450
+24,185,"GIL","GIL-N","Spr","white clover",168
+24,185,"GIL","GIL-N","Spr","daisy fleabane",107
+24,185,"GIL","GIL-N","Spr","deptford pink",47
+24,185,"GIL","GIL-N","Spr","ribwort plantain",17
+24,185,"GIL","GIL-N","Spr","horse nettle",2
+24,185,"GIL","GIL-N","Spr","chicory",2
+25,185,"LTR","LTR-E","SnS","black medick",246
+25,185,"LTR","LTR-E","SnS","white clover",48
+25,185,"LTR","LTR-E","SnS","daisy fleabane",174
+25,185,"LTR","LTR-E","SnS","prairie petunia",11
+25,185,"LTR","LTR-E","SnS","hoary vervain",13
+25,185,"LTR","LTR-E","SnS","deptford pink",5
+25,185,"LTR","LTR-E","SnS","red clover",19
+25,185,"LTR","LTR-E","SnS","wild white indigo",3
+26,185,"STE","STE-W","Con","birdsfoot trefoil",4741
+26,185,"STE","STE-W","Con","sweet black-eyed susan",6
+26,185,"STE","STE-W","Con","red clover",36
+26,185,"STE","STE-W","Con","daisy fleabane",14
+26,185,"STE","STE-W","Con","white clover",15
+26,185,"STE","STE-W","Con","yellow sweet clover",1
+26,185,"STE","STE-W","Con","black-eyed susan",1
+26,185,"STE","STE-W","Con","black medick",55
+26,185,"STE","STE-W","Con","slender mountain mint",110
+26,185,"STE","STE-W","Con","prairie petunia",2
+26,185,"STE","STE-W","Con","yarrow",2
+26,185,"STE","STE-W","Con","deptford pink",1
+27,197,"STE","STE-S","SnS","birdsfoot trefoil",520
+27,197,"STE","STE-S","SnS","queen anne's lace",13
+27,197,"STE","STE-S","SnS","alsike clover",60
+27,197,"STE","STE-S","SnS","white clover",61
+27,197,"STE","STE-S","SnS","ribwort plantain",1
+27,197,"STE","STE-S","SnS","red clover",16
+27,197,"STE","STE-S","SnS","canada thistle",35
+27,197,"STE","STE-S","SnS","wild parsnip",37
+27,197,"STE","STE-S","SnS","canada anemone",1
+27,197,"STE","STE-S","SnS","common cinquefoil",6
+27,197,"STE","STE-S","SnS","horse nettle",12
+27,197,"STE","STE-S","SnS","prairie cinquefoil",1
+27,197,"STE","STE-S","SnS","bergamot",3
+28,197,"LTR","LTR-W","Con","horse nettle",3
+28,197,"LTR","LTR-W","Con","daisy fleabane",27
+28,197,"LTR","LTR-W","Con","deptford pink",1
+28,197,"LTR","LTR-W","Con","bergamot",2
+28,197,"LTR","LTR-W","Con","ribwort plantain",3
+28,197,"LTR","LTR-W","Con","partridge pea",3
+28,197,"LTR","LTR-W","Con","alsike clover",1
+28,197,"LTR","LTR-W","Con","white clover",19
+28,197,"LTR","LTR-W","Con","prairie petunia",2
+28,197,"LTR","LTR-W","Con","slender mountain mint",5
+29,197,"PYN","PYN-N","Ref","birdsfoot trefoil",3024
+29,197,"PYN","PYN-N","Ref","white sweet clover",1545
+29,197,"PYN","PYN-N","Ref","white clover",140
+29,197,"PYN","PYN-N","Ref","red clover",267
+29,197,"PYN","PYN-N","Ref","prairie rose",3
+29,197,"PYN","PYN-N","Ref","germander",33
+29,197,"PYN","PYN-N","Ref","queen anne's lace",22
+29,197,"PYN","PYN-N","Ref","horse nettle",30
+29,197,"PYN","PYN-N","Ref","hoary vervain",10
+29,197,"PYN","PYN-N","Ref","butterfly milkweed",3
+29,197,"PYN","PYN-N","Ref","alsike clover",4
+29,197,"PYN","PYN-N","Ref","bergamot",8
+30,204,"RIS","RIS-S","Ref","bergamot",144
+30,204,"RIS","RIS-S","Ref","white sweet clover",25
+30,204,"RIS","RIS-S","Ref","hairy mountain mint",55
+30,204,"RIS","RIS-S","Ref","birdsfoot trefoil",409
+30,204,"RIS","RIS-S","Ref","red clover",58
+30,204,"RIS","RIS-S","Ref","slender mountain mint",80
+30,204,"RIS","RIS-S","Ref","queen anne's lace",52
+30,204,"RIS","RIS-S","Ref","white clover",16
+30,204,"RIS","RIS-S","Ref","daisy fleabane",6
+30,204,"RIS","RIS-S","Ref","self-heal",2
+30,204,"RIS","RIS-S","Ref","horse nettle",7
+30,204,"RIS","RIS-S","Ref","yellow sweet clover",4
+30,204,"RIS","RIS-S","Ref","field bindweed",1
+30,204,"RIS","RIS-S","Ref","hoary vervain",3
+31,204,"GIL","GIL-C","SnS","birdsfoot trefoil",485
+31,204,"GIL","GIL-C","SnS","chicory",145
+31,204,"GIL","GIL-C","SnS","daisy fleabane",255
+31,204,"GIL","GIL-C","SnS","hoary vervain",8
+31,204,"GIL","GIL-C","SnS","red clover",9
+31,204,"GIL","GIL-C","SnS","white clover",124
+31,204,"GIL","GIL-C","SnS","ribwort plantain",20
+31,204,"GIL","GIL-C","SnS","ironweed",2
+31,204,"GIL","GIL-C","SnS","catnip",30
+31,204,"GIL","GIL-C","SnS","deptford pink",23
+31,204,"GIL","GIL-C","SnS","queen anne's lace",53
+31,204,"GIL","GIL-C","SnS","germander",12
+31,204,"GIL","GIL-C","SnS","prairie petunia",3
+31,204,"GIL","GIL-C","SnS","self-heal",33
+31,204,"GIL","GIL-C","SnS","bergamot",45
+31,204,"GIL","GIL-C","SnS","slender mountain mint",24
+31,204,"GIL","GIL-C","SnS","black-eyed susan",5
+32,204,"STE","STE-N","Spr","birdsfoot trefoil",1178
+32,204,"STE","STE-N","Spr","queen anne's lace",181
+32,204,"STE","STE-N","Spr","daisy fleabane",155
+32,204,"STE","STE-N","Spr","red clover",184
+32,204,"STE","STE-N","Spr","grey-headed coneflower",36
+32,204,"STE","STE-N","Spr","hoary vervain",3
+32,204,"STE","STE-N","Spr","prairie petunia",6
+32,204,"STE","STE-N","Spr","white clover",5
+32,204,"STE","STE-N","Spr","black-eyed susan",10
+32,204,"STE","STE-N","Spr","yellow sweet clover",2
+32,204,"STE","STE-N","Spr","chicory",4
+32,204,"STE","STE-N","Spr","deptford pink",1
+32,204,"STE","STE-N","Spr","self-heal",6
+33,207,"KLN","KLN-E","Ref","red clover",261
+33,207,"KLN","KLN-E","Ref","white clover",43
+33,207,"KLN","KLN-E","Ref","queen anne's lace",186
+33,207,"KLN","KLN-E","Ref","black medick",4
+33,207,"KLN","KLN-E","Ref","horse nettle",11
+33,207,"KLN","KLN-E","Ref","self-heal",2
+33,207,"KLN","KLN-E","Ref","black-eyed susan",1
+33,207,"KLN","KLN-E","Ref","birdsfoot trefoil",33
+33,207,"KLN","KLN-E","Ref","partridge pea",2
+34,207,"GIL","GIL-S","Con","chicory",940
+34,207,"GIL","GIL-S","Con","queen anne's lace",120
+34,207,"GIL","GIL-S","Con","white clover",25
+34,207,"GIL","GIL-S","Con","birdsfoot trefoil",295
+34,207,"GIL","GIL-S","Con","ironweed",3
+34,207,"GIL","GIL-S","Con","germander",3
+34,207,"GIL","GIL-S","Con","horse nettle",1
+35,207,"LTR","LTR-C","Spr","queen anne's lace",113
+35,207,"LTR","LTR-C","Spr","daisy fleabane",44
+35,207,"LTR","LTR-C","Spr","deptford pink",1
+35,207,"LTR","LTR-C","Spr","hoary vervain",13
+35,207,"LTR","LTR-C","Spr","black-eyed susan",1
+35,207,"LTR","LTR-C","Spr","red clover",47
+35,207,"LTR","LTR-C","Spr","ironweed",10
+35,207,"LTR","LTR-C","Spr","prairie petunia",1
+35,207,"LTR","LTR-C","Spr","partridge pea",4
+36,209,"LTR","LTR-E","SnS","queen anne's lace",222
+36,209,"LTR","LTR-E","SnS","ironweed",39
+36,209,"LTR","LTR-E","SnS","wild parsnip",2
+36,209,"LTR","LTR-E","SnS","hoary vervain",22
+36,209,"LTR","LTR-E","SnS","grey-headed coneflower",3
+36,209,"LTR","LTR-E","SnS","white clover",7
+36,209,"LTR","LTR-E","SnS","prairie petunia",33
+36,209,"LTR","LTR-E","SnS","daisy fleabane",67
+36,209,"LTR","LTR-E","SnS","red clover",130
+36,209,"LTR","LTR-E","SnS","partridge pea",15
+37,209,"GIL","GIL-N","Spr","birdsfoot trefoil",1203
+37,209,"GIL","GIL-N","Spr","queen anne's lace",302
+37,209,"GIL","GIL-N","Spr","chicory",103
+37,209,"GIL","GIL-N","Spr","white clover",64
+37,209,"GIL","GIL-N","Spr","red clover",29
+37,209,"GIL","GIL-N","Spr","deptford pink",4
+37,209,"GIL","GIL-N","Spr","daisy fleabane",5
+37,209,"GIL","GIL-N","Spr","prairie petunia",18
+37,209,"GIL","GIL-N","Spr","self-heal",28
+38,209,"STE","STE-W","Con","birdsfoot trefoil",844
+38,209,"STE","STE-W","Con","queen anne's lace",459
+38,209,"STE","STE-W","Con","self-heal",14
+38,209,"STE","STE-W","Con","red clover",40
+38,209,"STE","STE-W","Con","swamp agrimony",6
+38,209,"STE","STE-W","Con","slender mountain mint",143
+38,209,"STE","STE-W","Con","white clover",1
+38,209,"STE","STE-W","Con","ribwort plantain",6
+38,209,"STE","STE-W","Con","daisy fleabane",14
+38,209,"STE","STE-W","Con","prairie petunia",8
+38,209,"STE","STE-W","Con","ironweed",4
+39,209,"STE","STE-S","SnS","queen anne's lace",159
+39,209,"STE","STE-S","SnS","birdsfoot trefoil",237
+39,209,"STE","STE-S","SnS","bergamot",7
+39,209,"STE","STE-S","SnS","ironweed",30
+39,209,"STE","STE-S","SnS","horse nettle",2
+39,209,"STE","STE-S","SnS","red clover",24
+39,209,"STE","STE-S","SnS","white clover",5
+39,209,"STE","STE-S","SnS","ribwort plantain",10
+40,209,"LTR","LTR-W","Con","queen anne's lace",50
+40,209,"LTR","LTR-W","Con","bergamot",7
+40,209,"LTR","LTR-W","Con","ironweed",15
+40,209,"LTR","LTR-W","Con","daisy fleabane",27
+40,209,"LTR","LTR-W","Con","partridge pea",7
+40,209,"LTR","LTR-W","Con","prairie petunia",16
+40,209,"LTR","LTR-W","Con","birdsfoot trefoil",20
+40,209,"LTR","LTR-W","Con","slender mountain mint",10
+41,209,"PYN","PYN-N","Ref","birdsfoot trefoil",515
+41,209,"PYN","PYN-N","Ref","red clover",208
+41,209,"PYN","PYN-N","Ref","daisy fleabane",5
+41,209,"PYN","PYN-N","Ref","ironweed",40
+41,209,"PYN","PYN-N","Ref","queen anne's lace",107
+41,209,"PYN","PYN-N","Ref","prairie petunia",21
+41,209,"PYN","PYN-N","Ref","hoary vervain",2
+41,209,"PYN","PYN-N","Ref","chicory",15
+41,209,"PYN","PYN-N","Ref","horse nettle",1
+41,209,"PYN","PYN-N","Ref","deptford pink",3
+41,209,"PYN","PYN-N","Ref","grey-headed coneflower",10
