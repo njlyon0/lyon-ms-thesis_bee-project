@@ -269,7 +269,7 @@ bz.specabun <- ggplot(bz.tot, aes(Bee.Species, Number, fill = Bee.Species)) +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
         legend.title = element_blank()); bz.specabun
 
-jpeg("./Graphs/2017/Species Abundances.jpg")
+jpeg("./Graphs/2017/spec_abun.jpg")
 bz.specabun
 dev.off()
 
@@ -331,7 +331,7 @@ ptch.df.plt <- ggplot(bz.ptch, aes(SiteCode, Number, fill = Bee.Species)) +
   theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
         legend.title = element_blank()); ptch.df.plt
   
-jpeg("./Graphs/2017/Patch Differences.jpg")
+jpeg("./Graphs/2017/patch_diffs.jpg")
 ptch.df.plt
 dev.off()
 
@@ -344,10 +344,13 @@ bz.site <- aggregate(Number ~ Site + Fescue.Treatment + Bee.Species, data = bz, 
 bz.site$Fescue.Treatment <- gsub("Con|Spr|SnS", "Exp", bz.site$Fescue.Treatment)
   ## "ocular test" = my eyeballs say the patterns look different
 
+# Re-level site so that we don't have to move bars around with our eyes
+bz.site$Site
+bz.site$Site <- factor(as.character(bz.site$Site), levels = c("GIL", "LTR", "STE", "KLN", "PYN", "RIS"))
+
 # Let's do it!
 site.df.plt <- ggplot(bz.site, aes(Site, Number, fill = Bee.Species)) +
   geom_bar(stat = 'identity') +
-  facet_grid(. ~ Fescue.Treatment) +
   scale_fill_manual(values = rev(sp::bpy.colors(length(unique(bz.site$Bee.Species))))) +
   theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
         legend.title = element_blank()); site.df.plt
@@ -355,7 +358,7 @@ site.df.plt <- ggplot(bz.site, aes(Site, Number, fill = Bee.Species)) +
 # REALLY interesting
   # Look how not just the assemblages but the proportions of each species are pretty conserved within treatment
   # Evidence for treatment effects above and beyond site-specific natural history
-jpeg("./Graphs/2017/Site Differences.jpg")
+jpeg("./Graphs/2017/site_diffs.jpg")
 site.df.plt
 dev.off()
 
