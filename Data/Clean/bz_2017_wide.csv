@@ -1,4 +1,4 @@
-"Sampling.Event.ID","Julian","Site","SiteCode","Height","Fescue.Treatment","Agapostemon.texanus","Agapostemon.virescens","Apis.mellifera","Augochlorella.aurata","Calliopsis.nebraskensis","Ceratina.dupla","Eucera.hamata","Halictus.ligatus","Lasioglossum.Dialictus","Lasioglossum.Evylaeus","Lasioglossum.Hemihalictus","Melissodes.bimaculata","Melissodes.boltoniae","Melissodes.communis","Melissodes.trinodis","Osmia.lignaria","Osmia.pumila","Abundance","Species.Density","Diversity"
+"Sampling.Event.ID","Julian","Site","SiteCode","Height","Fescue.Treatment","Agapostemon texanus","Agapostemon virescens","Apis mellifera","Augochlorella aurata","Calliopsis nebraskensis","Ceratina dupla","Eucera hamata","Halictus ligatus","Lasioglossum Dialictus","Lasioglossum Evylaeus","Lasioglossum Hemihalictus","Melissodes bimaculata","Melissodes boltoniae","Melissodes communis","Melissodes trinodis","Osmia lignaria","Osmia pumila","Abundance","Species.Density","Diversity"
 2,149,"STE","STE-N","High","Spr",0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0
 3,149,"GIL","GIL-C","High","SnS",0,0,0,0,0,1,0,1,3,0,0,0,0,0,0,0,0,5,3,0.950270539233235
 3,149,"RIS","RIS-S","Low","Ref",0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,3,2,0.636514168294813
@@ -13,10 +13,10 @@
 10,161,"GIL","GIL-N","High","Spr",0,1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,3,2,0.636514168294813
 11,161,"LTR","LTR-E","High","SnS",1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,0.636514168294813
 11,161,"LTR","LTR-E","Low","SnS",0,0,0,3,0,0,0,0,2,0,2,0,0,0,0,0,0,7,3,1.07899220787758
-13,171,"PYN","PYN-N","High","Ref",0,0,0,2,0,0,0,0,5,0,0,0,0,0,0,0,0,7,2,0.598269588585257
-14,171,"STE","STE-S","High","SnS",0,0,0,2,0,1,0,0,6,0,0,0,0,0,0,0,0,9,3,0.848685557726417
-15,171,"LTR","LTR-W","High","Con",0,0,0,1,0,0,0,1,2,0,0,0,0,0,0,0,0,4,3,1.03972077083992
-15,171,"LTR","LTR-W","Low","Con",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0
+13,172,"PYN","PYN-N","High","Ref",0,0,0,2,0,0,0,0,5,0,0,0,0,0,0,0,0,7,2,0.598269588585257
+14,172,"STE","STE-S","High","SnS",0,0,0,2,0,1,0,0,6,0,0,0,0,0,0,0,0,9,3,0.848685557726417
+15,172,"LTR","LTR-W","High","Con",0,0,0,1,0,0,0,1,2,0,0,0,0,0,0,0,0,4,3,1.03972077083992
+15,172,"LTR","LTR-W","Low","Con",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0
 17,173,"RIS","RIS-S","High","Ref",0,0,0,2,0,0,0,1,1,0,0,0,0,0,0,0,0,4,3,1.03972077083992
 17,173,"RIS","RIS-S","Low","Ref",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0
 18,173,"STE","STE-N","High","Spr",0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,2,2,0.693147180559945
