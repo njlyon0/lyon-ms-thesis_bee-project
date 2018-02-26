@@ -21,8 +21,8 @@ library(geomorph); library(ggplot2); library(cowplot) # analysis and plotting
 rm(list = ls())
 
 # Index file
-beetreat <- read.csv("./Indeces/trmntinfo.csv")
-julindex <- read.csv("./Indeces/julianinfo.csv")
+beetreat <- read.csv("./Indices/trmntinfo_17.csv")
+julindex <- read.csv("./Indices/julianinfo.csv")
 
 ##  ----------------------------------------------------------  ##
       # Bee Cleaning and Response Calculation
@@ -68,11 +68,11 @@ sort(unique(bz_v4$Genus))
 sort(unique(bz_v4$Species))
 
 # Need to create one column of binomial latin names for bees
-bz_v4$Bee.Species <- paste0(bz_v4$Genus, ".", bz_v4$Species)
+bz_v4$Bee.Species <- paste0(bz_v4$Genus, " ", bz_v4$Species)
 sort(unique(bz_v4$Bee.Species))
 
 # Remove the handful of rows (3) where mold made an ID confirmation impossible
-bz_v5 <- bz_v4[!(bz_v4$Bee.Species == "."),]
+bz_v5 <- bz_v4[!(bz_v4$Bee.Species == " "),]
 
 # Add in treatment column 
 bz_v5$Fescue.Treatment <- beetreat$Fescue.Treatment[match(bz_v5$SiteCode, beetreat$DataCode)]
@@ -103,7 +103,7 @@ bz_v6 <- aggregate(Number ~ Sampling.Event.ID + Julian + Site + SiteCode +
 str(bz_v6)
 
 # Save this dataframe out
-write.csv(bz_v6, "./Data/Clean/bz_year0.csv", row.names = F)
+write.csv(bz_v6, "./Data/Clean/bz_2017.csv", row.names = F)
 
 # Now mush to wide format (i.e. each species becomes a column populated by its abundances)
 bz_wide <- spread(bz_v6, Bee.Species, Number, fill = 0)
@@ -127,7 +127,7 @@ bz_wide_v2$Diversity <- bzdive
 str(bz_wide_v2)
 
 # Save for wide format
-write.csv(bz_wide_v2, "./Data/Clean/bz_year0_wide.csv", row.names = F)
+write.csv(bz_wide_v2, "./Data/Clean/bz_2017_wide.csv", row.names = F)
 
 # Create an annual report variant (without sampling event ID or date)
 ann.rep.v0 <- aggregate(Number ~ Site + SiteCode + Fescue.Treatment + Bee.Species, data = bz_v6, FUN = sum)
@@ -136,18 +136,18 @@ ann.rep.v0 <- aggregate(Number ~ Site + SiteCode + Fescue.Treatment + Bee.Specie
 ann.rep.v1 <- spread(ann.rep.v0, Bee.Species, Number, fill = NA)
 
 # And save it out
-write.csv(ann.rep.v1, "./Data/Curiosity/Year0_AnnualReport.csv", row.names = F)
+write.csv(ann.rep.v1, "./Data/Curiosity/2017_AnnualReport.csv", row.names = F)
 
 ##  ----------------------------------------------------------  ##
     # Nectar Cleaning and Response Calculation
 ##  ----------------------------------------------------------  ##
 # Data file
-nec <- read.csv("Data/Raw/bznec17_raw.csv")
+flr <- read.csv("Data/Raw/bzflr17_raw.csv")
 
 # PAUSE
 
 # DATA DICTIONARY:
-colnames(nec)
+colnames(flr)
   # For simplicity, only columns that are not found in the bee dataframe will be explained here. Sound fair?
 # "Nectar.Common.Name" = common name of the plant species observed on a transect
 # "Section.1" = the abundance of inflorescences of that plant species found from 0-20m on the transect
@@ -164,74 +164,74 @@ colnames(nec)
 # RESUME CODING
 
 # Sum section counts together for full transect counts
-nec$TransectTotals <- rowSums(nec[,8:12])
+flr$TransectTotals <- rowSums(flr[,8:12])
 
 # And ditch the section counts (not relevant to the scale of question we're asking)
-nec_v2 <- nec[,-c(8:12)]
+flr_v2 <- flr[,-c(8:12)]
 
 # Might as well add treatment labels (could be nice to actually answer the question at hand?)
-nec_v2$Fescue.Treatment <- beetreat$Fescue.Treatment[match(nec_v2$SiteCode, beetreat$DataCode)]
+flr_v2$Fescue.Treatment <- beetreat$Fescue.Treatment[match(flr_v2$SiteCode, beetreat$DataCode)]
 
 # Reorder so that you have only the columns you want and in the order you want 'em
-str(nec_v2)
-nec_v3 <- nec_v2[,c(1, 3, 5:6, 12, 7, 11)]
-str(nec_v3)
+str(flr_v2)
+flr_v3 <- flr_v2[,c(1, 3, 5:6, 12, 7, 11)]
+str(flr_v3)
 
-# Check nectar common names
-nec_v3$Nectar.Common.Name <- tolower(nec_v3$Nectar.Common.Name)
-sort(unique(nec_v3$Nectar.Common.Name))
+# Check Nectar common names
+flr_v3$Nectar.Common.Name <- tolower(flr_v3$Nectar.Common.Name)
+sort(unique(flr_v3$Nectar.Common.Name))
 
 # Remove foolish empty rows/unspecific "species" references
-nec_v4 <- nec_v3[!(nec_v3$Nectar.Common.Name == ""),]
+flr_v4 <- flr_v3[!(flr_v3$Nectar.Common.Name == ""),]
 
 # Standardize any names that are redundant (multiple common names that refer to the same species)
-nec_v4$Nectar.Common.Name <- gsub("lance-leafed plantain", "ribwort plantain", nec_v4$Nectar.Common.Name)
-nec_v4$Nectar.Common.Name <- gsub("lance leaf plantain", "ribwort plantain", nec_v4$Nectar.Common.Name)
-nec_v4$Nectar.Common.Name <- gsub("common plantain", "broadleaf plantain", nec_v4$Nectar.Common.Name)
-nec_v4$Nectar.Common.Name <- gsub("bee balm", "bergamot", nec_v4$Nectar.Common.Name)
-sort(unique(nec_v4$Nectar.Common.Name))
+flr_v4$Nectar.Common.Name <- gsub("lance-leafed plantain", "ribwort plantain", flr_v4$Nectar.Common.Name)
+flr_v4$Nectar.Common.Name <- gsub("lance leaf plantain", "ribwort plantain", flr_v4$Nectar.Common.Name)
+flr_v4$Nectar.Common.Name <- gsub("common plantain", "broadleaf plantain", flr_v4$Nectar.Common.Name)
+flr_v4$Nectar.Common.Name <- gsub("bee balm", "bergamot", flr_v4$Nectar.Common.Name)
+sort(unique(flr_v4$Nectar.Common.Name))
 
 # Now to fix the capture date column
   ## Floral data were collected one day before the bee data because pan traps were set out
   ## on the same day flowers were counted, but the traps weren't re-collected until 24 hours later
-nec_v4$Capture.Date <- nec_v4$Capture.Date + 0.01
-sort(unique(nec_v4$Capture.Date))
+flr_v4$Capture.Date <- flr_v4$Capture.Date + 0.01
+sort(unique(flr_v4$Capture.Date))
 sort(unique(bz_v5$Capture.Date))
 
 # Now that the dates are fixed, let's swap 'em for Julian dates
-nec_v4$Julian <- julindex$Julian[match(nec_v4$Capture.Date, julindex$Date)]
+flr_v4$Julian <- julindex$Julian[match(flr_v4$Capture.Date, julindex$Date)]
 
 # And do a quick check to make sure both dataframes' date modifications are still in agreement
-sort(unique(nec_v4$Julian))
+sort(unique(flr_v4$Julian))
 sort(unique(bz_v5$Julian))
 
 # Want to reorder quickly
-nec_v5 <- nec_v4[, c(1, 8, 3:7)]
+flr_v5 <- flr_v4[, c(1, 8, 3:7)]
 
 # Idiot check and save clean version
-str(nec_v5)
-write.csv(nec_v5, "./Data/Clean/flr_year0.csv", row.names = F)
+str(flr_v5)
+write.csv(flr_v5, "./Data/Clean/flr_2017.csv", row.names = F)
 
 # Wide format
-nec_wide <- spread(nec_v5, Nectar.Common.Name, TransectTotals, fill = 0)
-str(nec_wide)
+flr_wide <- spread(flr_v5, Nectar.Common.Name, TransectTotals, fill = 0)
+str(flr_wide)
 
 # Calculate response variables
-necabun <- as.vector(rowSums(nec_wide[,-c(1:5)]))
-necdens <- as.vector(specnumber(nec_wide[,-c(1:5)]))
-necdive <-  as.vector(diversity(nec_wide[,-c(1:5)], index = "shannon"))
+flrabun <- as.vector(rowSums(flr_wide[,-c(1:5)]))
+flrdens <- as.vector(specnumber(flr_wide[,-c(1:5)]))
+flrdive <-  as.vector(diversity(flr_wide[,-c(1:5)], index = "shannon"))
 
 # Push to new wide dataframe and add calculated response variables
-nec_wide_v2 <- nec_wide
-nec_wide_v2$Abundance <- necabun
-nec_wide_v2$Species.Density <- necdens
-nec_wide_v2$Diversity <- necdive
+flr_wide_v2 <- flr_wide
+flr_wide_v2$Abundance <- flrabun
+flr_wide_v2$Species.Density <- flrdens
+flr_wide_v2$Diversity <- flrdive
 
 # Final pre-save check
-str(nec_wide_v2)
+str(flr_wide_v2)
 
 # Save
-write.csv(nec_wide_v2, "./Data/Clean/flr_year0_wide.csv", row.names = F)
+write.csv(flr_wide_v2, "./Data/Clean/flr_2017_wide.csv", row.names = F)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                                   # Explore the Data
@@ -239,8 +239,8 @@ write.csv(nec_wide_v2, "./Data/Clean/flr_year0_wide.csv", row.names = F)
 rm(list = ls())
 
 # Data
-bz <- read.csv("./Data/Clean/bz_year0.csv")
-flr <- read.csv("./Data/Clean/flr_year0.csv")
+bz <- read.csv("./Data/Clean/bz_2017.csv")
+flr <- read.csv("./Data/Clean/flr_2017.csv")
 
 # Plotting shortcuts
 fesc.labs <- c("Ref", "Con", "Spr", "SnS")
@@ -269,7 +269,7 @@ bz.specabun <- ggplot(bz.tot, aes(Bee.Species, Number, fill = Bee.Species)) +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
         legend.title = element_blank()); bz.specabun
 
-jpeg("./Graphs/Year 0/Species Abundances.jpg")
+jpeg("./Graphs/2017/Species Abundances.jpg")
 bz.specabun
 dev.off()
 
@@ -331,7 +331,7 @@ ptch.df.plt <- ggplot(bz.ptch, aes(SiteCode, Number, fill = Bee.Species)) +
   theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
         legend.title = element_blank()); ptch.df.plt
   
-jpeg("./Graphs/Year 0/Patch Differences.jpg")
+jpeg("./Graphs/2017/Patch Differences.jpg")
 ptch.df.plt
 dev.off()
 
@@ -355,7 +355,7 @@ site.df.plt <- ggplot(bz.site, aes(Site, Number, fill = Bee.Species)) +
 # REALLY interesting
   # Look how not just the assemblages but the proportions of each species are pretty conserved within treatment
   # Evidence for treatment effects above and beyond site-specific natural history
-jpeg("./Graphs/Year 0/Site Differences.jpg")
+jpeg("./Graphs/2017/Site Differences.jpg")
 site.df.plt
 dev.off()
 
