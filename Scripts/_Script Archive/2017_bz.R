@@ -11,8 +11,7 @@
 setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Bee.Project")
 
 # Required libraries
-library(tidyr); library(stringr); library(vegan) # cleaning & calculation
-library(geomorph); library(ggplot2); library(cowplot) # analysis and plotting
+library(plyr); library(ggplot2); library(sp); library(cowplot)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                           # Cleaning and Response Calculation ####
@@ -103,7 +102,7 @@ bz_v6 <- aggregate(Number ~ Sampling.Event.ID + Julian + Site + SiteCode +
 str(bz_v6)
 
 # Save this dataframe out
-write.csv(bz_v6, "./Data/Clean/bz_2017.csv", row.names = F)
+write.csv(bz_v6, "./Data/clean_2017bz.csv", row.names = F)
 
 # Now mush to wide format (i.e. each species becomes a column populated by its abundances)
 bz_wide <- spread(bz_v6, Bee.Species, Number, fill = 0)
@@ -119,7 +118,7 @@ bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:6)], index = "shannon
 str(bz_wide_v2)
 
 # Save for wide format
-write.csv(bz_wide_v2, "./Data/Clean/bz_2017_wide.csv", row.names = F)
+write.csv(bz_wide_v2, "./Data/clean_2017bz_wide.csv", row.names = F)
 
 # Create an annual report variant (without sampling event ID or date)
 ann.rep.v0 <- aggregate(Number ~ Site + SiteCode + Fescue.Treatment + Bee.Species, data = bz_v6, FUN = sum)
@@ -128,7 +127,7 @@ ann.rep.v0 <- aggregate(Number ~ Site + SiteCode + Fescue.Treatment + Bee.Specie
 ann.rep.v1 <- spread(ann.rep.v0, Bee.Species, Number, fill = NA)
 
 # And save it out
-write.csv(ann.rep.v1, "./Data/Curiosity/2017_AnnualReport.csv", row.names = F)
+write.csv(ann.rep.v1, "./Data/report_2017.csv", row.names = F)
 
 ##  ----------------------------------------------------------  ##
                  # Floral Tidy ####
@@ -202,28 +201,23 @@ flr_v5 <- flr_v4[, c(1, 8, 3:7)]
 
 # Idiot check and save clean version
 str(flr_v5)
-write.csv(flr_v5, "./Data/Clean/flr_2017.csv", row.names = F)
+write.csv(flr_v5, "./Data/clean_2017flr.csv", row.names = F)
 
 # Wide format
 flr_wide <- spread(flr_v5, Nectar.Common.Name, TransectTotals, fill = 0)
 str(flr_wide)
 
-# Calculate response variables
-flrabun <- as.vector(rowSums(flr_wide[,-c(1:5)]))
-flrdens <- as.vector(specnumber(flr_wide[,-c(1:5)]))
-flrdive <-  as.vector(diversity(flr_wide[,-c(1:5)], index = "shannon"))
-
 # Push to new wide dataframe and add calculated response variables
 flr_wide_v2 <- flr_wide
-flr_wide_v2$Abundance <- flrabun
-flr_wide_v2$Species.Density <- flrdens
-flr_wide_v2$Diversity <- flrdive
+flr_wide_v2$Abundance <- as.vector(rowSums(flr_wide[,-c(1:5)]))
+flr_wide_v2$Species.Density <- as.vector(specnumber(flr_wide[,-c(1:5)]))
+flr_wide_v2$Diversity <- as.vector(diversity(flr_wide[,-c(1:5)], index = "shannon"))
 
 # Final pre-save check
 str(flr_wide_v2)
 
 # Save
-write.csv(flr_wide_v2, "./Data/Clean/flr_2017_wide.csv", row.names = F)
+write.csv(flr_wide_v2, "./Data/clean_2017flr_wide.csv", row.names = F)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                                   # Explore the Data ####
@@ -231,132 +225,101 @@ write.csv(flr_wide_v2, "./Data/Clean/flr_2017_wide.csv", row.names = F)
 rm(list = ls())
 
 # Data
-bz <- read.csv("./Data/Clean/bz_2017.csv")
-flr <- read.csv("./Data/Clean/flr_2017.csv")
+bz <- read.csv("./Data/clean_2017bz.csv")
+flr <- read.csv("./Data/clean_2017flr.csv")
 
-# Plotting shortcuts
-fesc.labs <- c("Ref", "Con", "Spr", "SnS")
-fesc.colors <- c("Ref" = "#0868ac", 
-                 "Con" = "#43a2ca",
-                 "Spr" = "#7bccc4",
-                 "SnS" = "#bae4bc",
-                 "Total" = "#252525")
+# Re-level herbicide treatment column
+unique(bz$Fescue.Treatment)
+bz$Fescue.Treatment <- factor(as.character(bz$Fescue.Treatment), levels = c("Ref", "Con", "Spr", "SnS"))
+unique(bz$Fescue.Treatment)
 
-##  ----------------------------------------------------------  ##
-     # Species Abundances of Preliminary Year
-##  ----------------------------------------------------------  ##
-# Get down to a raw total and an average within each level of height
-bz.tot <- aggregate(Number ~ Height + Bee.Species, FUN = sum, data = bz)
-bz.avg <- aggregate(Number ~ Height + Bee.Species, FUN = mean, data = bz)
+# Graphing shortcuts
+nah <- element_blank()
+bee.colors <- rev(topo.colors(length(unique(bz$Bee.Species))))
 
-# Do the same for floral resource data (minus the height bit obviously)
-flr.tot <- aggregate(TransectTotals ~ Nectar.Common.Name, FUN = sum, data = flr)
-flr.avg <- aggregate(TransectTotals ~ Nectar.Common.Name, FUN = mean, data = flr)
-
-# Want to know how many of each species were found in either high or low bowls in the preliminary study
-bz.specabun <- ggplot(bz.tot, aes(Bee.Species, Number, fill = Bee.Species)) +
-  geom_bar(stat = 'identity') +
-  scale_fill_manual(values = rev(sp::bpy.colors(length(unique(bz.tot$Bee.Species))))) +
-  facet_grid(Height ~ .) +
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
-        legend.title = element_blank()); bz.specabun
-
-jpeg("./Graphs/2017/spec_abun.jpg")
-bz.specabun
-dev.off()
-
-# Plot the floral species' total abundances to get a feel for what is up
-flr.specabun <- ggplot(flr.tot, aes(Nectar.Common.Name, TransectTotals, fill = Nectar.Common.Name)) +
-  geom_bar(stat = 'identity') +
-  ylab("Number Ramets") +
-  scale_fill_manual(values = rev(topo.colors(length(unique(flr.tot$Nectar.Common.Name))))) +
-  theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
-        legend.title = element_blank(), legend.position = "none"); flr.specabun
-
-# Not super informative because birdsfoot trefoil messes up the axis
-sort(unique(flr.tot$TransectTotals))
-flr.dominant <- subset(flr.tot, flr.tot$TransectTotals >= 379)
-flr.rare <- subset(flr.tot, flr.tot$TransectTotals <= 379)
-
-# Plot these suckers
-ggplot(flr.dominant, aes(Nectar.Common.Name, TransectTotals, fill = Nectar.Common.Name)) +
-  geom_bar(stat = 'identity') +
-  ylab("Number Ramets") +
-  scale_fill_manual(values = heat.colors(length(unique(flr.dominant$Nectar.Common.Name)))) +
-  theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
-        legend.title = element_blank(), legend.position = "none")
-
-ggplot(flr.rare, aes(Nectar.Common.Name, TransectTotals, fill = Nectar.Common.Name)) +
-  geom_bar(stat = 'identity') +
-  ylab("Number Ramets") +
-  scale_fill_manual(values = rev(topo.colors(length(unique(flr.rare$Nectar.Common.Name))))) +
-  theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
-        legend.title = element_blank(), legend.position = "none")
-
-# Let's take a look at those averages though (per species)
-ggplot(bz.avg, aes(Bee.Species, Number, fill = Bee.Species)) +
-  geom_bar(stat = 'identity') +
-  scale_fill_manual(values = rev(sp::bpy.colors(length(unique(bz.avg$Bee.Species))))) +
-  facet_grid(Height ~ .) +
-  ylab("Average Abundances") +
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
-        legend.title = element_blank())
-
-ggplot(flr.avg, aes(Nectar.Common.Name, TransectTotals, fill = Nectar.Common.Name)) +
-  geom_bar(stat = 'identity') +
-  ylab("Average Ramets") +
-  scale_fill_manual(values = rev(topo.colors(length(unique(flr.avg$Nectar.Common.Name))))) +
-  theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
-        legend.title = element_blank(), legend.position = "none")
+# Useful summary dataframes
+bz.ht <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
 
 ##  ----------------------------------------------------------  ##
-            # Among Patch Differences
+    # High vs. Low Community Composition ####
 ##  ----------------------------------------------------------  ##
-# Get patch-specific sums (ditching date and height)
-bz.ptch <- aggregate(Number ~ Site + SiteCode + Fescue.Treatment + Bee.Species, data = bz, FUN = sum)
+# Get a separate high and low dataframe
+hi <- subset(bz.ht, bz.ht$Height == "High")
+lo <- subset(bz.ht, bz.ht$Height == "Low")
 
-# Re-level patch information
-#bz.ptch$SiteCode <- as.factor(as.character(bz.ptch$SiteCode),
-# levels = c("GIL-N", "GIL-C", "GIL-S", "LTR-E", "LTR-C", "LTR-W", "STE-S", "STE-N", "STE-W", "KLN-E", "RIS-S", "PYN-N"))
+# Get a pie chart of species abundances (across all sites/dates) for "high" bees
+hibz.pie <- ggplot(hi, aes(x = Height, y = Number, fill = Bee.Species)) +
+  coord_polar(theta = "y", start = 0, direction = 1) +
+  geom_bar(stat = 'identity') + 
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "") +
+  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
+        axis.ticks = nah, axis.line = nah); hibz.pie
 
-# Plot
-ptch.df.plt <- ggplot(bz.ptch, aes(SiteCode, Number, fill = Bee.Species)) +
-  geom_bar(stat = 'identity') +
-  facet_grid(Fescue.Treatment ~ .) +
-  scale_fill_manual(values = rev(sp::bpy.colors(length(unique(bz.ptch$Bee.Species))))) +
-  theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
-        legend.title = element_blank()); ptch.df.plt
+# Do the same for "low" bees
+lobz.pie <- ggplot(lo, aes(x = Height, y = Number, fill = Bee.Species)) +
+  coord_polar(theta = "y", start = 0, direction = 1) +
+  geom_bar(stat = 'identity') + 
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "") +
+  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
+        axis.ticks = nah, axis.line = nah); lobz.pie
   
-jpeg("./Graphs/2017/patch_diffs.jpg")
-ptch.df.plt
+# Plot 'em
+plot_grid(hibz.pie, lobz.pie, labels = c("", ""), nrow = 1, ncol = 2)
+
+jpeg("./Graphs/bzspp_2017pies.jpeg")
+ggplot(bz.ht, aes(x = Height, y = Number, fill = Bee.Species)) +
+  coord_polar(theta = "y", start = 0, direction = 1) +
+  geom_bar(stat = 'identity') + 
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "") +
+  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
+        axis.ticks = nah, axis.line = nah, legend.position = "right")
 dev.off()
 
-# What about among site variation?
-  ## Might hint at what drives the variation among patches
-  ## Weirdo sites influencing patch effects or weirdo patches within typical sites?
-bz.site <- aggregate(Number ~ Site + Fescue.Treatment + Bee.Species, data = bz, FUN = mean)
+##  ----------------------------------------------------------  ##
+        # Single Sp. Resp to Treatment ####
+##  ----------------------------------------------------------  ##
+# Get just full season totals for each bee species
+bz.tot <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
 
-# From an initial version of this, an ocular test indicates that it PBG sites have diff communities than the others
-bz.site$Fescue.Treatment <- gsub("Con|Spr|SnS", "Exp", bz.site$Fescue.Treatment)
-  ## "ocular test" = my eyeballs say the patterns look different
+# Calculate the relative abundance of each species (%)
+bz.tot$Rel.Abun <- (bz.tot$Number / sum(bz.tot$Number) ) * 100
 
-# Re-level site so that we don't have to move bars around with our eyes
-bz.site$Site
-bz.site$Site <- factor(as.character(bz.site$Site), levels = c("GIL", "LTR", "STE", "KLN", "PYN", "RIS"))
+# Who are the top 5?
+bz.tot[order(bz.tot$Rel.Abun, decreasing = T),][c(1:5),]
+  ## Will now plot the top 3 (because #3 is doubly as abundant as #4)
 
-# Let's do it!
-site.df.plt <- ggplot(bz.site, aes(Site, Number, fill = Bee.Species)) +
+# Get dataframes of just these ones
+augaur <- subset(bz, bz$Bee.Species == "Augochlorella aurata")
+lasdia <- subset(bz, bz$Bee.Species == "Lasioglossum Dialictus")
+hallig <- subset(bz, bz$Bee.Species == "Halictus ligatus")
+
+# And plot 'em
+ggplot(augaur, aes(x = as.factor(Julian), y = Number, fill = Fescue.Treatment))+
   geom_bar(stat = 'identity') +
-  scale_fill_manual(values = rev(sp::bpy.colors(length(unique(bz.site$Bee.Species))))) +
-  theme(axis.text.x = element_text(angle = 90), axis.ticks.x = element_blank(),
-        legend.title = element_blank()); site.df.plt
+  labs(x = "Julian Date", y = "Augochlorella aurata #") +
+  scale_fill_manual(values = topo.colors(4)) +
+  facet_grid(Fescue.Treatment ~ .) +
+  theme(legend.title = nah, legend.position = "none")
 
-# REALLY interesting
-  # Look how not just the assemblages but the proportions of each species are pretty conserved within treatment
-  # Evidence for treatment effects above and beyond site-specific natural history
-jpeg("./Graphs/2017/site_diffs.jpg")
-site.df.plt
-dev.off()
+ggsave("./Graphs/bz2017_auguar.pdf", plot = last_plot())
 
+ggplot(lasdia, aes(x = as.factor(Julian), y = Number, fill = Fescue.Treatment))+
+  geom_bar(stat = 'identity') +
+  labs(x = "Julian Date", y = "Lasioglossum Dialictus spp. #") +
+  scale_fill_manual(values = topo.colors(4)) +
+  facet_grid(Fescue.Treatment ~ .) +
+  theme(legend.title = nah, legend.position = "none")
 
+ggsave("./Graphs/bz2017_lasdia.pdf", plot = last_plot())
 
+ggplot(hallig, aes(x = as.factor(Julian), y = Number, fill = Fescue.Treatment))+
+  geom_bar(stat = 'identity') +
+  labs(x = "Julian Date", y = "Halictus ligatus #") +
+  scale_fill_manual(values = topo.colors(4)) +
+  facet_grid(Fescue.Treatment ~ .) +
+  theme(legend.title = nah, legend.position = "none")
+
+ggsave("./Graphs/bz2017_hallig.pdf", plot = last_plot())
