@@ -1,17 +1,18 @@
 ##  --------------------------------------------------------------------------------------------------------------------------------------  ##
-                                        # Lyon Thesis -- Bee Code
+                               # Lyon Thesis -- Preliminary Bee Project
 ##  --------------------------------------------------------------------------------------------------------------------------------------  ##
 # Written by Nicholas Lyon
 
-# Due to unequal sampling intensity across the flowering phenology (I hate cows) these data are not analyzable
-# This makes this code entirely exploratory, so
-# several times this code will refer to these data and any plot produced from them as "year 0"
+# PURPOSE ####
+  ## Unequal sampling intensity through the season/too few replicates make this dataset unanalyzable.
+  ## However, it may have value in terms of anecdote in demonstrating patterns we did/didn't expect.
+  ## This will be valuable in post-hoc justification for continuing/refining the bee project into 2018
 
 # Set WD
 setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Bee.Project")
 
 # Required libraries
-library(plyr); library(ggplot2); library(sp); library(cowplot)
+library(plyr); library(tidyr); library(vegan); library(ggplot2); library(sp); library(cowplot)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                           # Cleaning and Response Calculation ####
@@ -19,9 +20,16 @@ library(plyr); library(ggplot2); library(sp); library(cowplot)
 # Clear environment to reduce error chances
 rm(list = ls())
 
-# Index file
-beetreat <- read.csv("./Indices/trmntinfo_17.csv")
-julindex <- read.csv("./Indices/julianinfo.csv")
+# Index files
+  ## Treatments
+treats <- read.csv("./Indices/trmntinfo.csv")
+
+  ## Julian Days
+julians <- read.csv("./Indices/julianinfo.csv")
+
+  ## Bee Functional Diversity
+fxns <- read.csv("./Indices/fxninfo.csv")
+
 
 ##  ----------------------------------------------------------  ##
                   # Bee Tidy ####
@@ -29,9 +37,7 @@ julindex <- read.csv("./Indices/julianinfo.csv")
 # Read in data
 bz <- read.csv("Data/Raw/bz17_raw.csv")
 
-# PAUSE!
-
-# DATA DICTIONARY:
+# BEE DATA DICTIONARY ####
 colnames(bz)
 # "Sampling.Event.ID" = a unique number code for each combination of date and patch sampled.
 # "Capture.Year" = Sort of irrelevant, but "2017" in all cases
@@ -50,8 +56,6 @@ colnames(bz)
 # "Bowls.Recovered" =  # number of bowls recovered per transect (maximum 6)
 # "ID.Checked." = holdover from quality control where bees with a checked species ID were given a "Y" for yes
 # "Pinned." = Either a "Y" for yes pinned (i.e. is in my collection), or an explanation why they aren't there
-
-# RESUME CODE
 
 # Remove posterity rows (row created when site had no bees at that height)
 bz_v2 <- bz[!(bz$Number == 0),]
@@ -73,9 +77,24 @@ sort(unique(bz_v4$Bee.Species))
 # Remove the handful of rows (3) where mold made an ID confirmation impossible
 bz_v5 <- bz_v4[!(bz_v4$Bee.Species == " "),]
 
-# Add in treatment column 
-bz_v5$Fescue.Treatment <- beetreat$Fescue.Treatment[match(bz_v5$SiteCode, beetreat$DataCode)]
+# Add in columns for site treatment, bee sociality, and nesting habit
+bz_v5$Herbicide.Treatment <- treats$Herbicide.Treatment[match(bz_v5$SiteCode, treats$Patch)]
+bz_v5$Sociality <- fxns$Sociality[match(bz_v5$Genus, fxns$Genus)]
+bz_v5$Nest.Type <- fxns$Nesting.Habitat[match(bz_v5$Genus, fxns$Genus)]
 str(bz_v5)
+
+# Simplify the sociality columns to more manageable number of levels
+sort(unique(bz_v5$Sociality))
+bz_v5$Sociality <- gsub("Eusocial", "Social", bz_v5$Sociality)
+bz_v5$Sociality <- gsub("Solitary/Communal|Solitary/Semi-Social|Solitary/Primitive Social",
+                        "Semi-Social", bz_v5$Sociality)
+bz_v5$Sociality <- factor(bz_v5$Sociality, levels = c("Solitary", "Semi-Social", "Social"))
+sort(unique(bz_v5$Sociality))
+
+# Simplify nest as well (just to eliminate hives)
+sort(unique(bz_v5$Nest.Type))
+bz_v5$Nest.Type <- as.factor(gsub("Cavities/Hives", "Cavities", bz_v5$Nest.Type))
+sort(unique(bz_v5$Nest.Type))
 
 # Insidious, but I have a space after "High" one time that will make it be treated as a different group
 sort(unique(as.character(bz_v5$Height))) # see the space before the end quote?
@@ -89,16 +108,16 @@ bz_v5$Capture.Date <- as.numeric(gsub(6.20, 6.21, bz_v5$Capture.Date))
 bz_v5$Capture.Date <- as.numeric(gsub(6.19, 6.20, bz_v5$Capture.Date))
 
 # Now that date is fixed, get Julian dates
-bz_v5$Julian <- julindex$Julian[match(bz_v5$Capture.Date, julindex$Date)]
+bz_v5$Julian <- julians$Julian[match(bz_v5$Capture.Date, julians$Date)]
   ## If you're unfamiliar, it's just a scale of dates where each day is an integer between 1 and 365
   ## Makes linear trends easier to plot over time
 str(bz_v5)
 
-# Sum through just patches
+# Get patch-wide averages across the season
     ## Code also removes columns that make sense to record but aren't valuable in this context
     ## You can infer which of these columns those are because they are not listed here
-bz_v6 <- aggregate(Number ~ Sampling.Event.ID + Julian + Site + SiteCode + 
-                     Height + Fescue.Treatment + Bee.Species, data = bz_v5, FUN = sum)
+bz_v6 <- aggregate(Number ~ Sampling.Event.ID + Site + SiteCode + Height + Genus + Bee.Species +
+                   Herbicide.Treatment + Sociality + Nest.Type, data = bz_v5, FUN = sum)
 str(bz_v6)
 
 # Save this dataframe out
@@ -110,9 +129,9 @@ str(bz_wide) # idiot check
 
 # Smush calculated variables into main dataframe
 bz_wide_v2 <- bz_wide
-bz_wide_v2$Abundance <- as.vector(rowSums(bz_wide[, -c(1:6)]))
-bz_wide_v2$Species.Density <- as.vector(specnumber(bz_wide[, -c(1:6)]))
-bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:6)], index = "shannon"))
+bz_wide_v2$Abundance <- as.vector(rowSums(bz_wide[, -c(1:7)]))
+bz_wide_v2$Species.Density <- as.vector(specnumber(bz_wide[, -c(1:7)]))
+bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:7)], index = "shannon"))
 
 # Final pre-save check
 str(bz_wide_v2)
@@ -121,7 +140,7 @@ str(bz_wide_v2)
 write.csv(bz_wide_v2, "./Data/clean_2017bz_wide.csv", row.names = F)
 
 # Create an annual report variant (without sampling event ID or date)
-ann.rep.v0 <- aggregate(Number ~ Site + SiteCode + Fescue.Treatment + Bee.Species, data = bz_v6, FUN = sum)
+ann.rep.v0 <- aggregate(Number ~ Site + SiteCode + Herbicide.Treatment + Bee.Species, data = bz_v6, FUN = sum)
 
 # Get that in wide format for interpretability's sake
 ann.rep.v1 <- spread(ann.rep.v0, Bee.Species, Number, fill = NA)
@@ -137,7 +156,7 @@ flr <- read.csv("Data/Raw/bzflr17_raw.csv")
 
 # PAUSE
 
-# DATA DICTIONARY:
+# FLORAL DATA DICTIONARY ####
 colnames(flr)
   # For simplicity, only columns that are not found in the bee dataframe will be explained here. Sound fair?
 # "Nectar.Common.Name" = common name of the plant species observed on a transect
@@ -161,7 +180,7 @@ flr$TransectTotals <- rowSums(flr[,8:12])
 flr_v2 <- flr[,-c(8:12)]
 
 # Might as well add treatment labels (could be nice to actually answer the question at hand?)
-flr_v2$Fescue.Treatment <- beetreat$Fescue.Treatment[match(flr_v2$SiteCode, beetreat$DataCode)]
+flr_v2$Herbicide.Treatment <- treats$Herbicide.Treatment[match(flr_v2$SiteCode, treats$Patch)]
 
 # Reorder so that you have only the columns you want and in the order you want 'em
 str(flr_v2)
@@ -190,7 +209,7 @@ sort(unique(flr_v4$Capture.Date))
 sort(unique(bz_v5$Capture.Date))
 
 # Now that the dates are fixed, let's swap 'em for Julian dates
-flr_v4$Julian <- julindex$Julian[match(flr_v4$Capture.Date, julindex$Date)]
+flr_v4$Julian <- julians$Julian[match(flr_v4$Capture.Date, julians$Date)]
 
 # And do a quick check to make sure both dataframes' date modifications are still in agreement
 sort(unique(flr_v4$Julian))
@@ -229,16 +248,24 @@ bz <- read.csv("./Data/clean_2017bz.csv")
 flr <- read.csv("./Data/clean_2017flr.csv")
 
 # Re-level herbicide treatment column
-unique(bz$Fescue.Treatment)
-bz$Fescue.Treatment <- factor(as.character(bz$Fescue.Treatment), levels = c("Ref", "Con", "Spr", "SnS"))
-unique(bz$Fescue.Treatment)
+unique(bz$Herbicide.Treatment)
+bz$Herbicide.Treatment <- factor(as.character(bz$Herbicide.Treatment), levels = c("Ref", "Con", "Spr", "SnS"))
+unique(bz$Herbicide.Treatment)
 
 # Graphing shortcuts
 nah <- element_blank()
 bee.colors <- rev(topo.colors(length(unique(bz$Bee.Species))))
+gen.colors <- rev(sp::bpy.colors(length(unique(bz$Genus))))
+herb.colors <- c("Ref" = "#003c30", "Con" = "#01665e",
+                 "Spr" = "#35978f", "SnS" = "#c7eae5")
+mega.colors <- c("Ref-High" = "#003c30", "Ref-Low"  = "#543005",
+                 "Con-High" = "#01665e", "Con-Low"  = "#8c510a",
+                 "Spr-High" = "#35978f", "Spr-Low" = "#bf812d",
+                 "SnS-High" = "#c7eae5", "SnS-Low"  = "#dfc27d")
 
 # Useful summary dataframes
 bz.ht <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
+bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
 
 ##  ----------------------------------------------------------  ##
     # High vs. Low Community Composition ####
@@ -278,6 +305,17 @@ ggplot(bz.ht, aes(x = Height, y = Number, fill = Bee.Species)) +
         axis.ticks = nah, axis.line = nah, legend.position = "right")
 dev.off()
 
+# There's really a lot of stuff going on with this, why not attempt this with genera-level info
+jpeg("./Graphs/bzgen_2017pies.jpeg")
+ggplot(bz.gen, aes(x = Height, y = Number, fill = Genus)) +
+  coord_polar(theta = "y", start = 0, direction = 1) +
+  geom_bar(stat = 'identity') + 
+  scale_fill_manual(values = gen.colors) +
+  labs(x = "", y = "") +
+  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
+        axis.ticks = nah, axis.line = nah, legend.position = "right")
+dev.off()
+
 ##  ----------------------------------------------------------  ##
         # Single Sp. Resp to Treatment ####
 ##  ----------------------------------------------------------  ##
@@ -297,29 +335,54 @@ lasdia <- subset(bz, bz$Bee.Species == "Lasioglossum Dialictus")
 hallig <- subset(bz, bz$Bee.Species == "Halictus ligatus")
 
 # And plot 'em
-ggplot(augaur, aes(x = as.factor(Julian), y = Number, fill = Fescue.Treatment))+
+ggplot(augaur, aes(x = as.factor(Sampling.Event.ID), y = Number, fill = Herbicide.Treatment))+
   geom_bar(stat = 'identity') +
-  labs(x = "Julian Date", y = "Augochlorella aurata #") +
+  labs(x = "Sampling Event", y = "Augochlorella aurata #") +
   scale_fill_manual(values = topo.colors(4)) +
-  facet_grid(Fescue.Treatment ~ .) +
+  facet_grid(Herbicide.Treatment ~ .) +
   theme(legend.title = nah, legend.position = "none")
 
-ggsave("./Graphs/bz2017_auguar.pdf", plot = last_plot())
-
-ggplot(lasdia, aes(x = as.factor(Julian), y = Number, fill = Fescue.Treatment))+
+ggplot(lasdia, aes(x = as.factor(Sampling.Event.ID), y = Number, fill = Herbicide.Treatment))+
   geom_bar(stat = 'identity') +
-  labs(x = "Julian Date", y = "Lasioglossum Dialictus spp. #") +
+  labs(x = "Sampling Event", y = "Lasioglossum Dialictus spp. #") +
   scale_fill_manual(values = topo.colors(4)) +
-  facet_grid(Fescue.Treatment ~ .) +
+  facet_grid(Herbicide.Treatment ~ .) +
   theme(legend.title = nah, legend.position = "none")
 
-ggsave("./Graphs/bz2017_lasdia.pdf", plot = last_plot())
-
-ggplot(hallig, aes(x = as.factor(Julian), y = Number, fill = Fescue.Treatment))+
+ggplot(hallig, aes(x = as.factor(Sampling.Event.ID), y = Number, fill = Herbicide.Treatment))+
   geom_bar(stat = 'identity') +
-  labs(x = "Julian Date", y = "Halictus ligatus #") +
+  labs(x = "Sampling Event", y = "Halictus ligatus #") +
   scale_fill_manual(values = topo.colors(4)) +
-  facet_grid(Fescue.Treatment ~ .) +
+  facet_grid(Herbicide.Treatment ~ .) +
   theme(legend.title = nah, legend.position = "none")
 
-ggsave("./Graphs/bz2017_hallig.pdf", plot = last_plot())
+##  ----------------------------------------------------------  ##
+           # Bee Functional Diversity ####
+##  ----------------------------------------------------------  ##
+# Any interesting treatment patterns with either nesting habit or sociality?
+ggplot(bz, aes(x = Herbicide.Treatment, y = Number, fill = Herbicide.Treatment)) +
+  geom_boxplot(outlier.shape = 21) +
+  scale_fill_manual(values = herb.colors) +
+  theme(panel.grid = nah, legend.position = "none") +
+  facet_grid(Sociality ~ Nest.Type)
+
+ggsave("Graphs/bz_fxn1_2017.pdf", plot = last_plot())
+
+# Any of those patterns maintained with height info?
+  ## Create a variable for use on the x-axis
+bz$Combo.Var <- paste0(bz$Herbicide.Treatment, "-", bz$Height)
+bz$Combo.Var <- factor(bz$Combo.Var, levels = c("Ref-High", "Ref-Low", "Con-High", "Con-Low",
+                                                "Spr-High", "Spr-Low", "SnS-High", "SnS-Low"))
+sort(unique(bz$Combo.Var))
+
+  ## Plot it
+ggplot(bz, aes(x = Combo.Var, y = Number, fill = Combo.Var)) +
+  geom_boxplot(outlier.shape = 21) +
+  scale_fill_manual(values = mega.colors) +
+  labs(x = "Treatment * Height", y = "Bee Abundance") +
+  theme(panel.grid = nah , axis.text.x = element_text(angle = -90)) +
+  facet_grid(Sociality ~ Nest.Type)
+
+ggsave("Graphs/bz_fxn2_2017.pdf", plot = last_plot())
+
+# END ####
