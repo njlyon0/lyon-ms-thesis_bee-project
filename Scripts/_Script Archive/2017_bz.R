@@ -13,7 +13,7 @@ setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Be
 
 # Required libraries
 library(plyr); library(tidyr); library(vegan);
-library(ggplot2); library(cowplot); library(gridExtra); library(grid)
+library(ggplot2); library(cowplot)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                           # Cleaning and Response Calculation ####
@@ -266,55 +266,46 @@ mega.colors <- c("Ref-High" = "#003c30", "Ref-Low"  = "#543005",
                  "SnS-High" = "#c7eae5", "SnS-Low"  = "#dfc27d")
 
 # Useful summary dataframes
-bz.ht <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
+bz.ht.simp <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
 bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
 bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
 
 ##  ----------------------------------------------------------  ##
     # High vs. Low Community Composition ####
 ##  ----------------------------------------------------------  ##
-# Get a separate high and low dataframe
-hi <- subset(bz.ht, bz.ht$Height == "High")
-lo <- subset(bz.ht, bz.ht$Height == "Low")
+# Just spread the bz.ht dataset to get high and low separated
+bz.ht.wide <- spread(bz.ht.simp, Height, Number, fill = 0)
 
-# Low bees are missing some high bees and I want those absences in my plot down the line
-  ## First get NAs in the same places
-lo <- lo[match(hi$Bee.Species, lo$Bee.Species),]
+# Re-order by the abundances at the high bowls
+bz.ht <- bz.ht.wide[order(bz.ht.wide$High, decreasing = T),]
 
-  ## Next, fill in those pesky NAs in the number column with 0s
-lo$Number
-lo[is.na(lo$Number),3] <- 0
-lo$Number
+# Re-level the factor in the same way
+bee.spp.order <- as.vector(bz.ht.wide[order(bz.ht.wide$High, decreasing = T), 1])
+bz.ht$Bee.Species <- factor(bz.ht$Bee.Species, levels = bee.spp.order)
+bz.sp$Bee.Species <- factor(bz.sp$Bee.Species, levels = bee.spp.order)
 
-  ## Then overwrite the low bee "Bee.Species" column with the one from the high bees
-lo$Bee.Species <- hi$Bee.Species
-unique(lo$Bee.Species == hi$Bee.Species) # worked!
+# Draw a bad plot to strip the legend from
+leg.plt <- ggplot(bz.sp, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  guides(fill = guide_legend(ncol = 3)) +
+  theme(panel.grid = nah, axis.text.x = nah, legend.title = nah, legend.position = "top",
+        legend.text = element_text(size = 5)); leg.plt
 
-# Re-order them both by species abundances in the high communities
-bee.levels <- as.vector(hi[order(hi$Number, decreasing = T), 2])
-levels(hi$Bee.Species); levels(lo$Bee.Species)
-hi$Bee.Species <- factor(as.character(hi$Bee.Species), levels = bee.levels)
-lo$Bee.Species <- factor(as.character(lo$Bee.Species), levels = bee.levels)
-levels(hi$Bee.Species); levels(lo$Bee.Species)
+# Get the legend as it's own object
+bee.legend <- get_legend(leg.plt)
 
 # Make the species rank plots
-hi.spp.plt <- ggplot(hi, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+hi.spp.plt <- ggplot(bz.ht, aes(x = Bee.Species, y = High, fill = Bee.Species)) +
   geom_bar(stat = 'identity') +
   ylim(low = 0, high = 65) +
   scale_fill_manual(values = bee.colors) +
   labs(x = "", y = "Number") +
-  guides(fill = guide_legend(ncol = 4)) +
-  theme(panel.grid = nah, axis.text.x = nah, legend.title = nah, legend.position = "top",
-        legend.text = element_text(size = 5)); hi.spp.plt
-
-# Get the legend as it's own object
-bee.legend <- get_legend(hi.spp.plt)
-
-# Now re-draw the high species plot without the legend
-hi.spp.plt <- hi.spp.plt + theme(legend.position = "none"); hi.spp.plt
+  theme(panel.grid = nah, axis.text.x = nah, legend.title = nah, legend.position = "none"); hi.spp.plt
 
 # Do the low plot now
-lo.spp.plt <- ggplot(lo, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+lo.spp.plt <- ggplot(bz.ht, aes(x = Bee.Species, y = Low, fill = Bee.Species)) +
   geom_bar(stat = 'identity') +
   ylim(low = 0, high = 65) +
   scale_fill_manual(values = bee.colors) +
