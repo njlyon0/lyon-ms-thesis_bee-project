@@ -12,7 +12,8 @@
 setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Bee.Project")
 
 # Required libraries
-library(plyr); library(tidyr); library(vegan); library(ggplot2); library(sp); library(cowplot)
+library(plyr); library(tidyr); library(vegan);
+library(ggplot2); library(cowplot); library(gridExtra); library(grid)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                           # Cleaning and Response Calculation ####
@@ -266,6 +267,7 @@ mega.colors <- c("Ref-High" = "#003c30", "Ref-Low"  = "#543005",
 # Useful summary dataframes
 bz.ht <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
 bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
+bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
 
 ##  ----------------------------------------------------------  ##
     # High vs. Low Community Composition ####
@@ -274,87 +276,56 @@ bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
 hi <- subset(bz.ht, bz.ht$Height == "High")
 lo <- subset(bz.ht, bz.ht$Height == "Low")
 
-# Get a pie chart of species abundances (across all sites/dates) for "high" bees
-hibz.pie <- ggplot(hi, aes(x = Height, y = Number, fill = Bee.Species)) +
-  coord_polar(theta = "y", start = 0, direction = 1) +
-  geom_bar(stat = 'identity') + 
-  scale_fill_manual(values = bee.colors) +
-  labs(x = "", y = "") +
-  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
-        axis.ticks = nah, axis.line = nah); hibz.pie
+# Low bees are missing some high bees and I want those absences in my plot down the line
+  ## First get NAs in the same places
+lo <- lo[match(hi$Bee.Species, lo$Bee.Species),]
 
-# Do the same for "low" bees
-lobz.pie <- ggplot(lo, aes(x = Height, y = Number, fill = Bee.Species)) +
-  coord_polar(theta = "y", start = 0, direction = 1) +
-  geom_bar(stat = 'identity') + 
-  scale_fill_manual(values = bee.colors) +
-  labs(x = "", y = "") +
-  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
-        axis.ticks = nah, axis.line = nah); lobz.pie
-  
-# Plot 'em
-plot_grid(hibz.pie, lobz.pie, labels = c("", ""), nrow = 1, ncol = 2)
+  ## Next, fill in those pesky NAs in the number column with 0s
+lo$Number
+lo[is.na(lo$Number),3] <- 0
+lo$Number
 
-jpeg("./Graphs/bzspp_2017pies.jpeg")
-ggplot(bz.ht, aes(x = Height, y = Number, fill = Bee.Species)) +
-  coord_polar(theta = "y", start = 0, direction = 1) +
-  geom_bar(stat = 'identity') + 
-  scale_fill_manual(values = bee.colors) +
-  labs(x = "", y = "") +
-  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
-        axis.ticks = nah, axis.line = nah, legend.position = "right")
-dev.off()
+  ## Then overwrite the low bee "Bee.Species" column with the one from the high bees
+lo$Bee.Species <- hi$Bee.Species
+unique(lo$Bee.Species == hi$Bee.Species) # worked!
 
-# There's really a lot of stuff going on with this, why not attempt this with genera-level info
-jpeg("./Graphs/bzgen_2017pies.jpeg")
-ggplot(bz.gen, aes(x = Height, y = Number, fill = Genus)) +
-  coord_polar(theta = "y", start = 0, direction = 1) +
-  geom_bar(stat = 'identity') + 
-  scale_fill_manual(values = gen.colors) +
-  labs(x = "", y = "") +
-  theme(axis.title = nah, panel.border = nah, panel.grid = nah, legend.title = nah,
-        axis.ticks = nah, axis.line = nah, legend.position = "right")
-dev.off()
+# Re-order them both by species abundances in the high communities
+bee.levels <- as.vector(hi[order(hi$Number, decreasing = T), 2])
+levels(hi$Bee.Species); levels(lo$Bee.Species)
+hi$Bee.Species <- factor(as.character(hi$Bee.Species), levels = bee.levels)
+lo$Bee.Species <- factor(as.character(lo$Bee.Species), levels = bee.levels)
+levels(hi$Bee.Species); levels(lo$Bee.Species)
 
-##  ----------------------------------------------------------  ##
-        # Single Sp. Resp to Treatment ####
-##  ----------------------------------------------------------  ##
-# Get just full season totals for each bee species
-bz.tot <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
-
-# Calculate the relative abundance of each species (%)
-bz.tot$Rel.Abun <- (bz.tot$Number / sum(bz.tot$Number) ) * 100
-
-# Who are the top 5?
-bz.tot[order(bz.tot$Rel.Abun, decreasing = T),][c(1:5),]
-  ## Will now plot the top 3 (because #3 is doubly as abundant as #4)
-
-# Get dataframes of just these ones
-augaur <- subset(bz, bz$Bee.Species == "Augochlorella aurata")
-lasdia <- subset(bz, bz$Bee.Species == "Lasioglossum Dialictus")
-hallig <- subset(bz, bz$Bee.Species == "Halictus ligatus")
-
-# And plot 'em
-ggplot(augaur, aes(x = as.factor(Sampling.Event.ID), y = Number, fill = Herbicide.Treatment))+
+# Make the species rank plots
+hi.spp.plt <- ggplot(hi, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
   geom_bar(stat = 'identity') +
-  labs(x = "Sampling Event", y = "Augochlorella aurata #") +
-  scale_fill_manual(values = topo.colors(4)) +
-  facet_grid(Herbicide.Treatment ~ .) +
-  theme(legend.title = nah, legend.position = "none")
+  ylim(low = 0, high = 65) +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  guides(fill = guide_legend(ncol = 4)) +
+  theme(panel.grid = nah, axis.text.x = nah, legend.title = nah, legend.position = "top",
+        legend.text = element_text(size = 5)); hi.spp.plt
 
-ggplot(lasdia, aes(x = as.factor(Sampling.Event.ID), y = Number, fill = Herbicide.Treatment))+
-  geom_bar(stat = 'identity') +
-  labs(x = "Sampling Event", y = "Lasioglossum Dialictus spp. #") +
-  scale_fill_manual(values = topo.colors(4)) +
-  facet_grid(Herbicide.Treatment ~ .) +
-  theme(legend.title = nah, legend.position = "none")
+# Get the legend as it's own object
+bee.legend <- get_legend(hi.spp.plt)
 
-ggplot(hallig, aes(x = as.factor(Sampling.Event.ID), y = Number, fill = Herbicide.Treatment))+
+# Now re-draw the high species plot without the legend
+hi.spp.plt <- hi.spp.plt + theme(legend.position = "none"); hi.spp.plt
+
+# Do the low plot now
+lo.spp.plt <- ggplot(lo, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
   geom_bar(stat = 'identity') +
-  labs(x = "Sampling Event", y = "Halictus ligatus #") +
-  scale_fill_manual(values = topo.colors(4)) +
-  facet_grid(Herbicide.Treatment ~ .) +
-  theme(legend.title = nah, legend.position = "none")
+  ylim(low = 0, high = 65) +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  theme(panel.grid = nah , legend.position = "none", axis.text.x = nah); lo.spp.plt
+
+# Now do both plots and the legend in a single graphic
+plot_grid(bee.legend, hi.spp.plt, lo.spp.plt,
+          labels = c("", "High", "Low"), label_x = 0.8, nrow = 3, ncol = 1)
+
+# And save this graphic
+ggsave("./Graphs/bz_rankabun_2017.pdf", plot = last_plot())
 
 ##  ----------------------------------------------------------  ##
            # Bee Functional Diversity ####
