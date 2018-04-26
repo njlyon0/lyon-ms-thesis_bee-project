@@ -89,7 +89,6 @@ sort(unique(bz_v5$Sociality))
 bz_v5$Sociality <- gsub("Eusocial", "Social", bz_v5$Sociality)
 bz_v5$Sociality <- gsub("Solitary/Communal|Solitary/Semi-Social|Solitary/Primitive Social",
                         "Semi-Social", bz_v5$Sociality)
-bz_v5$Sociality <- factor(bz_v5$Sociality, levels = c("Solitary", "Semi-Social", "Social"))
 sort(unique(bz_v5$Sociality))
 
 # Simplify nest as well (just to eliminate hives)
@@ -249,9 +248,11 @@ bz <- read.csv("./Data/clean_2017bz.csv")
 flr <- read.csv("./Data/clean_2017flr.csv")
 
 # Re-level herbicide treatment column
-unique(bz$Herbicide.Treatment)
 bz$Herbicide.Treatment <- factor(as.character(bz$Herbicide.Treatment), levels = c("Ref", "Con", "Spr", "SnS"))
 unique(bz$Herbicide.Treatment)
+
+bz$Sociality <- factor(bz$Sociality, levels = c("Social", "Semi-Social", "Solitary"))
+unique(bz$Sociality)
 
 # Graphing shortcuts
 nah <- element_blank()
@@ -334,6 +335,7 @@ ggsave("./Graphs/bz_rankabun_2017.pdf", plot = last_plot())
 ggplot(bz, aes(x = Herbicide.Treatment, y = Number, fill = Herbicide.Treatment)) +
   geom_boxplot(outlier.shape = 21) +
   scale_fill_manual(values = herb.colors) +
+  labs(x = "Herbicide Treatment", y = "Number") +
   theme(panel.grid = nah, legend.position = "none") +
   facet_grid(Sociality ~ Nest.Type)
 
