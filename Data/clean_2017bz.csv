@@ -1,10 +1,4 @@
 "Sampling.Event.ID","Site","SiteCode","Height","Genus","Bee.Species","Herbicide.Treatment","Sociality","Nest.Type","Number"
-9,"STE","STE-W","High","Eucera","Eucera hamata","Con","Solitary","Cavities",1
-15,"LTR","LTR-W","Low","Eucera","Eucera hamata","Con","Solitary","Cavities",1
-9,"STE","STE-W","Low","Eucera","Eucera hamata","Con","Solitary","Cavities",1
-17,"RIS","RIS-S","Low","Osmia","Osmia pumila","Ref","Solitary","Cavities",1
-25,"LTR","LTR-E","Low","Osmia","Osmia lignaria","SnS","Solitary","Cavities",1
-18,"STE","STE-N","High","Eucera","Eucera hamata","Spr","Solitary","Cavities",1
 4,"RIS","RIS-S","High","Ceratina","Ceratina dupla","Ref","Semi-Social","Cavities",1
 30,"RIS","RIS-S","High","Ceratina","Ceratina dupla","Ref","Semi-Social","Cavities",1
 3,"RIS","RIS-S","Low","Ceratina","Ceratina dupla","Ref","Semi-Social","Cavities",1
@@ -17,15 +11,12 @@
 7,"LTR","LTR-C","High","Ceratina","Ceratina dupla","Spr","Semi-Social","Cavities",1
 32,"STE","STE-N","High","Ceratina","Ceratina dupla","Spr","Semi-Social","Cavities",1
 32,"STE","STE-N","High","Apis","Apis mellifera","Spr","Social","Cavities",1
-38,"STE","STE-W","High","Melissodes","Melissodes bimaculata","Con","Solitary","Ground",1
-28,"LTR","LTR-W","High","Melissodes","Melissodes communis","Con","Solitary","Ground",1
-40,"LTR","LTR-W","High","Melissodes","Melissodes trinodis","Con","Solitary","Ground",1
-27,"STE","STE-S","High","Calliopsis","Calliopsis nebraskensis","SnS","Solitary","Ground",1
-25,"LTR","LTR-E","Low","Calliopsis","Calliopsis nebraskensis","SnS","Solitary","Ground",1
-27,"STE","STE-S","High","Melissodes","Melissodes bimaculata","SnS","Solitary","Ground",10
-31,"GIL","GIL-C","High","Melissodes","Melissodes boltoniae","SnS","Solitary","Ground",1
-36,"LTR","LTR-E","High","Melissodes","Melissodes trinodis","SnS","Solitary","Ground",1
-24,"GIL","GIL-N","High","Melissodes","Melissodes boltoniae","Spr","Solitary","Ground",1
+9,"STE","STE-W","High","Eucera","Eucera hamata","Con","Solitary","Cavities",1
+15,"LTR","LTR-W","Low","Eucera","Eucera hamata","Con","Solitary","Cavities",1
+9,"STE","STE-W","Low","Eucera","Eucera hamata","Con","Solitary","Cavities",1
+17,"RIS","RIS-S","Low","Osmia","Osmia pumila","Ref","Solitary","Cavities",1
+25,"LTR","LTR-E","Low","Osmia","Osmia lignaria","SnS","Solitary","Cavities",1
+18,"STE","STE-N","High","Eucera","Eucera hamata","Spr","Solitary","Cavities",1
 28,"LTR","LTR-W","High","Agapostemon","Agapostemon texanus","Con","Semi-Social","Ground",1
 9,"STE","STE-W","High","Agapostemon","Agapostemon virescens","Con","Semi-Social","Ground",1
 15,"LTR","LTR-W","High","Augochlorella","Augochlorella aurata","Con","Semi-Social","Ground",1
@@ -125,3 +116,12 @@
 18,"STE","STE-N","High","Halictus","Halictus ligatus","Spr","Social","Ground",1
 32,"STE","STE-N","High","Halictus","Halictus ligatus","Spr","Social","Ground",2
 24,"GIL","GIL-N","Low","Halictus","Halictus ligatus","Spr","Social","Ground",3
+38,"STE","STE-W","High","Melissodes","Melissodes bimaculata","Con","Solitary","Ground",1
+28,"LTR","LTR-W","High","Melissodes","Melissodes communis","Con","Solitary","Ground",1
+40,"LTR","LTR-W","High","Melissodes","Melissodes trinodis","Con","Solitary","Ground",1
+27,"STE","STE-S","High","Calliopsis","Calliopsis nebraskensis","SnS","Solitary","Ground",1
+25,"LTR","LTR-E","Low","Calliopsis","Calliopsis nebraskensis","SnS","Solitary","Ground",1
+27,"STE","STE-S","High","Melissodes","Melissodes bimaculata","SnS","Solitary","Ground",10
+31,"GIL","GIL-C","High","Melissodes","Melissodes boltoniae","SnS","Solitary","Ground",1
+36,"LTR","LTR-E","High","Melissodes","Melissodes trinodis","SnS","Solitary","Ground",1
+24,"GIL","GIL-N","High","Melissodes","Melissodes boltoniae","Spr","Solitary","Ground",1

@@ -129,9 +129,9 @@ str(bz_wide) # idiot check
 
 # Smush calculated variables into main dataframe
 bz_wide_v2 <- bz_wide
-bz_wide_v2$Abundance <- as.vector(rowSums(bz_wide[, -c(1:7)]))
-bz_wide_v2$Species.Density <- as.vector(specnumber(bz_wide[, -c(1:7)]))
-bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:7)], index = "shannon"))
+bz_wide_v2$Abundance <- as.vector(rowSums(bz_wide[, -c(1:8)]))
+bz_wide_v2$Species.Density <- as.vector(specnumber(bz_wide[, -c(1:8)]))
+bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:8)], index = "shannon"))
 
 # Final pre-save check
 str(bz_wide_v2)
@@ -148,96 +148,6 @@ ann.rep.v1 <- spread(ann.rep.v0, Bee.Species, Number, fill = NA)
 # And save it out
 write.csv(ann.rep.v1, "./Data/report_2017.csv", row.names = F)
 
-##  ----------------------------------------------------------  ##
-                 # Floral Tidy ####
-##  ----------------------------------------------------------  ##
-# Data file
-flr <- read.csv("Data/Raw/bzflr17_raw.csv")
-
-# PAUSE
-
-# FLORAL DATA DICTIONARY ####
-colnames(flr)
-  # For simplicity, only columns that are not found in the bee dataframe will be explained here. Sound fair?
-# "Nectar.Common.Name" = common name of the plant species observed on a transect
-# "Section.1" = the abundance of inflorescences of that plant species found from 0-20m on the transect
-# "Section.2" = the abundance of inflorescences of that plant species found from 20-40m on the transect
-# "Section.3" = the abundance of inflorescences of that plant species found from 40-60m on the transect
-# "Section.4" = the abundance of inflorescences of that plant species found from 60-80m on the transect
-# "Section.5" = the abundance of inflorescences of that plant species found from 80-100m on the transect
-  ## Transect total length is 100 meters
-# "Collector" = initials of person who identified/counted flowers
-# "Enterer" = initials of person who entered the data from the datasheet into the Excel spreadsheet
-# "Checker" = initials of person who checked that the entries in Excel were consistent with the datasheet
-  ## NJL = Nick J Lyon; EKS = Emma K Stivers; ELM = Erin Lynn McCall; LMG = Luke M Goodman
-
-# RESUME CODING
-
-# Sum section counts together for full transect counts
-flr$TransectTotals <- rowSums(flr[,8:12])
-
-# And ditch the section counts (not relevant to the scale of question we're asking)
-flr_v2 <- flr[,-c(8:12)]
-
-# Might as well add treatment labels (could be nice to actually answer the question at hand?)
-flr_v2$Herbicide.Treatment <- treats$Herbicide.Treatment[match(flr_v2$SiteCode, treats$Patch)]
-
-# Reorder so that you have only the columns you want and in the order you want 'em
-str(flr_v2)
-flr_v3 <- flr_v2[,c(1, 3, 5:6, 12, 7, 11)]
-str(flr_v3)
-
-# Check Nectar common names
-flr_v3$Nectar.Common.Name <- tolower(flr_v3$Nectar.Common.Name)
-sort(unique(flr_v3$Nectar.Common.Name))
-
-# Remove foolish empty rows/unspecific "species" references
-flr_v4 <- flr_v3[!(flr_v3$Nectar.Common.Name == ""),]
-
-# Standardize any names that are redundant (multiple common names that refer to the same species)
-flr_v4$Nectar.Common.Name <- gsub("lance-leafed plantain", "ribwort plantain", flr_v4$Nectar.Common.Name)
-flr_v4$Nectar.Common.Name <- gsub("lance leaf plantain", "ribwort plantain", flr_v4$Nectar.Common.Name)
-flr_v4$Nectar.Common.Name <- gsub("common plantain", "broadleaf plantain", flr_v4$Nectar.Common.Name)
-flr_v4$Nectar.Common.Name <- gsub("bee balm", "bergamot", flr_v4$Nectar.Common.Name)
-sort(unique(flr_v4$Nectar.Common.Name))
-
-# Now to fix the capture date column
-  ## Floral data were collected one day before the bee data because pan traps were set out
-  ## on the same day flowers were counted, but the traps weren't re-collected until 24 hours later
-flr_v4$Capture.Date <- flr_v4$Capture.Date + 0.01
-sort(unique(flr_v4$Capture.Date))
-sort(unique(bz_v5$Capture.Date))
-
-# Now that the dates are fixed, let's swap 'em for Julian dates
-flr_v4$Julian <- julians$Julian[match(flr_v4$Capture.Date, julians$Date)]
-
-# And do a quick check to make sure both dataframes' date modifications are still in agreement
-sort(unique(flr_v4$Julian))
-sort(unique(bz_v5$Julian))
-
-# Want to reorder quickly
-flr_v5 <- flr_v4[, c(1, 8, 3:7)]
-
-# Idiot check and save clean version
-str(flr_v5)
-write.csv(flr_v5, "./Data/clean_2017flr.csv", row.names = F)
-
-# Wide format
-flr_wide <- spread(flr_v5, Nectar.Common.Name, TransectTotals, fill = 0)
-str(flr_wide)
-
-# Push to new wide dataframe and add calculated response variables
-flr_wide_v2 <- flr_wide
-flr_wide_v2$Abundance <- as.vector(rowSums(flr_wide[,-c(1:5)]))
-flr_wide_v2$Species.Density <- as.vector(specnumber(flr_wide[,-c(1:5)]))
-flr_wide_v2$Diversity <- as.vector(diversity(flr_wide[,-c(1:5)], index = "shannon"))
-
-# Final pre-save check
-str(flr_wide_v2)
-
-# Save
-write.csv(flr_wide_v2, "./Data/clean_2017flr_wide.csv", row.names = F)
-
 ##  ----------------------------------------------------------------------------------------------------------  ##
                                   # Explore the Data ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
@@ -245,14 +155,32 @@ rm(list = ls())
 
 # Data
 bz <- read.csv("./Data/clean_2017bz.csv")
-flr <- read.csv("./Data/clean_2017flr.csv")
+
+# Now, because not all bees were found at all heights, in all patches, or at all treatments,
+# we have a slight problem. We need 0s for those things so that ggplot doesn't flip out
+# Making the dataframe from long to wide and back to long will get those values for you
+bz.wide <- spread(bz[,-c(1:2, 7)], SiteCode, Number, fill = 0)
 
 # Re-level herbicide treatment column
 bz$Herbicide.Treatment <- factor(as.character(bz$Herbicide.Treatment), levels = c("Ref", "Con", "Spr", "SnS"))
 unique(bz$Herbicide.Treatment)
 
+# And sociality column
 bz$Sociality <- factor(bz$Sociality, levels = c("Social", "Semi-Social", "Solitary"))
 unique(bz$Sociality)
+
+# And, finally, the bee species based on total abundance
+bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
+bee.order <- as.vector(bz.sp[order(bz.sp$Number, decreasing = T), 1])
+unique(bz$Bee.Species) # alpha order as default
+bz$Bee.Species <- factor(bz$Bee.Species, levels = bee.order)
+unique(bz$Bee.Species) # abundance order now
+
+# Useful summary dataframes
+bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum) # re-call this to get the new order
+bz.ht.simp <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
+bz.ptch <- aggregate(Number ~ SiteCode + Herbicide.Treatment + Bee.Species, data = bz, FUN = sum)
+bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
 
 # Graphing shortcuts
 nah <- element_blank()
@@ -265,11 +193,6 @@ mega.colors <- c("Ref-High" = "#003c30", "Ref-Low"  = "#543005",
                  "Spr-High" = "#35978f", "Spr-Low" = "#bf812d",
                  "SnS-High" = "#c7eae5", "SnS-Low"  = "#dfc27d")
 
-# Useful summary dataframes
-bz.ht.simp <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
-bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
-bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
-
 ##  ----------------------------------------------------------  ##
     # High vs. Low Community Composition ####
 ##  ----------------------------------------------------------  ##
@@ -278,11 +201,6 @@ bz.ht.wide <- spread(bz.ht.simp, Height, Number, fill = 0)
 
 # Re-order by the abundances at the high bowls
 bz.ht <- bz.ht.wide[order(bz.ht.wide$High, decreasing = T),]
-
-# Re-level the factor in the same way
-bee.spp.order <- as.vector(bz.ht.wide[order(bz.ht.wide$High, decreasing = T), 1])
-bz.ht$Bee.Species <- factor(bz.ht$Bee.Species, levels = bee.spp.order)
-bz.sp$Bee.Species <- factor(bz.sp$Bee.Species, levels = bee.spp.order)
 
 # Draw a bad plot to strip the legend from
 leg.plt <- ggplot(bz.sp, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
@@ -330,7 +248,7 @@ ggplot(bz, aes(x = Herbicide.Treatment, y = Number, fill = Herbicide.Treatment))
   theme(panel.grid = nah, legend.position = "none") +
   facet_grid(Sociality ~ Nest.Type)
 
-ggsave("Graphs/bz_fxn1_2017.pdf", plot = last_plot())
+ggsave("Graphs/bz_fxn_2017.pdf", plot = last_plot())
 
 # Any of those patterns maintained with height info?
   ## Create a variable for use on the x-axis
@@ -347,6 +265,56 @@ ggplot(bz, aes(x = Combo.Var, y = Number, fill = Combo.Var)) +
   theme(panel.grid = nah , axis.text.x = element_text(angle = -90)) +
   facet_grid(Sociality ~ Nest.Type)
 
-ggsave("Graphs/bz_fxn2_2017.pdf", plot = last_plot())
+##  ----------------------------------------------------------  ##
+          # Among Patch Heterogeneity ####
+##  ----------------------------------------------------------  ##
+# Get a wide dataframe just to make sure every patch has a value for every bee species
+bz.ptch.wide <- spread(bz.ptch, SiteCode, Number, fill = 0)
+str(bz.ptch.wide)
+
+# Now bring it *back to long format* to keep those fun new 0 entries
+bz.ptch.long <- gather(bz.ptch.wide, key = "Patch", value = "Number", 3:ncol(bz.ptch.wide))
+str(bz.ptch.long)
+
+# Re-level the patch factor to get it in a smart order
+ptch.lvs <- c("GIL-S", "GIL-N", "GIL-C",
+              "LTR-W","LTR-C", "LTR-E", 
+              "STE-W","STE-N", "STE-S", 
+              "KLN-E", "PYN-N", "RIS-S")
+bz.ptch.long$Patch <- factor(bz.ptch.long$Patch, levels = ptch.lvs)
+unique(bz.ptch.long$Patch)
+
+
+# Now plot this buddy
+ggplot(bz.ptch.long, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+  geom_bar(stat = 'identity') +
+  ylim(low = 0, high = 65) +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  facet_grid(Patch ~ Herbicide.Treatment) +
+  theme(panel.grid = nah , legend.position = "none", axis.text.x = nah)
+
+##  ----------------------------------------------------------  ##
+       # Among Treatment Differences ####
+##  ----------------------------------------------------------  ##
+# Get a treatment rank abundance dataframe and plot
+bz.trt1 <- aggregate(Number ~ Herbicide.Treatment + Bee.Species, data = bz, FUN = sum)
+
+# Do the long then wide then long thing to get all the rows you need
+bz.trt2 <- spread(bz.trt1, Herbicide.Treatment, Number, fill = 0)
+bz.trt3 <- gather(bz.trt2, key = "Herbicide.Treatment", value = "Number", -1)
+
+# Re-level the treatment, again
+
+# Now get the (now familiar and much-loved) rank abundance plots
+ggplot(bz.trt3, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+  geom_bar(stat = 'identity') +
+  ylim(low = 0, high = 65) +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  facet_grid(Herbicide.Treatment ~ .) +
+  theme(panel.grid = nah , legend.position = "none", axis.text.x = nah)
+
+
 
 # END ####
