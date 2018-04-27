@@ -123,15 +123,18 @@ str(bz_v6)
 # Save this dataframe out
 write.csv(bz_v6, "./Data/clean_2017bz.csv", row.names = F)
 
+# Before you can move on to wide format stuff, you'll need to ditch some of this sociality stuff
+bz_v7 <- bz_v6[,-c(5, 8:9)]
+
 # Now mush to wide format (i.e. each species becomes a column populated by its abundances)
-bz_wide <- spread(bz_v6, Bee.Species, Number, fill = 0)
+bz_wide <- spread(bz_v7, Bee.Species, Number, fill = 0)
 str(bz_wide) # idiot check
 
 # Smush calculated variables into main dataframe
 bz_wide_v2 <- bz_wide
-bz_wide_v2$Abundance <- as.vector(rowSums(bz_wide[, -c(1:8)]))
-bz_wide_v2$Species.Density <- as.vector(specnumber(bz_wide[, -c(1:8)]))
-bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:8)], index = "shannon"))
+bz_wide_v2$Abundance <- as.vector(rowSums(bz_wide[, -c(1:5)]))
+bz_wide_v2$Species.Density <- as.vector(specnumber(bz_wide[, -c(1:5)]))
+bz_wide_v2$Diversity <- as.vector(diversity(bz_wide[, -c(1:5)], index = "shannon"))
 
 # Final pre-save check
 str(bz_wide_v2)
@@ -154,62 +157,54 @@ write.csv(ann.rep.v1, "./Data/report_2017.csv", row.names = F)
 rm(list = ls())
 
 # Data
-bz <- read.csv("./Data/clean_2017bz.csv")
+bz.1 <- read.csv("./Data/clean_2017bz_wide.csv")
 
-# Now, because not all bees were found at all heights, in all patches, or at all treatments,
-# we have a slight problem. We need 0s for those things so that ggplot doesn't flip out
-# Making the dataframe from long to wide and back to long will get those values for you
-bz.wide <- spread(bz[,-c(1:2, 7)], SiteCode, Number, fill = 0)
+# Ditch the community metrics and non-patch specific columns
+bz.2 <- bz.1[,-c(1, (ncol(bz.1)-2):ncol(bz.1))]
 
-# Re-level herbicide treatment column
-bz$Herbicide.Treatment <- factor(as.character(bz$Herbicide.Treatment), levels = c("Ref", "Con", "Spr", "SnS"))
+# Get it in long format so that all species are represented (even when 0 of that species was found there)
+bz <- gather(bz.2, key = "Bee.Species", value = "Number", 5:20)
+count(bz$Bee.Species)
+str(bz)
+
+# Re-level treatment, patch, and site
+bz$Herbicide.Treatment <- factor(as.character(bz$Herbicide.Treatment),
+                                 levels = c("Ref", "Con", "Spr", "SnS"))
 unique(bz$Herbicide.Treatment)
+bz$SiteCode <- factor(bz$SiteCode,
+                      levels = c("GIL-S", "GIL-N", "GIL-C", "LTR-W","LTR-C", "LTR-E", 
+                                 "STE-W","STE-N", "STE-S", "KLN-E", "PYN-N", "RIS-S"))
+unique(bz$SiteCode)
+bz$Site <- factor(bz$Site, levels = c("GIL", "LTR", "STE", "KLN", "PYN", "RIS"))
+unique(bz$Site)
 
-# And sociality column
-bz$Sociality <- factor(bz$Sociality, levels = c("Social", "Semi-Social", "Solitary"))
-unique(bz$Sociality)
-
-# And, finally, the bee species based on total abundance
+# We'll want rank abundance so let's re-level the bee species column to match that order
 bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum)
 bee.order <- as.vector(bz.sp[order(bz.sp$Number, decreasing = T), 1])
-unique(bz$Bee.Species) # alpha order as default
 bz$Bee.Species <- factor(bz$Bee.Species, levels = bee.order)
-unique(bz$Bee.Species) # abundance order now
-
-# Useful summary dataframes
-bz.sp <- aggregate(Number ~ Bee.Species, data = bz, FUN = sum) # re-call this to get the new order
-bz.ht.simp <- aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)
-bz.ptch <- aggregate(Number ~ SiteCode + Herbicide.Treatment + Bee.Species, data = bz, FUN = sum)
-bz.gen <- aggregate(Number ~ Height + Genus, data = bz, FUN = sum)
+levels(bz$Bee.Species)
 
 # Graphing shortcuts
 nah <- element_blank()
 bee.colors <- rev(topo.colors(length(unique(bz$Bee.Species))))
-gen.colors <- rev(sp::bpy.colors(length(unique(bz$Genus))))
 herb.colors <- c("Ref" = "#003c30", "Con" = "#01665e",
                  "Spr" = "#35978f", "SnS" = "#c7eae5")
-mega.colors <- c("Ref-High" = "#003c30", "Ref-Low"  = "#543005",
-                 "Con-High" = "#01665e", "Con-Low"  = "#8c510a",
-                 "Spr-High" = "#35978f", "Spr-Low" = "#bf812d",
-                 "SnS-High" = "#c7eae5", "SnS-Low"  = "#dfc27d")
 
 ##  ----------------------------------------------------------  ##
     # High vs. Low Community Composition ####
 ##  ----------------------------------------------------------  ##
-# Just spread the bz.ht dataset to get high and low separated
-bz.ht.wide <- spread(bz.ht.simp, Height, Number, fill = 0)
-
-# Re-order by the abundances at the high bowls
-bz.ht <- bz.ht.wide[order(bz.ht.wide$High, decreasing = T),]
+# Get a dataframe that only includes height and species
+  ## push it to wide in one fell swoop because we don't really care about long format here
+bz.ht <- spread((aggregate(Number ~ Height + Bee.Species, data = bz, FUN = sum)), Height, Number, fill = 0)
 
 # Draw a bad plot to strip the legend from
-leg.plt <- ggplot(bz.sp, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+leg.plt <- ggplot(bz, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
   geom_bar(stat = 'identity') +
   scale_fill_manual(values = bee.colors) +
   labs(x = "", y = "Number") +
   guides(fill = guide_legend(ncol = 3)) +
   theme(panel.grid = nah, axis.text.x = nah, legend.title = nah, legend.position = "top",
-        legend.text = element_text(size = 5)); leg.plt
+        legend.text = element_text(size = 7)); leg.plt
 
 # Get the legend as it's own object
 bee.legend <- get_legend(leg.plt)
@@ -238,10 +233,57 @@ plot_grid(bee.legend, hi.spp.plt, lo.spp.plt,
 ggsave("./Graphs/bz_rankabun_2017.pdf", plot = last_plot())
 
 ##  ----------------------------------------------------------  ##
-           # Bee Functional Diversity ####
+          # Among Patch Heterogeneity ####
 ##  ----------------------------------------------------------  ##
+# Plot rank abundance and facet by patch
+ggplot(bz, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  facet_grid(SiteCode ~ .)+
+  theme(panel.grid = nah, axis.text.x = nah, legend.position = "none")
+
+## Not super easy to read, but basically it looks like patches are more similar to patches from the same site
+  ## than they are to patches in other sites...
+
+# Let's check site-to-site variation
+ggplot(bz, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  facet_grid(Site ~ .)+
+  theme(panel.grid = nah, axis.text.x = nah, legend.position = "none")
+
+##  ----------------------------------------------------------  ##
+       # Among Treatment Differences ####
+##  ----------------------------------------------------------  ##
+# Despite the above result, are there any patterns in treatment rank abundances?
+ggplot(bz, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = bee.colors) +
+  labs(x = "", y = "Number") +
+  facet_grid(Herbicide.Treatment ~ .)+
+  theme(panel.grid = nah, axis.text.x = nah, legend.position = "none")
+
+##  ----------------------------------------------------------  ##
+          # Bee Functional Diversity ####
+##  ----------------------------------------------------------  ##
+# We will actually be needing a different dataframe to address this
+bz.lng <- read.csv("./Data/clean_2017bz.csv")
+
+# Aggregate to get just functional diversity info
+bz.fxn <- aggregate(Number ~ Herbicide.Treatment + Sociality + Nest.Type + Height + Bee.Species,
+                    data = bz.lng, FUN = sum)
+
+# Re-level the factors that need it
+bz.fxn$Herbicide.Treatment <- factor(as.character(bz.fxn$Herbicide.Treatment),
+                                     levels = c("Ref", "Con", "Spr", "SnS"))
+bz.fxn$Sociality <- factor(bz.fxn$Sociality,
+                           levels = c("Social", "Semi-Social", "Solitary"))
+unique(bz.fxn$Herbicide.Treatment); unique(bz.fxn$Sociality)
+
 # Any interesting treatment patterns with either nesting habit or sociality?
-ggplot(bz, aes(x = Herbicide.Treatment, y = Number, fill = Herbicide.Treatment)) +
+ggplot(bz.fxn, aes(x = Herbicide.Treatment, y = Number, fill = Herbicide.Treatment)) +
   geom_boxplot(outlier.shape = 21) +
   scale_fill_manual(values = herb.colors) +
   labs(x = "Herbicide Treatment", y = "Number") +
@@ -251,69 +293,25 @@ ggplot(bz, aes(x = Herbicide.Treatment, y = Number, fill = Herbicide.Treatment))
 ggsave("Graphs/bz_fxn_2017.pdf", plot = last_plot())
 
 # Any of those patterns maintained with height info?
-  ## Create a variable for use on the x-axis
-bz$Combo.Var <- paste0(bz$Herbicide.Treatment, "-", bz$Height)
-bz$Combo.Var <- factor(bz$Combo.Var, levels = c("Ref-High", "Ref-Low", "Con-High", "Con-Low",
-                                                "Spr-High", "Spr-Low", "SnS-High", "SnS-Low"))
-sort(unique(bz$Combo.Var))
+## Create a variable for use on the x-axis
+bz.fxn$Combo.Var <- paste0(bz.fxn$Herbicide.Treatment, "-", bz.fxn$Height)
+bz.fxn$Combo.Var <- factor(bz.fxn$Combo.Var, levels = c("Ref-High", "Ref-Low", "Con-High", "Con-Low",
+                                                        "Spr-High", "Spr-Low", "SnS-High", "SnS-Low"))
+sort(unique(bz.fxn$Combo.Var))
 
-  ## Plot it
-ggplot(bz, aes(x = Combo.Var, y = Number, fill = Combo.Var)) +
+# Get a color shortcut for your new variable
+mega.colors <- c("Ref-High" = "#003c30", "Ref-Low"  = "#543005",
+                 "Con-High" = "#01665e", "Con-Low"  = "#8c510a",
+                 "Spr-High" = "#35978f", "Spr-Low" = "#bf812d",
+                 "SnS-High" = "#c7eae5", "SnS-Low"  = "#dfc27d")
+
+## Plot it
+ggplot(bz.fxn, aes(x = Combo.Var, y = Number, fill = Combo.Var)) +
   geom_boxplot(outlier.shape = 21) +
   scale_fill_manual(values = mega.colors) +
   labs(x = "Treatment * Height", y = "Bee Abundance") +
   theme(panel.grid = nah , axis.text.x = element_text(angle = -90)) +
   facet_grid(Sociality ~ Nest.Type)
-
-##  ----------------------------------------------------------  ##
-          # Among Patch Heterogeneity ####
-##  ----------------------------------------------------------  ##
-# Get a wide dataframe just to make sure every patch has a value for every bee species
-bz.ptch.wide <- spread(bz.ptch, SiteCode, Number, fill = 0)
-str(bz.ptch.wide)
-
-# Now bring it *back to long format* to keep those fun new 0 entries
-bz.ptch.long <- gather(bz.ptch.wide, key = "Patch", value = "Number", 3:ncol(bz.ptch.wide))
-str(bz.ptch.long)
-
-# Re-level the patch factor to get it in a smart order
-ptch.lvs <- c("GIL-S", "GIL-N", "GIL-C",
-              "LTR-W","LTR-C", "LTR-E", 
-              "STE-W","STE-N", "STE-S", 
-              "KLN-E", "PYN-N", "RIS-S")
-bz.ptch.long$Patch <- factor(bz.ptch.long$Patch, levels = ptch.lvs)
-unique(bz.ptch.long$Patch)
-
-
-# Now plot this buddy
-ggplot(bz.ptch.long, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
-  geom_bar(stat = 'identity') +
-  ylim(low = 0, high = 65) +
-  scale_fill_manual(values = bee.colors) +
-  labs(x = "", y = "Number") +
-  facet_grid(Patch ~ Herbicide.Treatment) +
-  theme(panel.grid = nah , legend.position = "none", axis.text.x = nah)
-
-##  ----------------------------------------------------------  ##
-       # Among Treatment Differences ####
-##  ----------------------------------------------------------  ##
-# Get a treatment rank abundance dataframe and plot
-bz.trt1 <- aggregate(Number ~ Herbicide.Treatment + Bee.Species, data = bz, FUN = sum)
-
-# Do the long then wide then long thing to get all the rows you need
-bz.trt2 <- spread(bz.trt1, Herbicide.Treatment, Number, fill = 0)
-bz.trt3 <- gather(bz.trt2, key = "Herbicide.Treatment", value = "Number", -1)
-
-# Re-level the treatment, again
-
-# Now get the (now familiar and much-loved) rank abundance plots
-ggplot(bz.trt3, aes(x = Bee.Species, y = Number, fill = Bee.Species)) +
-  geom_bar(stat = 'identity') +
-  ylim(low = 0, high = 65) +
-  scale_fill_manual(values = bee.colors) +
-  labs(x = "", y = "Number") +
-  facet_grid(Herbicide.Treatment ~ .) +
-  theme(panel.grid = nah , legend.position = "none", axis.text.x = nah)
 
 
 
