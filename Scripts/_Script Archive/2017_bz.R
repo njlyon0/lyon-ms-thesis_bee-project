@@ -31,7 +31,6 @@ julians <- read.csv("./Indices/julianinfo.csv")
   ## Bee Functional Diversity
 fxns <- read.csv("./Indices/fxninfo.csv")
 
-
 ##  ----------------------------------------------------------  ##
                   # Bee Tidy ####
 ##  ----------------------------------------------------------  ##
