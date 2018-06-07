@@ -39,8 +39,17 @@ bz.v1$Bee.Species <- paste0(bz.v1$Genus, ".", bz.v1$Species)
 sort(unique(bz.v1$Bee.Species))
   ## The "X.x" is for bowls that were recovered with no bees
 
+# Pull in treatment index
+trmnts <- read.csv("./Indices/trmntinfo.csv")
+
+# Put treatments into the dataframe
+bz.v1$Adaptive.Mgmt <- trmnts$Adaptive.Mgmt[match(bz.v1$Patch, trmnts$Patch)]
+bz.v1$YSB <- trmnts$YSB[match(bz.v1$Patch, trmnts$Patch)]
+bz.v1$Herb.Trt <- trmnts$Herbicide.Treatment[match(bz.v1$Patch, trmnts$Patch)]
+
 # Sum occurrences of the same species of bee from the same bowl
-bz.v2 <- aggregate(Number ~ Round + Patch + Height + Bowl.Position + Bowl.Color + Bowl.Size + Bee.Species,
+bz.v2 <- aggregate(Number ~ Round + Patch + Adaptive.Mgmt + YSB + Herb.Trt +
+                   Height + Bowl.Position + Bowl.Color + Bowl.Size + Bee.Species,
                    FUN = sum, data = bz.v1)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
@@ -56,9 +65,9 @@ bz.wide.v1$X.x # doesn't exist any more
 
 # Calculate the classic trifecta of community metrics
 bz.wide.v2 <- bz.wide.v1
-bz.wide.v2$Abundance <- rowSums(bz.wide.v1[, -c(1:6)])
-bz.wide.v2$Species.Density <- specnumber(bz.wide.v1[, -c(1:6)])
-bz.wide.v2$Diversity <- diversity(bz.wide.v1[, -c(1:6)], index = "shannon")
+bz.wide.v2$Abundance <- rowSums(bz.wide.v1[, -c(1:9)])
+bz.wide.v2$Species.Density <- specnumber(bz.wide.v1[, -c(1:9)])
+bz.wide.v2$Diversity <- diversity(bz.wide.v1[, -c(1:9)], index = "shannon")
 
 # Save 
 write.csv(bz.wide.v2, "./Data/actual_bz18.csv", row.names = F)
@@ -74,9 +83,6 @@ tots.v1 <- rbind(tots.v0, c("Total.Abundance", sum(tots.v0$Number)))
 
 # Calculate percent of total for each species!
 tots.v1$Percent.of.Total <- ( as.numeric(tots.v1$Number) / sum(tots.v0$Number) ) * 100
-
-# Do a quick eyeball check!
-tots.v1
 
 # And order from most to least abundant
 tots.v2 <- tots.v1[order(as.numeric(tots.v1$Number), decreasing = T),]
