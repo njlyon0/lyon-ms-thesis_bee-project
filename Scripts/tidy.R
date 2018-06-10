@@ -31,43 +31,46 @@ bz.v1 <- subset(bz.v0, bz.v0$Bowl.Status == "Retrieved")
 
 # Check genus and species of bees for spelling errors and fix those that occur
 sort(unique(bz.v1$Genus)); sort(unique(bz.v1$Species))
-bz.v1$Genus <- gsub("Unkown", "Unknown", bz.v1$Genus)
-sort(unique(bz.v1$Genus))
+  ## No errors yet
 
 # Get a single column of genus and species and check again
 bz.v1$Bee.Species <- paste0(bz.v1$Genus, ".", bz.v1$Species)
 sort(unique(bz.v1$Bee.Species))
   ## The "X.x" is for bowls that were recovered with no bees
 
+# Remove the "X.x" placeholder species (from bowls that were recovered with no bees)
+sort(unique(bz.v1$Bee.Species))
+bz.v2 <- subset(bz.v1, bz.v1$Bee.Species != "X.x")
+sort(unique(bz.v2$Bee.Species))
+
 # Pull in treatment index
 trmnts <- read.csv("./Indices/trmntinfo.csv")
 
 # Put treatments into the dataframe
-bz.v1$Adaptive.Mgmt <- trmnts$Adaptive.Mgmt[match(bz.v1$Patch, trmnts$Patch)]
-bz.v1$YSB <- trmnts$YSB[match(bz.v1$Patch, trmnts$Patch)]
-bz.v1$Herb.Trt <- trmnts$Herbicide.Treatment[match(bz.v1$Patch, trmnts$Patch)]
+bz.v2$Adaptive.Mgmt <- trmnts$Adaptive.Mgmt[match(bz.v2$Patch, trmnts$Patch)]
+bz.v2$YSB <- trmnts$YSB[match(bz.v2$Patch, trmnts$Patch)]
+bz.v2$Herb.Trt <- trmnts$Herbicide.Treatment[match(bz.v2$Patch, trmnts$Patch)]
 
 # Sum occurrences of the same species of bee from the same bowl
-bz.v2 <- aggregate(Number ~ Round + Patch + Adaptive.Mgmt + YSB + Herb.Trt +
-                   Height + Bowl.Position + Bowl.Color + Bowl.Size + Bee.Species,
-                   FUN = sum, data = bz.v1)
+bz.v3 <- aggregate(Number ~ Round + Patch + Adaptive.Mgmt + YSB + Herb.Trt +
+                   Height + Bowl.Position + Bowl.Color + Bee.Species,
+                   FUN = sum, data = bz.v2)
+  ## This re-orders the columns to match the above order (with Number furthest to the right though)
+
+# The above step also removes unwanted columns, but in case you're curious what was lost...
+setdiff(colnames(bz.v2), colnames(bz.v3))
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                         # Community Metric Calculation ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
 # Now spread to wide format so each bowl gets its own row and bee species are columns
-bz.wide.v0 <- spread(data = bz.v2, key = Bee.Species, value = Number, fill = 0)
-
-# Remove the "X.x" column as its purpose (to keep 0 bee bowls in the df) has been served
-unique(bz.wide.v0$X.x)
-bz.wide.v1 <- bz.wide.v0[,-ncol(bz.wide.v0)]
-bz.wide.v1$X.x # doesn't exist any more
+bz.wide <- spread(data = bz.v3, key = Bee.Species, value = Number, fill = 0)
 
 # Calculate the classic trifecta of community metrics
-bz.wide.v2 <- bz.wide.v1
-bz.wide.v2$Abundance <- rowSums(bz.wide.v1[, -c(1:9)])
-bz.wide.v2$Species.Density <- specnumber(bz.wide.v1[, -c(1:9)])
-bz.wide.v2$Diversity <- diversity(bz.wide.v1[, -c(1:9)], index = "shannon")
+bz.wide.v2 <- bz.wide
+bz.wide.v2$Abundance <- rowSums(bz.wide[, -c(1:8)])
+bz.wide.v2$Species.Density <- specnumber(bz.wide[, -c(1:8)])
+bz.wide.v2$Diversity <- diversity(bz.wide[, -c(1:8)], index = "shannon")
 
 # Save 
 write.csv(bz.wide.v2, "./Data/actual_bz18.csv", row.names = F)
@@ -76,7 +79,7 @@ write.csv(bz.wide.v2, "./Data/actual_bz18.csv", row.names = F)
                                   # Species Totals ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
 # People like to know species totals, so let's get those too
-tots.v0 <- aggregate(Number ~ Bee.Species, FUN = sum, data = bz.v1)
+tots.v0 <- aggregate(Number ~ Bee.Species, FUN = sum, data = bz.v2)
 
 # Add in a row for total number of bees collected
 tots.v1 <- rbind(tots.v0, c("Total.Abundance", sum(tots.v0$Number)))
