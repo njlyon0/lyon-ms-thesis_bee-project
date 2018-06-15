@@ -17,7 +17,7 @@ rm(list = ls())
 setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Bee.Project")
 
 # Load libraries
-library(vegan); library(ggplot2); library(lme4); library(lsmeans)
+library(vegan); library(ggplot2); library(lme4); library(emmeans)
 
 # Get cleaned data
 bz <- read.csv("./Data/actual_bz18.csv")
