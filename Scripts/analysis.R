@@ -50,7 +50,11 @@ pbg.r1 <- subset(pbg, pbg$Round == "R1")
 pbg.ab.mem <- glmer(Abundance ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r1, family = poisson)
 summary(pbg.ab.mem)
 
+pbg.dn.mem <- glmer(Species.Density ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r1, family = poisson)
+summary(pbg.dn.mem) ## NS
 
+pbg.dv.mem <- glmer(Diversity ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r1, family = poisson)
+summary(pbg.dv.mem) ## error
 
 # Plotting
 ggplot(pbg.r1, aes(x = YSB, y = Abundance, fill = YSB)) +
@@ -60,8 +64,19 @@ ggplot(pbg.r1, aes(x = YSB, y = Abundance, fill = YSB)) +
   facet_grid(Height ~ .) +
   pref.theme + theme(legend.position = "none")
 
+ggplot(pbg.r1, aes(x = YSB, y = Species.Density, fill = YSB)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Years Since Burn", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
 
-
+ggplot(pbg.r1, aes(x = YSB, y = Diversity, fill = YSB)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Years Since Burn", y = "Bee Diversity") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                               # Spray and Seed Question ####
