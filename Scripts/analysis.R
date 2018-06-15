@@ -24,7 +24,7 @@ bz <- read.csv("./Data/actual_bz18.csv")
 
 # Make years since burn a factor
 bz$YSB <- as.factor(bz$YSB)
-str(bz$YSB)
+unique(bz$YSB)
 
 # Graphing shortcuts
 colors <- c("0" = "#9970ab", "1" = "#762a83", "2" = "#40004b", # purples
@@ -92,24 +92,37 @@ unique(sns$Herb.Trt)
 # Get a dataframe for each round
 sns.r1 <- subset(sns, sns$Round == "R1")
 
-
 ##  ----------------------------------------------------------  ##
    # Round 1 Herbicide Analysis & Plotting ####
 ##  ----------------------------------------------------------  ##
 # Analysis
+sns.ab.mem <- glmer(Abundance ~ Herb.Trt * Height + (1|Patch) + (1|Bowl.Color), data = sns.r1, family = poisson)
+summary(sns.ab.mem)
 
+sns.dn.mem <- glmer(Species.Density ~ Herb.Trt * Height + (1|Patch) + (1|Bowl.Color), data = sns.r1, family = poisson)
+summary(sns.dn.mem) ## NS
 
-
-
-
-
-
-
+sns.dv.mem <- glmer(Diversity ~ Herb.Trt * Height + (1|Patch) + (1|Bowl.Color), data = sns.r1, family = poisson)
+summary(sns.dv.mem) ## error
 
 # Plotting
 ggplot(sns.r1, aes(x = Herb.Trt, y = Abundance, fill = Herb.Trt)) +
   geom_boxplot(outlier.shape = 21) +
   labs(x = "Herbicide Treatment", y = "Bee Abundance") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
+
+ggplot(sns.r1, aes(x = Herb.Trt, y = Species.Density, fill = Herb.Trt)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
+
+ggplot(sns.r1, aes(x = Herb.Trt, y = Diversity, fill = Herb.Trt)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Herbicide Treatment", y = "Bee Diversity") + 
   scale_fill_manual(values = colors) +
   facet_grid(Height ~ .) +
   pref.theme + theme(legend.position = "none")
