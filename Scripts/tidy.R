@@ -36,7 +36,6 @@ sort(unique(bz.v1$Genus)); sort(unique(bz.v1$Species))
 # Get a single column of genus and species and check again
 bz.v1$Bee.Species <- paste0(bz.v1$Genus, ".", bz.v1$Species)
 sort(unique(bz.v1$Bee.Species))
-  ## The "X.x" is for bowls that were recovered with no bees
 
 # Remove the "X.x" placeholder species (from bowls that were recovered with no bees)
 sort(unique(bz.v1$Bee.Species))
