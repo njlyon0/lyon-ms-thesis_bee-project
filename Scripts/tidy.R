@@ -42,6 +42,11 @@ sort(unique(bz.v1$Bee.Species))
 bz.v2 <- subset(bz.v1, bz.v1$Bee.Species != "X.x")
 sort(unique(bz.v2$Bee.Species))
 
+# Check any errors with bowl color spelling
+sort(unique(as.character(bz.v2$Bowl.Color)))
+bz.v2$Bowl.Color <- as.factor(gsub("^ Yellow$|^Yellow $|^Yelow$", "Yellow", bz.v2$Bowl.Color))
+sort(unique(as.character(bz.v2$Bowl.Color)))
+
 # Pull in treatment index
 trmnts <- read.csv("./Indices/trmntinfo.csv")
 
