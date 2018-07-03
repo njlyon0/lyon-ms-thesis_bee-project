@@ -28,7 +28,7 @@ unique(bz$YSB)
 
 # Graphing shortcuts
 colors <- c("0" = "#9970ab", "1" = "#762a83", "2" = "#40004b", # purples
-            "Ref" = "#9970ab", "Con" = "#00441b",  "Spr" = "#1b7837", "SnS" = "#5aae61") # greens (Ref = 0 YSB)
+            "Con" = "#00441b",  "Spr" = "#1b7837", "SnS" = "#5aae61") # greens (Ref = 0 YSB)
 dodge <- position_dodge(width = 0.5)
 pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                     panel.background = element_blank(), axis.line = element_line("black"),
@@ -82,11 +82,11 @@ ggplot(pbg.r1, aes(x = YSB, y = Diversity, fill = YSB)) +
                               # Spray and Seed Question ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
 # Prep the fescue project dataframe
-sns <- subset(bz, bz$Herb.Trt != "x")[, -c(3:4)]
+sns <- subset(bz, bz$Herb.Trt != "x" & bz$Herb.Trt != "Ref")[, -c(3:4)]
 
 # Re-level the spray and seed treatments
 unique(sns$Herb.Trt)
-sns$Herb.Trt <- factor(as.character(sns$Herb.Trt), levels = c("Ref", "Con", "Spr", "SnS"))
+sns$Herb.Trt <- factor(as.character(sns$Herb.Trt), levels = c("Con", "Spr", "SnS"))
 unique(sns$Herb.Trt)
 
 # Get a dataframe for each round
