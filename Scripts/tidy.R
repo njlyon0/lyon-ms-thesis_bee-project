@@ -97,5 +97,67 @@ tots.v2 <- tots.v1[order(as.numeric(tots.v1$Number), decreasing = T),]
 # Save this file out
 write.csv(tots.v2, "./Data/Summary Info/bz.tots.csv", row.names = F)
 
+##  ----------------------------------------------------------------------------------------------------------  ##
+                              # Floral Data Processing ####
+##  ----------------------------------------------------------------------------------------------------------  ##
+# Though I don't plan on using the floral data per se, that's no reason to not have it cleaned & ready
+rm(list = ls())
+
+# Read in data
+flr <- read.csv("./Data/raw_bzflr18.csv")
+str(flr)
+
+# Remove the columns that have to do with data entry/checking etc.
+flr.v2 <- flr[, -c(14:18)]
+  ## Makes sense to record in the raw data but is not relevant to analysis
+str(flr.v2)
+
+# Check the spelling on the floral common names column and fix any errors
+sort(unique(flr.v2$Flower.Common.Name))
+flr.v2$Flower.Common.Name <- as.character(flr.v2$Flower.Common.Name)
+sort(unique(flr.v2$Flower.Common.Name))
+  ## No errors yet
+
+# Get df into long format where post # is a column and all floral abundances are in another column
+flr.v3 <- gather(data = flr.v2, key = "Post", value = Flower.Number, ... = 8:13)
+str(flr.v3)
+
+# Get Post.ID
+flr.v3$Post.ID <- paste0(flr.v3$Patch, "-", flr.v3$Post)
+str(flr.v3)
+
+# Pull in treatment index
+trmnts <- read.csv("./Indices/trmntinfo.csv")
+
+# Put treatments into the dataframe
+flr.v3$Adaptive.Mgmt <- trmnts$Adaptive.Mgmt[match(flr.v3$Patch, trmnts$Patch)]
+flr.v3$YSB <- trmnts$YSB[match(flr.v3$Patch, trmnts$Patch)]
+flr.v3$Herb.Trt <- trmnts$Herbicide.Treatment[match(flr.v3$Patch, trmnts$Patch)]
+str(flr.v3)
+
+# Kind of an idiot check, but make sure every flower has only one record per post
+flr.v4 <- aggregate(Flower.Number ~ Round + Site + Patch + Post.ID +
+                      Adaptive.Mgmt + YSB + Herb.Trt + Flower.Common.Name, FUN = sum, data = flr.v3)
+str(flr.v4)
+
+# The massive rows you lost were all the flowers where the gather step created a row for 0 abundance
+count(is.na(flr.v3$Flower.Number))
+
+# As with bee cleaning, the aggregate step loses columns not specified, so do a quick check to make sure
+setdiff(colnames(flr.v3), colnames(flr.v4))
+
+# Get the data in wide format where floral common species are column names and abundance is the fill
+flr.wide <- spread(data = flr.v4, key = Flower.Common.Name, value = Flower.Number, fill = 0)
+str(flr.wide)
+
+# Calculate the classic trifecta of community metrics
+flr.wide.v2 <- flr.wide
+flr.wide.v2$Abundance <- rowSums(flr.wide[, -c(1:7)])
+flr.wide.v2$Species.Density <- specnumber(flr.wide[, -c(1:7)])
+flr.wide.v2$Diversity <- diversity(flr.wide[, -c(1:7)], index = "shannon")
+
+# Save it
+write.csv(flr.wide.v2, "./Data/actual_bzflr18.csv", row.names = F)
+
 # END ####
 
