@@ -74,7 +74,6 @@ bz.wide <- spread(data = bz.v3, key = Bee.Species, value = Number, fill = 0)
 bz.wide.v2 <- bz.wide
 bz.wide.v2$Abundance <- rowSums(bz.wide[, -c(1:8)])
 bz.wide.v2$Species.Density <- specnumber(bz.wide[, -c(1:8)])
-bz.wide.v2$Diversity <- diversity(bz.wide[, -c(1:8)], index = "shannon")
 
 # Save 
 write.csv(bz.wide.v2, "./Data/actual_bz18.csv", row.names = F)
