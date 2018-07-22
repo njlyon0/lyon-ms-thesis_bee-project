@@ -88,7 +88,7 @@ tots.v0 <- aggregate(Number ~ Bee.Species, FUN = sum, data = bz.v2)
 tots.v1 <- rbind(tots.v0, c("Total.Abundance", sum(tots.v0$Number)))
 
 # Calculate percent of total for each species!
-tots.v1$Percent.of.Total <- ( as.numeric(tots.v1$Number) / sum(tots.v0$Number) ) * 100
+tots.v1$Percent.of.Total <- round(( as.numeric(tots.v1$Number) / sum(tots.v0$Number) ) * 100, digits = 2)
 
 # And order from most to least abundant
 tots.v2 <- tots.v1[order(as.numeric(tots.v1$Number), decreasing = T),]
