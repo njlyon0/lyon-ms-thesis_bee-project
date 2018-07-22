@@ -113,9 +113,9 @@ str(flr.v2)
 
 # Check the spelling on the floral common names column and fix any errors
 sort(unique(flr.v2$Flower.Common.Name))
-flr.v2$Flower.Common.Name <- as.character(flr.v2$Flower.Common.Name)
+flr.v2$Flower.Common.Name <- gsub("bee balm", "bergamot", flr.v2$Flower.Common.Name)
+flr.v2$Flower.Common.Name <- gsub("plantago lanceolata", "ribwort plantain", flr.v2$Flower.Common.Name)
 sort(unique(flr.v2$Flower.Common.Name))
-  ## No errors yet
 
 # Get df into long format where post # is a column and all floral abundances are in another column
 flr.v3 <- gather(data = flr.v2, key = "Post", value = Flower.Number, ... = 8:13)
@@ -153,7 +153,6 @@ str(flr.wide)
 flr.wide.v2 <- flr.wide
 flr.wide.v2$Abundance <- rowSums(flr.wide[, -c(1:7)])
 flr.wide.v2$Species.Density <- specnumber(flr.wide[, -c(1:7)])
-flr.wide.v2$Diversity <- diversity(flr.wide[, -c(1:7)], index = "shannon")
 
 # Save it
 write.csv(flr.wide.v2, "./Data/actual_bzflr18.csv", row.names = F)
