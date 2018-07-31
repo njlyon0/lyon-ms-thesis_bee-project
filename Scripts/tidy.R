@@ -47,6 +47,11 @@ sort(unique(as.character(bz.v2$Bowl.Color)))
 bz.v2$Bowl.Color <- as.factor(gsub("^ Yellow$|^Yellow $|^Yelow$", "Yellow", bz.v2$Bowl.Color))
 sort(unique(as.character(bz.v2$Bowl.Color)))
 
+# Ditto for bowl height
+sort(unique(as.character(bz.v2$Height)))
+bz.v2$Height <- as.factor(gsub("^High $", "High", bz.v2$Height))
+sort(unique(as.character(bz.v2$Height)))
+
 # Pull in treatment index
 trmnts <- read.csv("./Indices/trmntinfo.csv")
 
