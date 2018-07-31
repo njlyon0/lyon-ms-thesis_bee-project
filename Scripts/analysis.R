@@ -55,8 +55,10 @@ pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = eleme
                               # Patch-Burn Graze Question ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
 # Get a dataframe for each round
+unique(pbg$Round)
 pbg.r1 <- subset(pbg, pbg$Round == "R1")
 pbg.r2 <- subset(pbg, pbg$Round == "R2")
+pbg.r3 <- subset(pbg, pbg$Round == "R3")
 
 ##  ----------------------------------------------------------  ##
    # Round 1 Bees - PBG Analysis & Plotting ####
@@ -89,9 +91,11 @@ ggplot(pbg.r1, aes(x = YSB, y = Species.Density, fill = YSB)) +
 # Analysis
 pbg.r2.ab.mem <- glmer(Abundance ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r2, family = poisson)
 summary(pbg.r2.ab.mem)
+  ## Low < High
 
 pbg.r2.dn.mem <- glmer(Species.Density ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r2, family = poisson)
-summary(pbg.r2.dn.mem) ## NS
+summary(pbg.r2.dn.mem)
+  ## Low < High
 
 # Plotting
 ggplot(pbg.r2, aes(x = YSB, y = Abundance, fill = YSB)) +
@@ -102,6 +106,31 @@ ggplot(pbg.r2, aes(x = YSB, y = Abundance, fill = YSB)) +
   pref.theme + theme(legend.position = "none")
 
 ggplot(pbg.r2, aes(x = YSB, y = Species.Density, fill = YSB)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Years Since Burn", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
+
+##  ----------------------------------------------------------  ##
+   # Round 3 Bees - PBG Analysis & Plotting ####
+##  ----------------------------------------------------------  ##
+# Analysis
+pbg.r3.ab.mem <- glmer(Abundance ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r3, family = poisson)
+summary(pbg.r3.ab.mem)
+
+pbg.r3.dn.mem <- glmer(Species.Density ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r3, family = poisson)
+summary(pbg.r3.dn.mem) ## Low < High
+
+# Plotting
+ggplot(pbg.r3, aes(x = YSB, y = Abundance, fill = YSB)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Years Since Burn", y = "Bee Abundance") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
+
+ggplot(pbg.r3, aes(x = YSB, y = Species.Density, fill = YSB)) +
   geom_boxplot(outlier.shape = 21) +
   labs(x = "Years Since Burn", y = "Bee Species Density") + 
   scale_fill_manual(values = colors) +
@@ -140,7 +169,9 @@ ggplot(pbg.flr, aes(x = YSB, y = Species.Density, fill = YSB)) +
                               # Spray and Seed Question ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
 # Get a dataframe for each round
+unique(sns$Round)
 sns.r1 <- subset(sns, sns$Round == "R1")
+sns.r3 <- subset(sns, sns$Round == "R3")
 
 ##  ----------------------------------------------------------  ##
  # Round 1 Bees - Herbicide Analysis & Plotting ####
@@ -161,6 +192,31 @@ ggplot(sns.r1, aes(x = Herb.Trt, y = Abundance, fill = Herb.Trt)) +
   pref.theme + theme(legend.position = "none")
 
 ggplot(sns.r1, aes(x = Herb.Trt, y = Species.Density, fill = Herb.Trt)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
+
+##  ----------------------------------------------------------  ##
+# Round 3 Bees - Herbicide Analysis & Plotting ####
+##  ----------------------------------------------------------  ##
+# Analysis
+sns.r3.ab.mem <- glmer(Abundance ~ Herb.Trt * Height + (1|Patch) + (1|Bowl.Color), data = sns.r3, family = poisson)
+summary(sns.r3.ab.mem) # low < high (regardless of treatment)
+
+sns.r3.dn.mem <- glmer(Species.Density ~ Herb.Trt * Height + (1|Patch) + (1|Bowl.Color), data = sns.r3, family = poisson)
+summary(sns.r3.dn.mem) ## NS
+
+# Plotting
+ggplot(sns.r3, aes(x = Herb.Trt, y = Abundance, fill = Herb.Trt)) +
+  geom_boxplot(outlier.shape = 21) +
+  labs(x = "Herbicide Treatment", y = "Bee Abundance") + 
+  scale_fill_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = "none")
+
+ggplot(sns.r3, aes(x = Herb.Trt, y = Species.Density, fill = Herb.Trt)) +
   geom_boxplot(outlier.shape = 21) +
   labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
   scale_fill_manual(values = colors) +
