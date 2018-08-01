@@ -60,6 +60,36 @@ pbg.r1 <- subset(pbg, pbg$Round == "R1")
 pbg.r2 <- subset(pbg, pbg$Round == "R2")
 pbg.r3 <- subset(pbg, pbg$Round == "R3")
 
+# Visualize the data before analysis!
+pbg.avg <- Rmisc::summarySE(data = pbg, measurevar = "Abundance",
+                            groupvars = c("YSB", "Round", "Height"))
+
+ggplot(pbg.avg, aes(x = Round, y = Abundance, fill = YSB, color = YSB)) +
+  geom_line(aes(group = YSB), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Abundance - se, ymax = Abundance + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Bee Abundance") + 
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = c(0.8, 0.9))
+
+# And for species density
+pbg.avg <- Rmisc::summarySE(data = pbg, measurevar = "Species.Density",
+                            groupvars = c("YSB", "Round", "Height"))
+
+ggplot(pbg.avg, aes(x = Round, y = Species.Density, fill = YSB, color = YSB)) +
+  geom_line(aes(group = YSB), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = c(0.8, 0.9))
+
 ##  ----------------------------------------------------------  ##
    # Round 1 Bees - PBG Analysis & Plotting ####
 ##  ----------------------------------------------------------  ##
@@ -172,6 +202,36 @@ ggplot(pbg.flr, aes(x = YSB, y = Species.Density, fill = YSB)) +
 unique(sns$Round)
 sns.r1 <- subset(sns, sns$Round == "R1")
 sns.r3 <- subset(sns, sns$Round == "R3")
+
+# Do some visualization of the full dataset
+sns.avg <- Rmisc::summarySE(data = sns, measurevar = "Abundance",
+                            groupvars = c("Herb.Trt", "Round", "Height"))
+
+ggplot(sns.avg, aes(x = Round, y = Abundance, fill = Herb.Trt, color = Herb.Trt)) +
+  geom_line(aes(group = Herb.Trt), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Abundance - se, ymax = Abundance + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Bee Abundance") + 
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = c(0.8, 0.9))
+
+# And for species density
+sns.avg <- Rmisc::summarySE(data = sns, measurevar = "Species.Density",
+                            groupvars = c("Herb.Trt", "Round", "Height"))
+
+ggplot(sns.avg, aes(x = Round, y = Species.Density, fill = Herb.Trt, color = Herb.Trt)) +
+  geom_line(aes(group = Herb.Trt), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  facet_grid(Height ~ .) +
+  pref.theme + theme(legend.position = c(0.8, 0.9))
 
 ##  ----------------------------------------------------------  ##
  # Round 1 Bees - Herbicide Analysis & Plotting ####
