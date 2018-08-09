@@ -31,14 +31,19 @@ bz.v1 <- subset(bz.v0, bz.v0$Bowl.Status == "Retrieved")
 
 # Check genus and species of bees for spelling errors and fix those that occur
 sort(unique(bz.v1$Genus)); sort(unique(bz.v1$Species))
-  ## No errors yet
+bz.v1$Species <- gsub("^cressonii cressonii$", "cressonii", bz.v1$Species)
+sort(unique(bz.v1$Genus)); sort(unique(bz.v1$Species))
 
 # Get a single column of genus and species and check again
 bz.v1$Bee.Species <- paste0(bz.v1$Genus, ".", bz.v1$Species)
 sort(unique(bz.v1$Bee.Species))
 
-# Remove the "X.x" placeholder species (from bowls that were recovered with no bees)
+# Modify any species IDs that need modifying
+bz.v1$Bee.Species <- gsub("Lasioglossum.coriaceum|Lasioglossum.Dialictus",
+                          "Lasioglossum.sp", bz.v1$Bee.Species) # make Lasioglossum just a genus ID
 sort(unique(bz.v1$Bee.Species))
+
+# Remove the "X.x" placeholder species (from bowls that were recovered with no bees)
 bz.v2 <- subset(bz.v1, bz.v1$Bee.Species != "X.x")
 sort(unique(bz.v2$Bee.Species))
 
@@ -93,7 +98,7 @@ tots.v0 <- aggregate(Number ~ Bee.Species, FUN = sum, data = bz.v2)
 tots.v1 <- rbind(tots.v0, c("Total.Abundance", sum(tots.v0$Number)))
 
 # Calculate percent of total for each species!
-tots.v1$Percent.of.Total <- round(( as.numeric(tots.v1$Number) / sum(tots.v0$Number) ) * 100, digits = 2)
+tots.v1$Percent.of.Total <- round(( as.numeric(tots.v1$Number) / sum(tots.v0$Number) ) * 100, digits = 3)
 
 # And order from most to least abundant
 tots.v2 <- tots.v1[order(as.numeric(tots.v1$Number), decreasing = T),]
