@@ -61,10 +61,9 @@ pbg.r2 <- subset(pbg, pbg$Round == "R2")
 pbg.r3 <- subset(pbg, pbg$Round == "R3")
 
 # Visualize the data before analysis!
-pbg.avg <- Rmisc::summarySE(data = pbg, measurevar = "Abundance",
-                            groupvars = c("YSB", "Round", "Height"))
+pbg.ab.avg <- Rmisc::summarySE(data = pbg, measurevar = "Abundance", groupvars = c("YSB", "Round", "Height"))
 
-ggplot(pbg.avg, aes(x = Round, y = Abundance, fill = YSB, color = YSB)) +
+ggplot(pbg.ab.avg, aes(x = Round, y = Abundance, fill = YSB, color = YSB)) +
   geom_line(aes(group = YSB), size = 1, position = dodge) +
   geom_errorbar(aes(ymin = Abundance - se, ymax = Abundance + se),
                 width = .2, size = 0.6, position = dodge) +
@@ -76,10 +75,10 @@ ggplot(pbg.avg, aes(x = Round, y = Abundance, fill = YSB, color = YSB)) +
   pref.theme + theme(legend.position = c(0.8, 0.9))
 
 # And for species density
-pbg.avg <- Rmisc::summarySE(data = pbg, measurevar = "Species.Density",
-                            groupvars = c("YSB", "Round", "Height"))
+pbg.dn.avg <- Rmisc::summarySE(data = pbg, measurevar = "Species.Density",
+                               groupvars = c("YSB", "Round", "Height"))
 
-ggplot(pbg.avg, aes(x = Round, y = Species.Density, fill = YSB, color = YSB)) +
+ggplot(pbg.dn.avg, aes(x = Round, y = Species.Density, fill = YSB, color = YSB)) +
   geom_line(aes(group = YSB), size = 1, position = dodge) +
   geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
                 width = .2, size = 0.6, position = dodge) +
@@ -150,7 +149,7 @@ pbg.r3.ab.mem <- glmer(Abundance ~ YSB * Height + (1|Patch) + (1|Bowl.Color), da
 summary(pbg.r3.ab.mem)
 
 pbg.r3.dn.mem <- glmer(Species.Density ~ YSB * Height + (1|Patch) + (1|Bowl.Color), data = pbg.r3, family = poisson)
-summary(pbg.r3.dn.mem) ## Low < High
+summary(pbg.r3.dn.mem)
 
 # Plotting
 ggplot(pbg.r3, aes(x = YSB, y = Abundance, fill = YSB)) +
@@ -180,20 +179,31 @@ summary(pbg.flr.ab.mem)
 pbg.flr.dn.mem <- glmer(Species.Density ~ YSB * Round + (1|Patch), data = pbg.flr, family = poisson)
 summary(pbg.flr.dn.mem) ## NS
 
-# Plotting
-ggplot(pbg.flr, aes(x = YSB, y = Abundance, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Floral Abundance") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Round ~ .) +
-  pref.theme + theme(legend.position = "none")
+# Get plot-able summary dataframes
+pbg.flr.ab.avg <- Rmisc::summarySE(data = pbg.flr, measurevar = "Abundance", groupvars = c("YSB", "Round"))
+pbg.flr.dn.avg <- Rmisc::summarySE(data = pbg.flr, measurevar = "Species.Density", groupvars = c("YSB", "Round"))
 
-ggplot(pbg.flr, aes(x = YSB, y = Species.Density, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Floral Species Density") + 
+# Visualize the floral differences!
+ggplot(pbg.flr.ab.avg, aes(x = Round, y = Abundance, fill = YSB, color = YSB)) +
+  geom_line(aes(group = YSB), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Abundance - se, ymax = Abundance + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Floral Abundance") + 
   scale_fill_manual(values = colors) +
-  facet_grid(Round ~ .) +
-  pref.theme + theme(legend.position = "none")
+  scale_color_manual(values = colors) +
+  pref.theme + theme(legend.position = c(0.1, 0.9))
+
+# And for species density
+ggplot(pbg.flr.dn.avg, aes(x = Round, y = Species.Density, fill = YSB, color = YSB)) +
+  geom_line(aes(group = YSB), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  pref.theme + theme(legend.position = c(0.15, 0.9))
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                               # Spray and Seed Question ####
@@ -204,10 +214,10 @@ sns.r1 <- subset(sns, sns$Round == "R1")
 sns.r3 <- subset(sns, sns$Round == "R3")
 
 # Do some visualization of the full dataset
-sns.avg <- Rmisc::summarySE(data = sns, measurevar = "Abundance",
+sns.ab.avg <- Rmisc::summarySE(data = sns, measurevar = "Abundance",
                             groupvars = c("Herb.Trt", "Round", "Height"))
 
-ggplot(sns.avg, aes(x = Round, y = Abundance, fill = Herb.Trt, color = Herb.Trt)) +
+ggplot(sns.ab.avg, aes(x = Round, y = Abundance, fill = Herb.Trt, color = Herb.Trt)) +
   geom_line(aes(group = Herb.Trt), size = 1, position = dodge) +
   geom_errorbar(aes(ymin = Abundance - se, ymax = Abundance + se),
                 width = .2, size = 0.6, position = dodge) +
@@ -219,10 +229,10 @@ ggplot(sns.avg, aes(x = Round, y = Abundance, fill = Herb.Trt, color = Herb.Trt)
   pref.theme + theme(legend.position = c(0.8, 0.9))
 
 # And for species density
-sns.avg <- Rmisc::summarySE(data = sns, measurevar = "Species.Density",
+sns.dn.avg <- Rmisc::summarySE(data = sns, measurevar = "Species.Density",
                             groupvars = c("Herb.Trt", "Round", "Height"))
 
-ggplot(sns.avg, aes(x = Round, y = Species.Density, fill = Herb.Trt, color = Herb.Trt)) +
+ggplot(sns.dn.avg, aes(x = Round, y = Species.Density, fill = Herb.Trt, color = Herb.Trt)) +
   geom_line(aes(group = Herb.Trt), size = 1, position = dodge) +
   geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
                 width = .2, size = 0.6, position = dodge) +
@@ -295,23 +305,33 @@ summary(sns.flr.ab.mem)
 sns.flr.dn.mem <- glmer(Species.Density ~ Herb.Trt * Round + (1|Patch), data = sns.flr, family = poisson)
 summary(sns.flr.dn.mem) ## NS
 
-# Plotting
-ggplot(sns.flr, aes(x = Herb.Trt, y = Abundance, fill = Herb.Trt)) +
-  geom_boxplot(outlier.shape = 21) +
+# Get plot-able summary dataframes
+sns.flr.ab.avg <- Rmisc::summarySE(data = sns.flr, measurevar = "Abundance",
+                                   groupvars = c("Herb.Trt", "Round"))
+sns.flr.dn.avg <- Rmisc::summarySE(data = sns.flr, measurevar = "Species.Density",
+                                   groupvars = c("Herb.Trt", "Round"))
+
+# Visualize the floral differences!
+ggplot(sns.flr.ab.avg, aes(x = Round, y = Abundance, fill = Herb.Trt, color = Herb.Trt)) +
+  geom_line(aes(group = Herb.Trt), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Abundance - se, ymax = Abundance + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
   labs(x = "Herbicide Treatment", y = "Floral Abundance") + 
   scale_fill_manual(values = colors) +
-  facet_grid(Round ~ .) +
-  pref.theme + theme(legend.position = "none")
+  scale_color_manual(values = colors) +
+  pref.theme + theme(legend.position = c(0.85, 0.9))
 
-ggplot(sns.flr, aes(x = Herb.Trt, y = Species.Density, fill = Herb.Trt)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Herbicide Treatment", y = "Floral Species Density") + 
+# And for species density
+ggplot(sns.flr.dn.avg, aes(x = Round, y = Species.Density, fill = Herb.Trt, color = Herb.Trt)) +
+  geom_line(aes(group = Herb.Trt), size = 1, position = dodge) +
+  geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
+                width = .2, size = 0.6, position = dodge) +
+  geom_point(shape = 21, position = dodge) +
+  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
   scale_fill_manual(values = colors) +
-  facet_grid(Round ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-
-
+  scale_color_manual(values = colors) +
+  pref.theme + theme(legend.position = c(0.15, 0.9))
 
 # END ####
 
