@@ -200,7 +200,7 @@ ggplot(pbg.flr.dn.avg, aes(x = Round, y = Species.Density, fill = YSB, color = Y
   geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
                 width = .2, size = 0.6, position = dodge) +
   geom_point(shape = 21, position = dodge) +
-  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  labs(x = "Herbicide Treatment", y = "Floral Species Density") + 
   scale_fill_manual(values = colors) +
   scale_color_manual(values = colors) +
   pref.theme + theme(legend.position = c(0.15, 0.9))
@@ -328,7 +328,7 @@ ggplot(sns.flr.dn.avg, aes(x = Round, y = Species.Density, fill = Herb.Trt, colo
   geom_errorbar(aes(ymin = Species.Density - se, ymax = Species.Density + se),
                 width = .2, size = 0.6, position = dodge) +
   geom_point(shape = 21, position = dodge) +
-  labs(x = "Herbicide Treatment", y = "Bee Species Density") + 
+  labs(x = "Herbicide Treatment", y = "Floral Species Density") + 
   scale_fill_manual(values = colors) +
   scale_color_manual(values = colors) +
   pref.theme + theme(legend.position = c(0.15, 0.9))
