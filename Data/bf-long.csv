@@ -1,202 +1,202 @@
-"Composite.Variable","Year","Date","Site","Patch","Adaptive.Mgmt","BFLY.Common.Name","Number"
-"18-PBG","18","6.08","KLN","KLN-W","PBG","american lady",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","american lady",1
-"18-PBG","18","6.08","RIS","RIS-S","PBG","american lady",1
-"18-PBG","18","7.22","KLN","KLN-C","PBG","black swallowtail",2
-"18-PBG","18","6.24","KLN","KLN-E","PBG","black swallowtail",1
-"18-PBG","18","7.22","KLN","KLN-E","PBG","black swallowtail",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","black swallowtail",1
-"18-PBG","18","6.17","PYN","PYN-N","PBG","black swallowtail",1
-"18-PBG","18","7.20","PYN","PYN-S","PBG","black swallowtail",2
-"18-PBG","18","5.27","PYN","PYN-W","PBG","black swallowtail",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","black swallowtail",4
-"18-PBG","18","7.05","PYN","PYN-W","PBG","black swallowtail",2
-"18-PBG","18","6.24","RIS","RIS-N","PBG","black swallowtail",2
-"18-PBG","18","6.08","RIS","RIS-S","PBG","black swallowtail",1
-"18-PBG","18","6.08","KLN","KLN-C","PBG","cabbage white",2
-"18-PBG","18","6.24","KLN","KLN-C","PBG","cabbage white",1
-"18-PBG","18","7.10","KLN","KLN-C","PBG","cabbage white",1
-"18-PBG","18","6.08","KLN","KLN-E","PBG","cabbage white",6
-"18-PBG","18","6.24","KLN","KLN-E","PBG","cabbage white",2
-"18-PBG","18","7.10","KLN","KLN-E","PBG","cabbage white",2
-"18-PBG","18","7.22","KLN","KLN-E","PBG","cabbage white",1
-"18-PBG","18","7.10","KLN","KLN-W","PBG","cabbage white",4
-"18-PBG","18","6.17","PYN","PYN-N","PBG","cabbage white",1
-"18-PBG","18","7.20","PYN","PYN-N","PBG","cabbage white",1
-"18-PBG","18","6.17","PYN","PYN-S","PBG","cabbage white",2
-"18-PBG","18","7.20","PYN","PYN-S","PBG","cabbage white",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","cabbage white",3
-"18-PBG","18","7.05","PYN","PYN-W","PBG","cabbage white",3
-"18-PBG","18","6.08","RIS","RIS-C","PBG","cabbage white",2
-"18-PBG","18","6.24","RIS","RIS-C","PBG","cabbage white",1
-"18-PBG","18","7.11","RIS","RIS-C","PBG","cabbage white",7
-"18-PBG","18","7.23","RIS","RIS-C","PBG","cabbage white",1
-"18-PBG","18","6.24","RIS","RIS-N","PBG","cabbage white",1
-"18-PBG","18","7.11","RIS","RIS-N","PBG","cabbage white",2
-"18-PBG","18","6.08","RIS","RIS-S","PBG","cabbage white",1
-"18-PBG","18","6.24","RIS","RIS-S","PBG","cabbage white",1
-"18-PBG","18","7.11","RIS","RIS-S","PBG","cabbage white",2
-"18-PBG","18","6.08","KLN","KLN-C","PBG","clouded sulphur",4
-"18-PBG","18","6.24","KLN","KLN-C","PBG","clouded sulphur",3
-"18-PBG","18","7.10","KLN","KLN-C","PBG","clouded sulphur",4
-"18-PBG","18","7.22","KLN","KLN-C","PBG","clouded sulphur",1
-"18-PBG","18","6.08","KLN","KLN-E","PBG","clouded sulphur",1
-"18-PBG","18","7.10","KLN","KLN-E","PBG","clouded sulphur",1
-"18-PBG","18","7.22","KLN","KLN-E","PBG","clouded sulphur",1
-"18-PBG","18","6.08","KLN","KLN-W","PBG","clouded sulphur",3
-"18-PBG","18","6.24","KLN","KLN-W","PBG","clouded sulphur",1
-"18-PBG","18","7.10","KLN","KLN-W","PBG","clouded sulphur",2
-"18-PBG","18","7.22","KLN","KLN-W","PBG","clouded sulphur",3
-"18-PBG","18","6.17","PYN","PYN-N","PBG","clouded sulphur",2
-"18-PBG","18","7.05","PYN","PYN-N","PBG","clouded sulphur",1
-"18-PBG","18","7.05","PYN","PYN-S","PBG","clouded sulphur",2
-"18-PBG","18","7.20","PYN","PYN-S","PBG","clouded sulphur",3
-"18-PBG","18","6.17","PYN","PYN-W","PBG","clouded sulphur",2
-"18-PBG","18","7.05","PYN","PYN-W","PBG","clouded sulphur",3
-"18-PBG","18","7.20","PYN","PYN-W","PBG","clouded sulphur",2
-"18-PBG","18","6.24","RIS","RIS-C","PBG","clouded sulphur",1
-"18-PBG","18","7.11","RIS","RIS-C","PBG","clouded sulphur",2
-"18-PBG","18","6.08","RIS","RIS-S","PBG","clouded sulphur",2
-"18-PBG","18","6.24","RIS","RIS-S","PBG","clouded sulphur",3
-"18-PBG","18","7.11","RIS","RIS-S","PBG","clouded sulphur",4
-"18-PBG","18","7.23","RIS","RIS-S","PBG","clouded sulphur",1
-"18-PBG","18","6.24","RIS","RIS-C","PBG","common sootywing",1
-"18-PBG","18","7.22","KLN","KLN-E","PBG","common wood nymph",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","common wood nymph",1
-"18-PBG","18","6.17","PYN","PYN-N","PBG","common wood nymph",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","delaware skipper",1
-"18-PBG","18","6.08","KLN","KLN-C","PBG","eastern tailed blue",3
-"18-PBG","18","6.24","KLN","KLN-C","PBG","eastern tailed blue",5
-"18-PBG","18","7.10","KLN","KLN-C","PBG","eastern tailed blue",11
-"18-PBG","18","7.22","KLN","KLN-C","PBG","eastern tailed blue",2
-"18-PBG","18","6.08","KLN","KLN-E","PBG","eastern tailed blue",1
-"18-PBG","18","6.24","KLN","KLN-E","PBG","eastern tailed blue",6
-"18-PBG","18","7.10","KLN","KLN-E","PBG","eastern tailed blue",12
-"18-PBG","18","7.22","KLN","KLN-E","PBG","eastern tailed blue",3
-"18-PBG","18","6.08","KLN","KLN-W","PBG","eastern tailed blue",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","eastern tailed blue",17
-"18-PBG","18","7.10","KLN","KLN-W","PBG","eastern tailed blue",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","eastern tailed blue",15
-"18-PBG","18","5.27","PYN","PYN-N","PBG","eastern tailed blue",2
-"18-PBG","18","6.17","PYN","PYN-N","PBG","eastern tailed blue",5
-"18-PBG","18","7.05","PYN","PYN-N","PBG","eastern tailed blue",1
-"18-PBG","18","7.20","PYN","PYN-N","PBG","eastern tailed blue",29
-"18-PBG","18","6.17","PYN","PYN-S","PBG","eastern tailed blue",2
-"18-PBG","18","7.05","PYN","PYN-S","PBG","eastern tailed blue",2
-"18-PBG","18","7.20","PYN","PYN-S","PBG","eastern tailed blue",3
-"18-PBG","18","5.27","PYN","PYN-W","PBG","eastern tailed blue",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","eastern tailed blue",9
-"18-PBG","18","7.05","PYN","PYN-W","PBG","eastern tailed blue",1
-"18-PBG","18","7.20","PYN","PYN-W","PBG","eastern tailed blue",22
-"18-PBG","18","6.24","RIS","RIS-C","PBG","eastern tailed blue",2
-"18-PBG","18","6.24","RIS","RIS-N","PBG","eastern tailed blue",3
-"18-PBG","18","7.23","RIS","RIS-N","PBG","eastern tailed blue",1
-"18-PBG","18","6.08","RIS","RIS-S","PBG","eastern tailed blue",1
-"18-PBG","18","6.24","RIS","RIS-S","PBG","eastern tailed blue",4
-"18-PBG","18","7.11","RIS","RIS-S","PBG","eastern tailed blue",3
-"18-PBG","18","5.27","PYN","PYN-S","PBG","eastern tiger swallowtail",1
-"18-PBG","18","6.08","RIS","RIS-N","PBG","eastern tiger swallowtail",1
-"18-PBG","18","6.24","RIS","RIS-N","PBG","giant swallowtail",1
-"18-PBG","18","7.23","RIS","RIS-S","PBG","gray copper",1
-"18-PBG","18","6.24","KLN","KLN-C","PBG","great spangled fritillary",1
-"18-PBG","18","6.24","KLN","KLN-E","PBG","great spangled fritillary",2
-"18-PBG","18","6.17","PYN","PYN-N","PBG","great spangled fritillary",1
-"18-PBG","18","7.05","PYN","PYN-S","PBG","great spangled fritillary",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","great spangled fritillary",2
-"18-PBG","18","7.05","PYN","PYN-W","PBG","great spangled fritillary",2
-"18-PBG","18","6.08","RIS","RIS-C","PBG","great spangled fritillary",2
-"18-PBG","18","6.24","RIS","RIS-C","PBG","great spangled fritillary",5
-"18-PBG","18","6.08","RIS","RIS-N","PBG","great spangled fritillary",3
-"18-PBG","18","6.24","RIS","RIS-N","PBG","great spangled fritillary",1
-"18-PBG","18","6.08","RIS","RIS-S","PBG","great spangled fritillary",2
-"18-PBG","18","6.24","RIS","RIS-S","PBG","great spangled fritillary",3
-"18-PBG","18","7.11","RIS","RIS-S","PBG","indigo duskywing",1
-"18-PBG","18","6.08","KLN","KLN-C","PBG","least skipper",1
-"18-PBG","18","5.27","PYN","PYN-W","PBG","least skipper",1
-"18-PBG","18","6.24","RIS","RIS-C","PBG","little wood satyr",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","little yellow",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","little yellow",1
-"18-PBG","18","7.11","RIS","RIS-C","PBG","little yellow",1
-"18-PBG","18","6.08","KLN","KLN-C","PBG","meadow fritillary",3
-"18-PBG","18","6.08","KLN","KLN-E","PBG","meadow fritillary",3
-"18-PBG","18","6.08","KLN","KLN-W","PBG","meadow fritillary",1
-"18-PBG","18","6.17","PYN","PYN-N","PBG","meadow fritillary",1
-"18-PBG","18","7.05","PYN","PYN-N","PBG","meadow fritillary",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","meadow fritillary",1
-"18-PBG","18","7.05","PYN","PYN-W","PBG","meadow fritillary",5
-"18-PBG","18","6.08","RIS","RIS-C","PBG","meadow fritillary",6
-"18-PBG","18","6.24","RIS","RIS-C","PBG","meadow fritillary",2
-"18-PBG","18","7.11","RIS","RIS-C","PBG","meadow fritillary",2
-"18-PBG","18","6.08","RIS","RIS-N","PBG","meadow fritillary",2
-"18-PBG","18","7.11","RIS","RIS-N","PBG","meadow fritillary",1
-"18-PBG","18","6.08","RIS","RIS-S","PBG","meadow fritillary",1
-"18-PBG","18","7.11","RIS","RIS-S","PBG","meadow fritillary",1
-"18-PBG","18","6.08","KLN","KLN-C","PBG","melissa blue",3
-"18-PBG","18","6.24","KLN","KLN-C","PBG","melissa blue",3
-"18-PBG","18","7.10","KLN","KLN-C","PBG","melissa blue",3
-"18-PBG","18","6.08","KLN","KLN-E","PBG","melissa blue",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","melissa blue",10
-"18-PBG","18","7.22","KLN","KLN-W","PBG","melissa blue",4
-"18-PBG","18","6.08","KLN","KLN-E","PBG","monarch",1
-"18-PBG","18","7.22","KLN","KLN-E","PBG","monarch",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","monarch",1
-"18-PBG","18","6.24","RIS","RIS-C","PBG","monarch",1
-"18-PBG","18","6.08","RIS","RIS-N","PBG","monarch",1
-"18-PBG","18","6.08","RIS","RIS-S","PBG","monarch",2
-"18-PBG","18","7.11","RIS","RIS-S","PBG","monarch",1
-"18-PBG","18","6.08","KLN","KLN-C","PBG","orange sulphur",1
-"18-PBG","18","6.24","KLN","KLN-C","PBG","orange sulphur",5
-"18-PBG","18","7.10","KLN","KLN-C","PBG","orange sulphur",2
-"18-PBG","18","7.22","KLN","KLN-C","PBG","orange sulphur",7
-"18-PBG","18","6.08","KLN","KLN-E","PBG","orange sulphur",2
-"18-PBG","18","6.24","KLN","KLN-E","PBG","orange sulphur",2
-"18-PBG","18","7.10","KLN","KLN-E","PBG","orange sulphur",4
-"18-PBG","18","7.22","KLN","KLN-E","PBG","orange sulphur",2
-"18-PBG","18","6.08","KLN","KLN-W","PBG","orange sulphur",1
-"18-PBG","18","6.24","KLN","KLN-W","PBG","orange sulphur",1
-"18-PBG","18","7.10","KLN","KLN-W","PBG","orange sulphur",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","orange sulphur",2
-"18-PBG","18","6.17","PYN","PYN-N","PBG","orange sulphur",2
-"18-PBG","18","7.05","PYN","PYN-N","PBG","orange sulphur",2
-"18-PBG","18","7.20","PYN","PYN-N","PBG","orange sulphur",4
-"18-PBG","18","6.17","PYN","PYN-S","PBG","orange sulphur",4
-"18-PBG","18","7.05","PYN","PYN-S","PBG","orange sulphur",3
-"18-PBG","18","7.20","PYN","PYN-S","PBG","orange sulphur",2
-"18-PBG","18","5.27","PYN","PYN-W","PBG","orange sulphur",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","orange sulphur",3
-"18-PBG","18","7.05","PYN","PYN-W","PBG","orange sulphur",5
-"18-PBG","18","7.20","PYN","PYN-W","PBG","orange sulphur",2
-"18-PBG","18","6.24","RIS","RIS-C","PBG","orange sulphur",4
-"18-PBG","18","7.11","RIS","RIS-C","PBG","orange sulphur",2
-"18-PBG","18","7.23","RIS","RIS-C","PBG","orange sulphur",1
-"18-PBG","18","6.24","RIS","RIS-N","PBG","orange sulphur",3
-"18-PBG","18","7.11","RIS","RIS-N","PBG","orange sulphur",7
-"18-PBG","18","6.08","RIS","RIS-S","PBG","orange sulphur",2
-"18-PBG","18","7.11","RIS","RIS-S","PBG","orange sulphur",1
-"18-PBG","18","7.23","RIS","RIS-S","PBG","orange sulphur",1
-"18-PBG","18","6.24","KLN","KLN-C","PBG","pearl crescent",4
-"18-PBG","18","7.10","KLN","KLN-C","PBG","pearl crescent",1
-"18-PBG","18","6.24","KLN","KLN-E","PBG","pearl crescent",11
-"18-PBG","18","7.10","KLN","KLN-E","PBG","pearl crescent",1
-"18-PBG","18","7.22","KLN","KLN-E","PBG","pearl crescent",1
-"18-PBG","18","6.08","KLN","KLN-W","PBG","pearl crescent",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","pearl crescent",2
-"18-PBG","18","6.17","PYN","PYN-N","PBG","pearl crescent",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","pearl crescent",1
-"18-PBG","18","7.05","PYN","PYN-W","PBG","pearl crescent",1
-"18-PBG","18","6.24","RIS","RIS-C","PBG","pearl crescent",3
-"18-PBG","18","6.24","RIS","RIS-N","PBG","pearl crescent",6
-"18-PBG","18","6.24","RIS","RIS-S","PBG","pearl crescent",1
-"18-PBG","18","7.11","RIS","RIS-S","PBG","pearl crescent",1
-"18-PBG","18","7.22","KLN","KLN-W","PBG","peck's skipper",2
-"18-PBG","18","5.27","PYN","PYN-N","PBG","peck's skipper",3
-"18-PBG","18","5.27","PYN","PYN-W","PBG","peck's skipper",1
-"18-PBG","18","6.08","RIS","RIS-S","PBG","peck's skipper",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","red-spotted purple",1
-"18-PBG","18","6.24","RIS","RIS-S","PBG","regal fritillary",4
-"18-PBG","18","7.22","KLN","KLN-W","PBG","silver-spotted skipper",1
-"18-PBG","18","7.20","PYN","PYN-N","PBG","silver-spotted skipper",1
-"18-PBG","18","7.23","RIS","RIS-C","PBG","silver-spotted skipper",1
-"18-PBG","18","6.17","PYN","PYN-W","PBG","silvery checkerspot",1
-"18-PBG","18","6.24","RIS","RIS-N","PBG","silvery checkerspot",1
-"18-PBG","18","5.27","PYN","PYN-N","PBG","viceroy",1
+"Year","Date","Site","Patch","Adaptive.Mgmt","Herb.Trt","BFLY.Common.Name","Number"
+"18","6.08","KLN","KLN-W","PBG","","american lady",1
+"18","6.24","KLN","KLN-W","PBG","","american lady",1
+"18","6.08","RIS","RIS-S","PBG","","american lady",1
+"18","7.22","KLN","KLN-W","PBG","","black swallowtail",1
+"18","7.20","PYN","PYN-S","PBG","","black swallowtail",2
+"18","7.22","KLN","KLN-C","PBG","","black swallowtail",2
+"18","5.27","PYN","PYN-W","PBG","","black swallowtail",1
+"18","6.17","PYN","PYN-W","PBG","","black swallowtail",4
+"18","7.05","PYN","PYN-W","PBG","","black swallowtail",2
+"18","6.24","RIS","RIS-N","PBG","","black swallowtail",2
+"18","6.24","KLN","KLN-E","PBG","","black swallowtail",1
+"18","7.22","KLN","KLN-E","PBG","","black swallowtail",1
+"18","6.17","PYN","PYN-N","PBG","","black swallowtail",1
+"18","6.08","RIS","RIS-S","PBG","","black swallowtail",1
+"18","7.10","KLN","KLN-W","PBG","","cabbage white",4
+"18","6.17","PYN","PYN-S","PBG","","cabbage white",2
+"18","7.20","PYN","PYN-S","PBG","","cabbage white",1
+"18","6.08","RIS","RIS-C","PBG","","cabbage white",2
+"18","6.24","RIS","RIS-C","PBG","","cabbage white",1
+"18","7.11","RIS","RIS-C","PBG","","cabbage white",7
+"18","7.23","RIS","RIS-C","PBG","","cabbage white",1
+"18","6.08","KLN","KLN-C","PBG","","cabbage white",2
+"18","6.24","KLN","KLN-C","PBG","","cabbage white",1
+"18","7.10","KLN","KLN-C","PBG","","cabbage white",1
+"18","6.17","PYN","PYN-W","PBG","","cabbage white",3
+"18","7.05","PYN","PYN-W","PBG","","cabbage white",3
+"18","6.24","RIS","RIS-N","PBG","","cabbage white",1
+"18","7.11","RIS","RIS-N","PBG","","cabbage white",2
+"18","6.08","KLN","KLN-E","PBG","","cabbage white",6
+"18","6.24","KLN","KLN-E","PBG","","cabbage white",2
+"18","7.10","KLN","KLN-E","PBG","","cabbage white",2
+"18","7.22","KLN","KLN-E","PBG","","cabbage white",1
+"18","6.17","PYN","PYN-N","PBG","","cabbage white",1
+"18","7.20","PYN","PYN-N","PBG","","cabbage white",1
+"18","6.08","RIS","RIS-S","PBG","","cabbage white",1
+"18","6.24","RIS","RIS-S","PBG","","cabbage white",1
+"18","7.11","RIS","RIS-S","PBG","","cabbage white",2
+"18","6.08","KLN","KLN-W","PBG","","clouded sulphur",3
+"18","6.24","KLN","KLN-W","PBG","","clouded sulphur",1
+"18","7.10","KLN","KLN-W","PBG","","clouded sulphur",2
+"18","7.22","KLN","KLN-W","PBG","","clouded sulphur",3
+"18","7.05","PYN","PYN-S","PBG","","clouded sulphur",2
+"18","7.20","PYN","PYN-S","PBG","","clouded sulphur",3
+"18","6.24","RIS","RIS-C","PBG","","clouded sulphur",1
+"18","7.11","RIS","RIS-C","PBG","","clouded sulphur",2
+"18","6.08","KLN","KLN-C","PBG","","clouded sulphur",4
+"18","6.24","KLN","KLN-C","PBG","","clouded sulphur",3
+"18","7.10","KLN","KLN-C","PBG","","clouded sulphur",4
+"18","7.22","KLN","KLN-C","PBG","","clouded sulphur",1
+"18","6.17","PYN","PYN-W","PBG","","clouded sulphur",2
+"18","7.05","PYN","PYN-W","PBG","","clouded sulphur",3
+"18","7.20","PYN","PYN-W","PBG","","clouded sulphur",2
+"18","6.08","KLN","KLN-E","PBG","","clouded sulphur",1
+"18","7.10","KLN","KLN-E","PBG","","clouded sulphur",1
+"18","7.22","KLN","KLN-E","PBG","","clouded sulphur",1
+"18","6.17","PYN","PYN-N","PBG","","clouded sulphur",2
+"18","7.05","PYN","PYN-N","PBG","","clouded sulphur",1
+"18","6.08","RIS","RIS-S","PBG","","clouded sulphur",2
+"18","6.24","RIS","RIS-S","PBG","","clouded sulphur",3
+"18","7.11","RIS","RIS-S","PBG","","clouded sulphur",4
+"18","7.23","RIS","RIS-S","PBG","","clouded sulphur",1
+"18","6.24","RIS","RIS-C","PBG","","common sootywing",1
+"18","6.24","KLN","KLN-W","PBG","","common wood nymph",1
+"18","7.22","KLN","KLN-E","PBG","","common wood nymph",1
+"18","6.17","PYN","PYN-N","PBG","","common wood nymph",1
+"18","7.22","KLN","KLN-W","PBG","","delaware skipper",1
+"18","6.08","KLN","KLN-W","PBG","","eastern tailed blue",1
+"18","6.24","KLN","KLN-W","PBG","","eastern tailed blue",17
+"18","7.10","KLN","KLN-W","PBG","","eastern tailed blue",1
+"18","7.22","KLN","KLN-W","PBG","","eastern tailed blue",15
+"18","6.17","PYN","PYN-S","PBG","","eastern tailed blue",2
+"18","7.05","PYN","PYN-S","PBG","","eastern tailed blue",2
+"18","7.20","PYN","PYN-S","PBG","","eastern tailed blue",3
+"18","6.24","RIS","RIS-C","PBG","","eastern tailed blue",2
+"18","6.08","KLN","KLN-C","PBG","","eastern tailed blue",3
+"18","6.24","KLN","KLN-C","PBG","","eastern tailed blue",5
+"18","7.10","KLN","KLN-C","PBG","","eastern tailed blue",11
+"18","7.22","KLN","KLN-C","PBG","","eastern tailed blue",2
+"18","5.27","PYN","PYN-W","PBG","","eastern tailed blue",1
+"18","6.17","PYN","PYN-W","PBG","","eastern tailed blue",9
+"18","7.05","PYN","PYN-W","PBG","","eastern tailed blue",1
+"18","7.20","PYN","PYN-W","PBG","","eastern tailed blue",22
+"18","6.24","RIS","RIS-N","PBG","","eastern tailed blue",3
+"18","7.23","RIS","RIS-N","PBG","","eastern tailed blue",1
+"18","6.08","KLN","KLN-E","PBG","","eastern tailed blue",1
+"18","6.24","KLN","KLN-E","PBG","","eastern tailed blue",6
+"18","7.10","KLN","KLN-E","PBG","","eastern tailed blue",12
+"18","7.22","KLN","KLN-E","PBG","","eastern tailed blue",3
+"18","5.27","PYN","PYN-N","PBG","","eastern tailed blue",2
+"18","6.17","PYN","PYN-N","PBG","","eastern tailed blue",5
+"18","7.05","PYN","PYN-N","PBG","","eastern tailed blue",1
+"18","7.20","PYN","PYN-N","PBG","","eastern tailed blue",29
+"18","6.08","RIS","RIS-S","PBG","","eastern tailed blue",1
+"18","6.24","RIS","RIS-S","PBG","","eastern tailed blue",4
+"18","7.11","RIS","RIS-S","PBG","","eastern tailed blue",3
+"18","5.27","PYN","PYN-S","PBG","","eastern tiger swallowtail",1
+"18","6.08","RIS","RIS-N","PBG","","eastern tiger swallowtail",1
+"18","6.24","RIS","RIS-N","PBG","","giant swallowtail",1
+"18","7.23","RIS","RIS-S","PBG","","gray copper",1
+"18","7.05","PYN","PYN-S","PBG","","great spangled fritillary",1
+"18","6.08","RIS","RIS-C","PBG","","great spangled fritillary",2
+"18","6.24","RIS","RIS-C","PBG","","great spangled fritillary",5
+"18","6.24","KLN","KLN-C","PBG","","great spangled fritillary",1
+"18","6.17","PYN","PYN-W","PBG","","great spangled fritillary",2
+"18","7.05","PYN","PYN-W","PBG","","great spangled fritillary",2
+"18","6.08","RIS","RIS-N","PBG","","great spangled fritillary",3
+"18","6.24","RIS","RIS-N","PBG","","great spangled fritillary",1
+"18","6.24","KLN","KLN-E","PBG","","great spangled fritillary",2
+"18","6.17","PYN","PYN-N","PBG","","great spangled fritillary",1
+"18","6.08","RIS","RIS-S","PBG","","great spangled fritillary",2
+"18","6.24","RIS","RIS-S","PBG","","great spangled fritillary",3
+"18","7.11","RIS","RIS-S","PBG","","indigo duskywing",1
+"18","6.08","KLN","KLN-C","PBG","","least skipper",1
+"18","5.27","PYN","PYN-W","PBG","","least skipper",1
+"18","6.24","RIS","RIS-C","PBG","","little wood satyr",1
+"18","6.24","KLN","KLN-W","PBG","","little yellow",1
+"18","7.22","KLN","KLN-W","PBG","","little yellow",1
+"18","7.11","RIS","RIS-C","PBG","","little yellow",1
+"18","6.08","KLN","KLN-W","PBG","","meadow fritillary",1
+"18","6.08","RIS","RIS-C","PBG","","meadow fritillary",6
+"18","6.24","RIS","RIS-C","PBG","","meadow fritillary",2
+"18","7.11","RIS","RIS-C","PBG","","meadow fritillary",2
+"18","6.08","KLN","KLN-C","PBG","","meadow fritillary",3
+"18","6.17","PYN","PYN-W","PBG","","meadow fritillary",1
+"18","7.05","PYN","PYN-W","PBG","","meadow fritillary",5
+"18","6.08","RIS","RIS-N","PBG","","meadow fritillary",2
+"18","7.11","RIS","RIS-N","PBG","","meadow fritillary",1
+"18","6.08","KLN","KLN-E","PBG","","meadow fritillary",3
+"18","6.17","PYN","PYN-N","PBG","","meadow fritillary",1
+"18","7.05","PYN","PYN-N","PBG","","meadow fritillary",1
+"18","6.08","RIS","RIS-S","PBG","","meadow fritillary",1
+"18","7.11","RIS","RIS-S","PBG","","meadow fritillary",1
+"18","6.24","KLN","KLN-W","PBG","","melissa blue",10
+"18","7.22","KLN","KLN-W","PBG","","melissa blue",4
+"18","6.08","KLN","KLN-C","PBG","","melissa blue",3
+"18","6.24","KLN","KLN-C","PBG","","melissa blue",3
+"18","7.10","KLN","KLN-C","PBG","","melissa blue",3
+"18","6.08","KLN","KLN-E","PBG","","melissa blue",1
+"18","6.24","KLN","KLN-W","PBG","","monarch",1
+"18","6.24","RIS","RIS-C","PBG","","monarch",1
+"18","6.08","RIS","RIS-N","PBG","","monarch",1
+"18","6.08","KLN","KLN-E","PBG","","monarch",1
+"18","7.22","KLN","KLN-E","PBG","","monarch",1
+"18","6.08","RIS","RIS-S","PBG","","monarch",2
+"18","7.11","RIS","RIS-S","PBG","","monarch",1
+"18","6.08","KLN","KLN-W","PBG","","orange sulphur",1
+"18","6.24","KLN","KLN-W","PBG","","orange sulphur",1
+"18","7.10","KLN","KLN-W","PBG","","orange sulphur",1
+"18","7.22","KLN","KLN-W","PBG","","orange sulphur",2
+"18","6.17","PYN","PYN-S","PBG","","orange sulphur",4
+"18","7.05","PYN","PYN-S","PBG","","orange sulphur",3
+"18","7.20","PYN","PYN-S","PBG","","orange sulphur",2
+"18","6.24","RIS","RIS-C","PBG","","orange sulphur",4
+"18","7.11","RIS","RIS-C","PBG","","orange sulphur",2
+"18","7.23","RIS","RIS-C","PBG","","orange sulphur",1
+"18","6.08","KLN","KLN-C","PBG","","orange sulphur",1
+"18","6.24","KLN","KLN-C","PBG","","orange sulphur",5
+"18","7.10","KLN","KLN-C","PBG","","orange sulphur",2
+"18","7.22","KLN","KLN-C","PBG","","orange sulphur",7
+"18","5.27","PYN","PYN-W","PBG","","orange sulphur",1
+"18","6.17","PYN","PYN-W","PBG","","orange sulphur",3
+"18","7.05","PYN","PYN-W","PBG","","orange sulphur",5
+"18","7.20","PYN","PYN-W","PBG","","orange sulphur",2
+"18","6.24","RIS","RIS-N","PBG","","orange sulphur",3
+"18","7.11","RIS","RIS-N","PBG","","orange sulphur",7
+"18","6.08","KLN","KLN-E","PBG","","orange sulphur",2
+"18","6.24","KLN","KLN-E","PBG","","orange sulphur",2
+"18","7.10","KLN","KLN-E","PBG","","orange sulphur",4
+"18","7.22","KLN","KLN-E","PBG","","orange sulphur",2
+"18","6.17","PYN","PYN-N","PBG","","orange sulphur",2
+"18","7.05","PYN","PYN-N","PBG","","orange sulphur",2
+"18","7.20","PYN","PYN-N","PBG","","orange sulphur",4
+"18","6.08","RIS","RIS-S","PBG","","orange sulphur",2
+"18","7.11","RIS","RIS-S","PBG","","orange sulphur",1
+"18","7.23","RIS","RIS-S","PBG","","orange sulphur",1
+"18","6.08","KLN","KLN-W","PBG","","pearl crescent",1
+"18","7.22","KLN","KLN-W","PBG","","pearl crescent",2
+"18","6.24","RIS","RIS-C","PBG","","pearl crescent",3
+"18","6.24","KLN","KLN-C","PBG","","pearl crescent",4
+"18","7.10","KLN","KLN-C","PBG","","pearl crescent",1
+"18","6.17","PYN","PYN-W","PBG","","pearl crescent",1
+"18","7.05","PYN","PYN-W","PBG","","pearl crescent",1
+"18","6.24","RIS","RIS-N","PBG","","pearl crescent",6
+"18","6.24","KLN","KLN-E","PBG","","pearl crescent",11
+"18","7.10","KLN","KLN-E","PBG","","pearl crescent",1
+"18","7.22","KLN","KLN-E","PBG","","pearl crescent",1
+"18","6.17","PYN","PYN-N","PBG","","pearl crescent",1
+"18","6.24","RIS","RIS-S","PBG","","pearl crescent",1
+"18","7.11","RIS","RIS-S","PBG","","pearl crescent",1
+"18","7.22","KLN","KLN-W","PBG","","peck's skipper",2
+"18","5.27","PYN","PYN-W","PBG","","peck's skipper",1
+"18","5.27","PYN","PYN-N","PBG","","peck's skipper",3
+"18","6.08","RIS","RIS-S","PBG","","peck's skipper",1
+"18","6.17","PYN","PYN-W","PBG","","red-spotted purple",1
+"18","6.24","RIS","RIS-S","PBG","","regal fritillary",4
+"18","7.22","KLN","KLN-W","PBG","","silver-spotted skipper",1
+"18","7.23","RIS","RIS-C","PBG","","silver-spotted skipper",1
+"18","7.20","PYN","PYN-N","PBG","","silver-spotted skipper",1
+"18","6.17","PYN","PYN-W","PBG","","silvery checkerspot",1
+"18","6.24","RIS","RIS-N","PBG","","silvery checkerspot",1
+"18","5.27","PYN","PYN-N","PBG","","viceroy",1
