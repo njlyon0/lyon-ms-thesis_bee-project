@@ -38,28 +38,56 @@ pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = eleme
 ##  ----------------------------------------------------------------------------------------------------------  ##
                             # Butterfly Analysis & Plotting ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
-# Analyze!
-bf.ab.mem <- glmer(Abundance ~ YSB +
+# Due to the use of mixed-effects models, will need to re-level "YSB" to perform pairwise comparisons
+
+# Re-level the YSB factor
+sort(unique(bf$YSB))
+bf$YSB <- factor(bf$YSB, levels = c(1, 0, 2))
+sort(unique(bf$YSB))
+
+# Re-analyze to get 1 vs. 2 YSB comparison
+bf.ab.mem.base1 <- glmer(Abundance ~ YSB +
+                           (1|Site) + (1|Patch) + (1|Date),
+                         data = bf, family = poisson)
+summary(bf.ab.mem.base1)
+
+bf.dn.mem.base1 <- glmer(Species.Density ~ YSB +
+                           (1|Site) + (1|Patch) + (1|Date),
+                         data = bf, family = poisson)
+summary(bf.dn.mem.base1)
+
+# Manually re-set leveling
+bf$YSB <- factor(bf$YSB, levels = c(0, 1, 2))
+sort(unique(bf$YSB))
+
+# Analyze
+bf.ab.mem.base0 <- glmer(Abundance ~ YSB +
                   (1|Site) + (1|Patch) + (1|Date),
                   data = bf, family = poisson)
-summary(bf.ab.mem)
+summary(bf.ab.mem.base0)
 
-
-bf.dn.mem <- glmer(Species.Density ~ YSB +
+bf.dn.mem.base0 <- glmer(Species.Density ~ YSB +
                   (1|Site) + (1|Patch) + (1|Date),
                   data = bf, family = poisson)
-summary(bf.dn.mem)
+summary(bf.dn.mem.base0)
+
+# Connected letter diagram?
+## Abundance
+# 0 YSB = A | 1 = A | 2 = A
+
+## Species Density
+# 0 YSB = A | 1 = A | 2 = A
 
 # Visualize the differences in interior floral resources
 ggplot(bf, aes(x = YSB, y = Abundance, fill = YSB)) +
   geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Interior Floral Abundance") + 
+  labs(x = "Years Since Burn", y = "Butterfly Abundance") + 
   scale_fill_manual(values = colors) +
   pref.theme + theme(legend.position = "none")
 
 ggplot(bf, aes(x = YSB, y = Species.Density, fill = YSB)) +
   geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Interior Species Density") + 
+  labs(x = "Years Since Burn", y = "Butterfly Density") + 
   scale_fill_manual(values = colors) +
   pref.theme + theme(legend.position = "none")
 
