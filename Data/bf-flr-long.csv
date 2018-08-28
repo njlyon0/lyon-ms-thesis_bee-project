@@ -1,317 +1,260 @@
 "Year","Date","Site","Patch","Adaptive.Mgmt","YSB","Herb.Trt","Nectar.Plant.Name","TransectTotals"
-"18","6.08","KLN","KLN-W","PBG","0","","alsike clover",3
-"18","7.22","KLN","KLN-W","PBG","0","","alsike clover",2
-"18","6.08","KLN","KLN-C","PBG","1","","alsike clover",20
-"18","6.24","KLN","KLN-C","PBG","1","","alsike clover",245
-"18","7.22","KLN","KLN-C","PBG","1","","alsike clover",27
-"18","6.08","RIS","RIS-N","PBG","1","","alsike clover",1
-"18","6.08","KLN","KLN-E","PBG","2","","alsike clover",5
-"18","6.24","KLN","KLN-E","PBG","2","","alsike clover",1
-"18","7.22","KLN","KLN-E","PBG","2","","alsike clover",2
-"18","5.27","PYN","PYN-N","PBG","2","","alsike clover",26
-"18","6.08","KLN","KLN-W","PBG","0","","birdsfoot trefoil",16
-"18","6.24","KLN","KLN-W","PBG","0","","birdsfoot trefoil",69
-"18","7.10","KLN","KLN-W","PBG","0","","birdsfoot trefoil",16
-"18","7.22","KLN","KLN-W","PBG","0","","birdsfoot trefoil",70
-"18","5.27","PYN","PYN-S","PBG","0","","birdsfoot trefoil",182
-"18","6.17","PYN","PYN-S","PBG","0","","birdsfoot trefoil",1734
-"18","7.05","PYN","PYN-S","PBG","0","","birdsfoot trefoil",835
-"18","7.20","PYN","PYN-S","PBG","0","","birdsfoot trefoil",982
-"18","6.08","RIS","RIS-C","PBG","0","","birdsfoot trefoil",953
-"18","6.24","RIS","RIS-C","PBG","0","","birdsfoot trefoil",755
-"18","7.11","RIS","RIS-C","PBG","0","","birdsfoot trefoil",606
-"18","7.23","RIS","RIS-C","PBG","0","","birdsfoot trefoil",154
-"18","6.08","KLN","KLN-C","PBG","1","","birdsfoot trefoil",29
-"18","6.24","KLN","KLN-C","PBG","1","","birdsfoot trefoil",138
-"18","7.10","KLN","KLN-C","PBG","1","","birdsfoot trefoil",13
-"18","7.22","KLN","KLN-C","PBG","1","","birdsfoot trefoil",394
-"18","6.17","PYN","PYN-W","PBG","1","","birdsfoot trefoil",1728
-"18","7.05","PYN","PYN-W","PBG","1","","birdsfoot trefoil",480
-"18","7.20","PYN","PYN-W","PBG","1","","birdsfoot trefoil",190
-"18","6.08","RIS","RIS-N","PBG","1","","birdsfoot trefoil",1090
-"18","6.24","RIS","RIS-N","PBG","1","","birdsfoot trefoil",1530
-"18","7.11","RIS","RIS-N","PBG","1","","birdsfoot trefoil",333
-"18","7.23","RIS","RIS-N","PBG","1","","birdsfoot trefoil",325
-"18","6.08","KLN","KLN-E","PBG","2","","birdsfoot trefoil",387
-"18","6.24","KLN","KLN-E","PBG","2","","birdsfoot trefoil",141
-"18","7.10","KLN","KLN-E","PBG","2","","birdsfoot trefoil",32
-"18","7.22","KLN","KLN-E","PBG","2","","birdsfoot trefoil",150
-"18","6.17","PYN","PYN-N","PBG","2","","birdsfoot trefoil",1971
-"18","7.05","PYN","PYN-N","PBG","2","","birdsfoot trefoil",638
-"18","7.20","PYN","PYN-N","PBG","2","","birdsfoot trefoil",362
-"18","6.08","RIS","RIS-S","PBG","2","","birdsfoot trefoil",668
-"18","6.24","RIS","RIS-S","PBG","2","","birdsfoot trefoil",730
-"18","7.11","RIS","RIS-S","PBG","2","","birdsfoot trefoil",995
-"18","7.23","RIS","RIS-S","PBG","2","","birdsfoot trefoil",156
-"18","7.10","KLN","KLN-W","PBG","0","","black medick",1
-"18","6.08","KLN","KLN-C","PBG","1","","black medick",27
-"18","6.24","KLN","KLN-C","PBG","1","","black medick",115
-"18","7.22","KLN","KLN-C","PBG","1","","black medick",190
-"18","7.05","PYN","PYN-W","PBG","1","","black medick",5
-"18","6.08","RIS","RIS-N","PBG","1","","black medick",432
-"18","6.24","RIS","RIS-N","PBG","1","","black medick",20
-"18","6.08","KLN","KLN-E","PBG","2","","black medick",1
-"18","6.24","KLN","KLN-E","PBG","2","","black medick",36
-"18","5.27","PYN","PYN-N","PBG","2","","black medick",64
-"18","6.24","RIS","RIS-S","PBG","2","","black medick",3
-"18","6.24","KLN","KLN-W","PBG","0","","black-eyed susan",8
-"18","7.10","KLN","KLN-W","PBG","0","","black-eyed susan",1
-"18","7.22","KLN","KLN-W","PBG","0","","black-eyed susan",284
-"18","7.20","PYN","PYN-S","PBG","0","","black-eyed susan",6
-"18","6.24","RIS","RIS-C","PBG","0","","black-eyed susan",2
-"18","6.24","KLN","KLN-C","PBG","1","","black-eyed susan",34
-"18","7.10","KLN","KLN-C","PBG","1","","black-eyed susan",63
-"18","7.22","KLN","KLN-C","PBG","1","","black-eyed susan",29
-"18","7.05","PYN","PYN-W","PBG","1","","black-eyed susan",11
-"18","6.08","RIS","RIS-N","PBG","1","","black-eyed susan",1
-"18","6.24","KLN","KLN-E","PBG","2","","black-eyed susan",32
-"18","7.10","KLN","KLN-E","PBG","2","","black-eyed susan",16
-"18","7.22","KLN","KLN-E","PBG","2","","black-eyed susan",15
-"18","6.08","RIS","RIS-S","PBG","2","","blackberry",27
-"18","7.20","PYN","PYN-N","PBG","2","","butterfly milkweed",5
-"18","7.11","RIS","RIS-C","PBG","0","","catnip",29
-"18","7.11","RIS","RIS-C","PBG","0","","culver's root",1
-"18","6.24","KLN","KLN-W","PBG","0","","daisy fleabane",5
-"18","7.10","KLN","KLN-W","PBG","0","","daisy fleabane",2
-"18","6.17","PYN","PYN-S","PBG","0","","daisy fleabane",3
-"18","7.05","PYN","PYN-S","PBG","0","","daisy fleabane",10
-"18","7.20","PYN","PYN-S","PBG","0","","daisy fleabane",8
-"18","6.08","KLN","KLN-C","PBG","1","","daisy fleabane",54
-"18","6.24","KLN","KLN-C","PBG","1","","daisy fleabane",16
-"18","7.10","KLN","KLN-C","PBG","1","","daisy fleabane",19
-"18","7.22","KLN","KLN-C","PBG","1","","daisy fleabane",2
-"18","6.17","PYN","PYN-W","PBG","1","","daisy fleabane",25
-"18","7.05","PYN","PYN-W","PBG","1","","daisy fleabane",1
-"18","7.20","PYN","PYN-W","PBG","1","","daisy fleabane",8
-"18","6.08","RIS","RIS-N","PBG","1","","daisy fleabane",24
-"18","6.24","RIS","RIS-N","PBG","1","","daisy fleabane",139
-"18","7.11","RIS","RIS-N","PBG","1","","daisy fleabane",18
-"18","6.08","KLN","KLN-E","PBG","2","","daisy fleabane",20
-"18","6.24","KLN","KLN-E","PBG","2","","daisy fleabane",1
-"18","7.10","KLN","KLN-E","PBG","2","","daisy fleabane",2
-"18","7.22","KLN","KLN-E","PBG","2","","daisy fleabane",39
-"18","7.05","PYN","PYN-N","PBG","2","","daisy fleabane",32
-"18","7.20","PYN","PYN-N","PBG","2","","daisy fleabane",12
-"18","6.08","RIS","RIS-S","PBG","2","","daisy fleabane",7
-"18","6.24","RIS","RIS-S","PBG","2","","daisy fleabane",12
-"18","7.11","RIS","RIS-S","PBG","2","","daisy fleabane",69
-"18","6.08","KLN","KLN-W","PBG","0","","dandelion",1
-"18","6.24","KLN","KLN-W","PBG","0","","deptford pink",2
-"18","6.17","PYN","PYN-S","PBG","0","","deptford pink",4
-"18","6.08","KLN","KLN-C","PBG","1","","deptford pink",107
-"18","6.24","KLN","KLN-C","PBG","1","","deptford pink",80
-"18","7.10","KLN","KLN-C","PBG","1","","deptford pink",3
-"18","6.17","PYN","PYN-W","PBG","1","","deptford pink",10
-"18","6.08","RIS","RIS-N","PBG","1","","deptford pink",102
-"18","6.24","RIS","RIS-N","PBG","1","","deptford pink",34
-"18","7.11","RIS","RIS-N","PBG","1","","deptford pink",3
-"18","7.23","RIS","RIS-N","PBG","1","","deptford pink",1
-"18","6.08","KLN","KLN-E","PBG","2","","deptford pink",7
-"18","6.24","KLN","KLN-E","PBG","2","","deptford pink",9
-"18","7.22","KLN","KLN-E","PBG","2","","deptford pink",5
-"18","6.17","PYN","PYN-N","PBG","2","","deptford pink",6
-"18","7.05","PYN","PYN-N","PBG","2","","deptford pink",4
-"18","6.08","RIS","RIS-S","PBG","2","","deptford pink",13
-"18","6.24","RIS","RIS-S","PBG","2","","deptford pink",29
-"18","7.11","RIS","RIS-S","PBG","2","","deptford pink",5
-"18","7.22","KLN","KLN-W","PBG","0","","field milkwort",1
-"18","6.24","RIS","RIS-C","PBG","0","","germander",3
-"18","7.11","RIS","RIS-C","PBG","0","","germander",4
-"18","7.20","PYN","PYN-S","PBG","0","","grey-headed coneflower",4
-"18","7.11","RIS","RIS-C","PBG","0","","grey-headed coneflower",7
-"18","7.23","RIS","RIS-C","PBG","0","","grey-headed coneflower",10
-"18","7.10","KLN","KLN-C","PBG","1","","grey-headed coneflower",7
-"18","7.10","KLN","KLN-E","PBG","2","","grey-headed coneflower",12
-"18","7.11","RIS","RIS-S","PBG","2","","grey-headed coneflower",1
-"18","7.22","KLN","KLN-W","PBG","0","","hairy mountain mint",17
-"18","6.24","RIS","RIS-C","PBG","0","","hairy mountain mint",10
-"18","7.11","RIS","RIS-C","PBG","0","","hairy mountain mint",6
-"18","7.23","RIS","RIS-C","PBG","0","","hairy mountain mint",7
-"18","7.22","KLN","KLN-E","PBG","2","","hairy mountain mint",3
-"18","7.23","RIS","RIS-S","PBG","2","","hoary vervain",12
-"18","7.10","KLN","KLN-W","PBG","0","","horsenettle",3
-"18","6.17","PYN","PYN-S","PBG","0","","horsenettle",12
-"18","7.05","PYN","PYN-S","PBG","0","","horsenettle",13
-"18","6.08","RIS","RIS-C","PBG","0","","horsenettle",8
-"18","6.24","RIS","RIS-C","PBG","0","","horsenettle",13
-"18","7.11","RIS","RIS-C","PBG","0","","horsenettle",1
-"18","6.17","PYN","PYN-W","PBG","1","","horsenettle",1
-"18","7.05","PYN","PYN-W","PBG","1","","horsenettle",1
-"18","6.08","RIS","RIS-N","PBG","1","","horsenettle",1
-"18","6.24","RIS","RIS-N","PBG","1","","horsenettle",33
-"18","7.11","RIS","RIS-N","PBG","1","","horsenettle",1
-"18","7.05","PYN","PYN-N","PBG","2","","horsenettle",11
-"18","6.24","RIS","RIS-S","PBG","2","","horsenettle",6
-"18","7.11","RIS","RIS-S","PBG","2","","horsenettle",3
-"18","7.10","KLN","KLN-W","PBG","0","","ironweed",1
-"18","7.20","PYN","PYN-S","PBG","0","","ironweed",2
-"18","7.11","RIS","RIS-C","PBG","0","","ironweed",19
-"18","7.23","RIS","RIS-C","PBG","0","","ironweed",51
-"18","7.20","PYN","PYN-W","PBG","1","","ironweed",9
-"18","7.11","RIS","RIS-N","PBG","1","","ironweed",30
-"18","7.23","RIS","RIS-N","PBG","1","","ironweed",10
-"18","7.23","RIS","RIS-S","PBG","2","","ironweed",21
-"18","7.22","KLN","KLN-W","PBG","0","","lady's thumb",1
-"18","6.24","KLN","KLN-W","PBG","0","","oxeye daisy",12
-"18","6.17","PYN","PYN-S","PBG","0","","oxeye daisy",16
-"18","6.08","KLN","KLN-C","PBG","1","","oxeye daisy",39
-"18","6.17","PYN","PYN-W","PBG","1","","oxeye daisy",17
-"18","6.24","RIS","RIS-N","PBG","1","","oxeye daisy",24
-"18","6.08","KLN","KLN-E","PBG","2","","oxeye daisy",11
-"18","6.24","KLN","KLN-E","PBG","2","","oxeye daisy",9
-"18","6.24","KLN","KLN-W","PBG","0","","pale spike lobelia",5
-"18","6.08","KLN","KLN-C","PBG","1","","pale spike lobelia",10
-"18","6.08","KLN","KLN-E","PBG","2","","pale spike lobelia",53
-"18","6.08","RIS","RIS-S","PBG","2","","pale spike lobelia",2
-"18","6.24","RIS","RIS-S","PBG","2","","prairie cinquefoil",4
-"18","6.17","PYN","PYN-S","PBG","0","","prairie petunia",4
-"18","7.20","PYN","PYN-S","PBG","0","","prairie petunia",4
-"18","6.08","RIS","RIS-C","PBG","0","","prairie petunia",1
-"18","6.24","RIS","RIS-C","PBG","0","","prairie petunia",7
-"18","7.11","RIS","RIS-C","PBG","0","","prairie petunia",5
-"18","7.20","PYN","PYN-W","PBG","1","","prairie petunia",22
-"18","6.24","RIS","RIS-N","PBG","1","","prairie petunia",1
-"18","7.11","RIS","RIS-N","PBG","1","","prairie petunia",4
-"18","7.23","RIS","RIS-N","PBG","1","","prairie petunia",8
-"18","7.22","KLN","KLN-E","PBG","2","","prairie petunia",1
-"18","6.24","RIS","RIS-S","PBG","2","","prairie petunia",2
-"18","7.23","RIS","RIS-S","PBG","2","","prairie petunia",13
-"18","7.22","KLN","KLN-W","PBG","0","","queen anne's lace",9
-"18","7.05","PYN","PYN-S","PBG","0","","queen anne's lace",3
-"18","7.20","PYN","PYN-S","PBG","0","","queen anne's lace",74
-"18","7.11","RIS","RIS-C","PBG","0","","queen anne's lace",3
-"18","7.23","RIS","RIS-C","PBG","0","","queen anne's lace",2
-"18","7.10","KLN","KLN-C","PBG","1","","queen anne's lace",7
-"18","7.22","KLN","KLN-C","PBG","1","","queen anne's lace",412
-"18","7.20","PYN","PYN-W","PBG","1","","queen anne's lace",193
-"18","7.11","RIS","RIS-N","PBG","1","","queen anne's lace",74
-"18","7.23","RIS","RIS-N","PBG","1","","queen anne's lace",526
-"18","7.10","KLN","KLN-E","PBG","2","","queen anne's lace",1
-"18","7.22","KLN","KLN-E","PBG","2","","queen anne's lace",180
-"18","7.05","PYN","PYN-N","PBG","2","","queen anne's lace",1
-"18","7.20","PYN","PYN-N","PBG","2","","queen anne's lace",16
-"18","7.23","RIS","RIS-S","PBG","2","","queen anne's lace",52
-"18","7.10","KLN","KLN-W","PBG","0","","red clover",2
-"18","7.22","KLN","KLN-W","PBG","0","","red clover",102
-"18","6.17","PYN","PYN-S","PBG","0","","red clover",117
-"18","7.05","PYN","PYN-S","PBG","0","","red clover",56
-"18","7.20","PYN","PYN-S","PBG","0","","red clover",116
-"18","6.08","RIS","RIS-C","PBG","0","","red clover",43
-"18","6.24","RIS","RIS-C","PBG","0","","red clover",2
-"18","7.11","RIS","RIS-C","PBG","0","","red clover",3
-"18","6.08","KLN","KLN-C","PBG","1","","red clover",9
-"18","6.24","KLN","KLN-C","PBG","1","","red clover",67
-"18","7.10","KLN","KLN-C","PBG","1","","red clover",4
-"18","7.22","KLN","KLN-C","PBG","1","","red clover",407
-"18","5.27","PYN","PYN-W","PBG","1","","red clover",9
-"18","6.17","PYN","PYN-W","PBG","1","","red clover",23
-"18","7.05","PYN","PYN-W","PBG","1","","red clover",91
-"18","7.20","PYN","PYN-W","PBG","1","","red clover",65
-"18","6.08","RIS","RIS-N","PBG","1","","red clover",8
-"18","6.24","RIS","RIS-N","PBG","1","","red clover",310
-"18","7.11","RIS","RIS-N","PBG","1","","red clover",8
-"18","7.23","RIS","RIS-N","PBG","1","","red clover",17
-"18","6.08","KLN","KLN-E","PBG","2","","red clover",9
-"18","6.24","KLN","KLN-E","PBG","2","","red clover",44
-"18","7.10","KLN","KLN-E","PBG","2","","red clover",2
-"18","7.22","KLN","KLN-E","PBG","2","","red clover",58
-"18","5.27","PYN","PYN-N","PBG","2","","red clover",1
-"18","6.17","PYN","PYN-N","PBG","2","","red clover",63
-"18","7.05","PYN","PYN-N","PBG","2","","red clover",92
-"18","7.20","PYN","PYN-N","PBG","2","","red clover",27
-"18","6.08","RIS","RIS-S","PBG","2","","red clover",25
-"18","6.24","RIS","RIS-S","PBG","2","","red clover",19
-"18","7.11","RIS","RIS-S","PBG","2","","red clover",14
-"18","7.23","RIS","RIS-S","PBG","2","","red clover",8
-"18","7.10","KLN","KLN-W","PBG","0","","ribwort plantain",4
-"18","7.22","KLN","KLN-W","PBG","0","","ribwort plantain",3
-"18","6.17","PYN","PYN-S","PBG","0","","ribwort plantain",18
-"18","7.05","PYN","PYN-S","PBG","0","","ribwort plantain",43
-"18","6.17","PYN","PYN-W","PBG","1","","ribwort plantain",2
-"18","6.08","RIS","RIS-N","PBG","1","","ribwort plantain",10
-"18","6.24","RIS","RIS-N","PBG","1","","ribwort plantain",27
-"18","6.24","RIS","RIS-S","PBG","2","","ribwort plantain",75
-"18","7.20","PYN","PYN-S","PBG","0","","self-heal",1
-"18","7.10","KLN","KLN-C","PBG","1","","self-heal",67
-"18","7.05","PYN","PYN-W","PBG","1","","self-heal",6
-"18","7.20","PYN","PYN-W","PBG","1","","self-heal",2
-"18","7.20","PYN","PYN-N","PBG","2","","self-heal",1
-"18","7.23","RIS","RIS-S","PBG","2","","self-heal",4
-"18","7.10","KLN","KLN-W","PBG","0","","slender mountain mint",3
-"18","7.22","KLN","KLN-W","PBG","0","","slender mountain mint",10
-"18","6.24","RIS","RIS-C","PBG","0","","slender mountain mint",35
-"18","7.11","RIS","RIS-C","PBG","0","","slender mountain mint",74
-"18","7.23","RIS","RIS-C","PBG","0","","slender mountain mint",61
-"18","7.10","KLN","KLN-C","PBG","1","","slender mountain mint",71
-"18","7.22","KLN","KLN-C","PBG","1","","slender mountain mint",2
-"18","7.05","PYN","PYN-W","PBG","1","","slender mountain mint",18
-"18","7.23","RIS","RIS-N","PBG","1","","slender mountain mint",67
-"18","7.10","KLN","KLN-E","PBG","2","","slender mountain mint",37
-"18","7.22","KLN","KLN-E","PBG","2","","slender mountain mint",11
-"18","7.11","RIS","RIS-S","PBG","2","","slender mountain mint",27
-"18","7.23","RIS","RIS-S","PBG","2","","slender mountain mint",6
-"18","7.11","RIS","RIS-C","PBG","0","","spotted st. john's wort",5
-"18","7.10","KLN","KLN-C","PBG","1","","spotted st. john's wort",1
-"18","7.22","KLN","KLN-E","PBG","2","","spotted st. john's wort",6
-"18","6.08","RIS","RIS-S","PBG","2","","strawberry",9
-"18","7.23","RIS","RIS-C","PBG","0","","swamp agrimony",1
-"18","7.05","PYN","PYN-W","PBG","1","","tall green milkweed",16
-"18","7.20","PYN","PYN-W","PBG","1","","tall green milkweed",7
-"18","6.24","RIS","RIS-N","PBG","1","","tall green milkweed",4
-"18","6.08","KLN","KLN-W","PBG","0","","white clover",2
-"18","7.10","KLN","KLN-W","PBG","0","","white clover",9
-"18","7.22","KLN","KLN-W","PBG","0","","white clover",6
-"18","6.17","PYN","PYN-S","PBG","0","","white clover",126
-"18","7.05","PYN","PYN-S","PBG","0","","white clover",31
-"18","6.08","RIS","RIS-C","PBG","0","","white clover",65
-"18","6.24","RIS","RIS-C","PBG","0","","white clover",20
-"18","6.08","KLN","KLN-C","PBG","1","","white clover",198
-"18","6.24","KLN","KLN-C","PBG","1","","white clover",424
-"18","7.10","KLN","KLN-C","PBG","1","","white clover",40
-"18","7.22","KLN","KLN-C","PBG","1","","white clover",45
-"18","7.05","PYN","PYN-W","PBG","1","","white clover",14
-"18","6.24","RIS","RIS-N","PBG","1","","white clover",48
-"18","6.24","KLN","KLN-E","PBG","2","","white clover",5
-"18","6.17","PYN","PYN-N","PBG","2","","white clover",50
-"18","7.05","PYN","PYN-N","PBG","2","","white clover",258
-"18","6.08","RIS","RIS-S","PBG","2","","white clover",12
-"18","6.24","RIS","RIS-S","PBG","2","","white clover",28
-"18","6.24","KLN","KLN-C","PBG","1","","white sweet clover",25
-"18","7.22","KLN","KLN-C","PBG","1","","white sweet clover",403
-"18","7.05","PYN","PYN-W","PBG","1","","white sweet clover",3
-"18","7.20","PYN","PYN-W","PBG","1","","white sweet clover",12
-"18","6.24","RIS","RIS-N","PBG","1","","white sweet clover",27
-"18","7.11","RIS","RIS-N","PBG","1","","white sweet clover",85
-"18","7.23","RIS","RIS-N","PBG","1","","white sweet clover",6
-"18","7.05","PYN","PYN-N","PBG","2","","white sweet clover",4
-"18","7.20","PYN","PYN-N","PBG","2","","white sweet clover",2
-"18","7.23","RIS","RIS-S","PBG","2","","white sweet clover",6
-"18","6.24","RIS","RIS-C","PBG","0","","white wild indigo",3
-"18","7.20","PYN","PYN-N","PBG","2","","whorled milkweed",1
-"18","7.11","RIS","RIS-C","PBG","0","","wild bergamot",39
-"18","7.23","RIS","RIS-C","PBG","0","","wild bergamot",12
-"18","7.10","KLN","KLN-C","PBG","1","","wild bergamot",1
-"18","7.11","RIS","RIS-N","PBG","1","","wild bergamot",1
-"18","7.11","RIS","RIS-C","PBG","0","","winged loosestrife",18
-"18","6.08","KLN","KLN-W","PBG","0","","yarrow",2
-"18","6.24","KLN","KLN-W","PBG","0","","yarrow",46
-"18","7.22","KLN","KLN-W","PBG","0","","yarrow",8
-"18","6.08","RIS","RIS-C","PBG","0","","yarrow",5
-"18","6.24","RIS","RIS-C","PBG","0","","yarrow",7
-"18","6.08","KLN","KLN-C","PBG","1","","yarrow",91
-"18","6.24","KLN","KLN-C","PBG","1","","yarrow",14
-"18","6.08","RIS","RIS-N","PBG","1","","yarrow",1
-"18","6.24","RIS","RIS-N","PBG","1","","yarrow",10
-"18","7.23","RIS","RIS-N","PBG","1","","yarrow",1
-"18","6.08","KLN","KLN-E","PBG","2","","yarrow",8
-"18","6.08","RIS","RIS-S","PBG","2","","yarrow",4
-"18","6.24","RIS","RIS-C","PBG","0","","yellow oxalis",9
-"18","6.24","KLN","KLN-C","PBG","1","","yellow oxalis",1
-"18","6.24","KLN","KLN-C","PBG","1","","yellow sweet clover",42
-"18","7.22","KLN","KLN-C","PBG","1","","yellow sweet clover",6
-"18","7.05","PYN","PYN-W","PBG","1","","yellow sweet clover",24
-"18","7.20","PYN","PYN-W","PBG","1","","yellow sweet clover",25
-"18","6.08","RIS","RIS-N","PBG","1","","yellow sweet clover",34
-"18","7.11","RIS","RIS-N","PBG","1","","yellow sweet clover",7
-"18","6.17","PYN","PYN-N","PBG","2","","yellow sweet clover",3
-"18","7.20","PYN","PYN-N","PBG","2","","yellow sweet clover",9
+"18",160,"KLN","KLN-W","PBG","0","","alsike clover",3
+"18",205,"KLN","KLN-W","PBG","0","","alsike clover",2
+"18",160,"KLN","KLN-C","PBG","1","","alsike clover",20
+"18",176,"KLN","KLN-C","PBG","1","","alsike clover",245
+"18",205,"KLN","KLN-C","PBG","1","","alsike clover",27
+"18",160,"RIS","RIS-N","PBG","1","","alsike clover",1
+"18",160,"KLN","KLN-E","PBG","2","","alsike clover",5
+"18",176,"KLN","KLN-E","PBG","2","","alsike clover",1
+"18",205,"KLN","KLN-E","PBG","2","","alsike clover",2
+"18",147,"PYN","PYN-N","PBG","2","","alsike clover",26
+"18",160,"KLN","KLN-W","PBG","0","","birdsfoot trefoil",16
+"18",176,"KLN","KLN-W","PBG","0","","birdsfoot trefoil",69
+"18",205,"KLN","KLN-W","PBG","0","","birdsfoot trefoil",70
+"18",147,"PYN","PYN-S","PBG","0","","birdsfoot trefoil",182
+"18",169,"PYN","PYN-S","PBG","0","","birdsfoot trefoil",1734
+"18",188,"PYN","PYN-S","PBG","0","","birdsfoot trefoil",835
+"18",160,"RIS","RIS-C","PBG","0","","birdsfoot trefoil",953
+"18",176,"RIS","RIS-C","PBG","0","","birdsfoot trefoil",755
+"18",194,"RIS","RIS-C","PBG","0","","birdsfoot trefoil",606
+"18",206,"RIS","RIS-C","PBG","0","","birdsfoot trefoil",154
+"18",160,"KLN","KLN-C","PBG","1","","birdsfoot trefoil",29
+"18",176,"KLN","KLN-C","PBG","1","","birdsfoot trefoil",138
+"18",205,"KLN","KLN-C","PBG","1","","birdsfoot trefoil",394
+"18",169,"PYN","PYN-W","PBG","1","","birdsfoot trefoil",1728
+"18",188,"PYN","PYN-W","PBG","1","","birdsfoot trefoil",480
+"18",160,"RIS","RIS-N","PBG","1","","birdsfoot trefoil",1090
+"18",176,"RIS","RIS-N","PBG","1","","birdsfoot trefoil",1530
+"18",194,"RIS","RIS-N","PBG","1","","birdsfoot trefoil",333
+"18",206,"RIS","RIS-N","PBG","1","","birdsfoot trefoil",325
+"18",160,"KLN","KLN-E","PBG","2","","birdsfoot trefoil",387
+"18",176,"KLN","KLN-E","PBG","2","","birdsfoot trefoil",141
+"18",205,"KLN","KLN-E","PBG","2","","birdsfoot trefoil",150
+"18",169,"PYN","PYN-N","PBG","2","","birdsfoot trefoil",1971
+"18",188,"PYN","PYN-N","PBG","2","","birdsfoot trefoil",638
+"18",160,"RIS","RIS-S","PBG","2","","birdsfoot trefoil",668
+"18",176,"RIS","RIS-S","PBG","2","","birdsfoot trefoil",730
+"18",194,"RIS","RIS-S","PBG","2","","birdsfoot trefoil",995
+"18",206,"RIS","RIS-S","PBG","2","","birdsfoot trefoil",156
+"18",160,"KLN","KLN-C","PBG","1","","black medick",27
+"18",176,"KLN","KLN-C","PBG","1","","black medick",115
+"18",205,"KLN","KLN-C","PBG","1","","black medick",190
+"18",188,"PYN","PYN-W","PBG","1","","black medick",5
+"18",160,"RIS","RIS-N","PBG","1","","black medick",432
+"18",176,"RIS","RIS-N","PBG","1","","black medick",20
+"18",160,"KLN","KLN-E","PBG","2","","black medick",1
+"18",176,"KLN","KLN-E","PBG","2","","black medick",36
+"18",147,"PYN","PYN-N","PBG","2","","black medick",64
+"18",176,"RIS","RIS-S","PBG","2","","black medick",3
+"18",176,"KLN","KLN-W","PBG","0","","black-eyed susan",8
+"18",205,"KLN","KLN-W","PBG","0","","black-eyed susan",284
+"18",176,"RIS","RIS-C","PBG","0","","black-eyed susan",2
+"18",176,"KLN","KLN-C","PBG","1","","black-eyed susan",34
+"18",205,"KLN","KLN-C","PBG","1","","black-eyed susan",29
+"18",188,"PYN","PYN-W","PBG","1","","black-eyed susan",11
+"18",160,"RIS","RIS-N","PBG","1","","black-eyed susan",1
+"18",176,"KLN","KLN-E","PBG","2","","black-eyed susan",32
+"18",205,"KLN","KLN-E","PBG","2","","black-eyed susan",15
+"18",160,"RIS","RIS-S","PBG","2","","blackberry",27
+"18",194,"RIS","RIS-C","PBG","0","","catnip",29
+"18",194,"RIS","RIS-C","PBG","0","","culver's root",1
+"18",176,"KLN","KLN-W","PBG","0","","daisy fleabane",5
+"18",169,"PYN","PYN-S","PBG","0","","daisy fleabane",3
+"18",188,"PYN","PYN-S","PBG","0","","daisy fleabane",10
+"18",160,"KLN","KLN-C","PBG","1","","daisy fleabane",54
+"18",176,"KLN","KLN-C","PBG","1","","daisy fleabane",16
+"18",205,"KLN","KLN-C","PBG","1","","daisy fleabane",2
+"18",169,"PYN","PYN-W","PBG","1","","daisy fleabane",25
+"18",188,"PYN","PYN-W","PBG","1","","daisy fleabane",1
+"18",160,"RIS","RIS-N","PBG","1","","daisy fleabane",24
+"18",176,"RIS","RIS-N","PBG","1","","daisy fleabane",139
+"18",194,"RIS","RIS-N","PBG","1","","daisy fleabane",18
+"18",160,"KLN","KLN-E","PBG","2","","daisy fleabane",20
+"18",176,"KLN","KLN-E","PBG","2","","daisy fleabane",1
+"18",205,"KLN","KLN-E","PBG","2","","daisy fleabane",39
+"18",188,"PYN","PYN-N","PBG","2","","daisy fleabane",32
+"18",160,"RIS","RIS-S","PBG","2","","daisy fleabane",7
+"18",176,"RIS","RIS-S","PBG","2","","daisy fleabane",12
+"18",194,"RIS","RIS-S","PBG","2","","daisy fleabane",69
+"18",160,"KLN","KLN-W","PBG","0","","dandelion",1
+"18",176,"KLN","KLN-W","PBG","0","","deptford pink",2
+"18",169,"PYN","PYN-S","PBG","0","","deptford pink",4
+"18",160,"KLN","KLN-C","PBG","1","","deptford pink",107
+"18",176,"KLN","KLN-C","PBG","1","","deptford pink",80
+"18",169,"PYN","PYN-W","PBG","1","","deptford pink",10
+"18",160,"RIS","RIS-N","PBG","1","","deptford pink",102
+"18",176,"RIS","RIS-N","PBG","1","","deptford pink",34
+"18",194,"RIS","RIS-N","PBG","1","","deptford pink",3
+"18",206,"RIS","RIS-N","PBG","1","","deptford pink",1
+"18",160,"KLN","KLN-E","PBG","2","","deptford pink",7
+"18",176,"KLN","KLN-E","PBG","2","","deptford pink",9
+"18",205,"KLN","KLN-E","PBG","2","","deptford pink",5
+"18",169,"PYN","PYN-N","PBG","2","","deptford pink",6
+"18",188,"PYN","PYN-N","PBG","2","","deptford pink",4
+"18",160,"RIS","RIS-S","PBG","2","","deptford pink",13
+"18",176,"RIS","RIS-S","PBG","2","","deptford pink",29
+"18",194,"RIS","RIS-S","PBG","2","","deptford pink",5
+"18",205,"KLN","KLN-W","PBG","0","","field milkwort",1
+"18",176,"RIS","RIS-C","PBG","0","","germander",3
+"18",194,"RIS","RIS-C","PBG","0","","germander",4
+"18",194,"RIS","RIS-C","PBG","0","","grey-headed coneflower",7
+"18",206,"RIS","RIS-C","PBG","0","","grey-headed coneflower",10
+"18",194,"RIS","RIS-S","PBG","2","","grey-headed coneflower",1
+"18",205,"KLN","KLN-W","PBG","0","","hairy mountain mint",17
+"18",176,"RIS","RIS-C","PBG","0","","hairy mountain mint",10
+"18",194,"RIS","RIS-C","PBG","0","","hairy mountain mint",6
+"18",206,"RIS","RIS-C","PBG","0","","hairy mountain mint",7
+"18",205,"KLN","KLN-E","PBG","2","","hairy mountain mint",3
+"18",206,"RIS","RIS-S","PBG","2","","hoary vervain",12
+"18",169,"PYN","PYN-S","PBG","0","","horsenettle",12
+"18",188,"PYN","PYN-S","PBG","0","","horsenettle",13
+"18",160,"RIS","RIS-C","PBG","0","","horsenettle",8
+"18",176,"RIS","RIS-C","PBG","0","","horsenettle",13
+"18",194,"RIS","RIS-C","PBG","0","","horsenettle",1
+"18",169,"PYN","PYN-W","PBG","1","","horsenettle",1
+"18",188,"PYN","PYN-W","PBG","1","","horsenettle",1
+"18",160,"RIS","RIS-N","PBG","1","","horsenettle",1
+"18",176,"RIS","RIS-N","PBG","1","","horsenettle",33
+"18",194,"RIS","RIS-N","PBG","1","","horsenettle",1
+"18",188,"PYN","PYN-N","PBG","2","","horsenettle",11
+"18",176,"RIS","RIS-S","PBG","2","","horsenettle",6
+"18",194,"RIS","RIS-S","PBG","2","","horsenettle",3
+"18",194,"RIS","RIS-C","PBG","0","","ironweed",19
+"18",206,"RIS","RIS-C","PBG","0","","ironweed",51
+"18",194,"RIS","RIS-N","PBG","1","","ironweed",30
+"18",206,"RIS","RIS-N","PBG","1","","ironweed",10
+"18",206,"RIS","RIS-S","PBG","2","","ironweed",21
+"18",205,"KLN","KLN-W","PBG","0","","lady's thumb",1
+"18",176,"KLN","KLN-W","PBG","0","","oxeye daisy",12
+"18",169,"PYN","PYN-S","PBG","0","","oxeye daisy",16
+"18",160,"KLN","KLN-C","PBG","1","","oxeye daisy",39
+"18",169,"PYN","PYN-W","PBG","1","","oxeye daisy",17
+"18",176,"RIS","RIS-N","PBG","1","","oxeye daisy",24
+"18",160,"KLN","KLN-E","PBG","2","","oxeye daisy",11
+"18",176,"KLN","KLN-E","PBG","2","","oxeye daisy",9
+"18",176,"KLN","KLN-W","PBG","0","","pale spike lobelia",5
+"18",160,"KLN","KLN-C","PBG","1","","pale spike lobelia",10
+"18",160,"KLN","KLN-E","PBG","2","","pale spike lobelia",53
+"18",160,"RIS","RIS-S","PBG","2","","pale spike lobelia",2
+"18",176,"RIS","RIS-S","PBG","2","","prairie cinquefoil",4
+"18",169,"PYN","PYN-S","PBG","0","","prairie petunia",4
+"18",160,"RIS","RIS-C","PBG","0","","prairie petunia",1
+"18",176,"RIS","RIS-C","PBG","0","","prairie petunia",7
+"18",194,"RIS","RIS-C","PBG","0","","prairie petunia",5
+"18",176,"RIS","RIS-N","PBG","1","","prairie petunia",1
+"18",194,"RIS","RIS-N","PBG","1","","prairie petunia",4
+"18",206,"RIS","RIS-N","PBG","1","","prairie petunia",8
+"18",205,"KLN","KLN-E","PBG","2","","prairie petunia",1
+"18",176,"RIS","RIS-S","PBG","2","","prairie petunia",2
+"18",206,"RIS","RIS-S","PBG","2","","prairie petunia",13
+"18",205,"KLN","KLN-W","PBG","0","","queen anne's lace",9
+"18",188,"PYN","PYN-S","PBG","0","","queen anne's lace",3
+"18",194,"RIS","RIS-C","PBG","0","","queen anne's lace",3
+"18",206,"RIS","RIS-C","PBG","0","","queen anne's lace",2
+"18",205,"KLN","KLN-C","PBG","1","","queen anne's lace",412
+"18",194,"RIS","RIS-N","PBG","1","","queen anne's lace",74
+"18",206,"RIS","RIS-N","PBG","1","","queen anne's lace",526
+"18",205,"KLN","KLN-E","PBG","2","","queen anne's lace",180
+"18",188,"PYN","PYN-N","PBG","2","","queen anne's lace",1
+"18",206,"RIS","RIS-S","PBG","2","","queen anne's lace",52
+"18",205,"KLN","KLN-W","PBG","0","","red clover",102
+"18",169,"PYN","PYN-S","PBG","0","","red clover",117
+"18",188,"PYN","PYN-S","PBG","0","","red clover",56
+"18",160,"RIS","RIS-C","PBG","0","","red clover",43
+"18",176,"RIS","RIS-C","PBG","0","","red clover",2
+"18",194,"RIS","RIS-C","PBG","0","","red clover",3
+"18",160,"KLN","KLN-C","PBG","1","","red clover",9
+"18",176,"KLN","KLN-C","PBG","1","","red clover",67
+"18",205,"KLN","KLN-C","PBG","1","","red clover",407
+"18",147,"PYN","PYN-W","PBG","1","","red clover",9
+"18",169,"PYN","PYN-W","PBG","1","","red clover",23
+"18",188,"PYN","PYN-W","PBG","1","","red clover",91
+"18",160,"RIS","RIS-N","PBG","1","","red clover",8
+"18",176,"RIS","RIS-N","PBG","1","","red clover",310
+"18",194,"RIS","RIS-N","PBG","1","","red clover",8
+"18",206,"RIS","RIS-N","PBG","1","","red clover",17
+"18",160,"KLN","KLN-E","PBG","2","","red clover",9
+"18",176,"KLN","KLN-E","PBG","2","","red clover",44
+"18",205,"KLN","KLN-E","PBG","2","","red clover",58
+"18",147,"PYN","PYN-N","PBG","2","","red clover",1
+"18",169,"PYN","PYN-N","PBG","2","","red clover",63
+"18",188,"PYN","PYN-N","PBG","2","","red clover",92
+"18",160,"RIS","RIS-S","PBG","2","","red clover",25
+"18",176,"RIS","RIS-S","PBG","2","","red clover",19
+"18",194,"RIS","RIS-S","PBG","2","","red clover",14
+"18",206,"RIS","RIS-S","PBG","2","","red clover",8
+"18",205,"KLN","KLN-W","PBG","0","","ribwort plantain",3
+"18",169,"PYN","PYN-S","PBG","0","","ribwort plantain",18
+"18",188,"PYN","PYN-S","PBG","0","","ribwort plantain",43
+"18",169,"PYN","PYN-W","PBG","1","","ribwort plantain",2
+"18",160,"RIS","RIS-N","PBG","1","","ribwort plantain",10
+"18",176,"RIS","RIS-N","PBG","1","","ribwort plantain",27
+"18",176,"RIS","RIS-S","PBG","2","","ribwort plantain",75
+"18",188,"PYN","PYN-W","PBG","1","","self-heal",6
+"18",206,"RIS","RIS-S","PBG","2","","self-heal",4
+"18",205,"KLN","KLN-W","PBG","0","","slender mountain mint",10
+"18",176,"RIS","RIS-C","PBG","0","","slender mountain mint",35
+"18",194,"RIS","RIS-C","PBG","0","","slender mountain mint",74
+"18",206,"RIS","RIS-C","PBG","0","","slender mountain mint",61
+"18",205,"KLN","KLN-C","PBG","1","","slender mountain mint",2
+"18",188,"PYN","PYN-W","PBG","1","","slender mountain mint",18
+"18",206,"RIS","RIS-N","PBG","1","","slender mountain mint",67
+"18",205,"KLN","KLN-E","PBG","2","","slender mountain mint",11
+"18",194,"RIS","RIS-S","PBG","2","","slender mountain mint",27
+"18",206,"RIS","RIS-S","PBG","2","","slender mountain mint",6
+"18",194,"RIS","RIS-C","PBG","0","","spotted st. john's wort",5
+"18",205,"KLN","KLN-E","PBG","2","","spotted st. john's wort",6
+"18",160,"RIS","RIS-S","PBG","2","","strawberry",9
+"18",206,"RIS","RIS-C","PBG","0","","swamp agrimony",1
+"18",188,"PYN","PYN-W","PBG","1","","tall green milkweed",16
+"18",176,"RIS","RIS-N","PBG","1","","tall green milkweed",4
+"18",160,"KLN","KLN-W","PBG","0","","white clover",2
+"18",205,"KLN","KLN-W","PBG","0","","white clover",6
+"18",169,"PYN","PYN-S","PBG","0","","white clover",126
+"18",188,"PYN","PYN-S","PBG","0","","white clover",31
+"18",160,"RIS","RIS-C","PBG","0","","white clover",65
+"18",176,"RIS","RIS-C","PBG","0","","white clover",20
+"18",160,"KLN","KLN-C","PBG","1","","white clover",198
+"18",176,"KLN","KLN-C","PBG","1","","white clover",424
+"18",205,"KLN","KLN-C","PBG","1","","white clover",45
+"18",188,"PYN","PYN-W","PBG","1","","white clover",14
+"18",176,"RIS","RIS-N","PBG","1","","white clover",48
+"18",176,"KLN","KLN-E","PBG","2","","white clover",5
+"18",169,"PYN","PYN-N","PBG","2","","white clover",50
+"18",188,"PYN","PYN-N","PBG","2","","white clover",258
+"18",160,"RIS","RIS-S","PBG","2","","white clover",12
+"18",176,"RIS","RIS-S","PBG","2","","white clover",28
+"18",176,"KLN","KLN-C","PBG","1","","white sweet clover",25
+"18",205,"KLN","KLN-C","PBG","1","","white sweet clover",403
+"18",188,"PYN","PYN-W","PBG","1","","white sweet clover",3
+"18",176,"RIS","RIS-N","PBG","1","","white sweet clover",27
+"18",194,"RIS","RIS-N","PBG","1","","white sweet clover",85
+"18",206,"RIS","RIS-N","PBG","1","","white sweet clover",6
+"18",188,"PYN","PYN-N","PBG","2","","white sweet clover",4
+"18",206,"RIS","RIS-S","PBG","2","","white sweet clover",6
+"18",176,"RIS","RIS-C","PBG","0","","white wild indigo",3
+"18",194,"RIS","RIS-C","PBG","0","","wild bergamot",39
+"18",206,"RIS","RIS-C","PBG","0","","wild bergamot",12
+"18",194,"RIS","RIS-N","PBG","1","","wild bergamot",1
+"18",194,"RIS","RIS-C","PBG","0","","winged loosestrife",18
+"18",160,"KLN","KLN-W","PBG","0","","yarrow",2
+"18",176,"KLN","KLN-W","PBG","0","","yarrow",46
+"18",205,"KLN","KLN-W","PBG","0","","yarrow",8
+"18",160,"RIS","RIS-C","PBG","0","","yarrow",5
+"18",176,"RIS","RIS-C","PBG","0","","yarrow",7
+"18",160,"KLN","KLN-C","PBG","1","","yarrow",91
+"18",176,"KLN","KLN-C","PBG","1","","yarrow",14
+"18",160,"RIS","RIS-N","PBG","1","","yarrow",1
+"18",176,"RIS","RIS-N","PBG","1","","yarrow",10
+"18",206,"RIS","RIS-N","PBG","1","","yarrow",1
+"18",160,"KLN","KLN-E","PBG","2","","yarrow",8
+"18",160,"RIS","RIS-S","PBG","2","","yarrow",4
+"18",176,"RIS","RIS-C","PBG","0","","yellow oxalis",9
+"18",176,"KLN","KLN-C","PBG","1","","yellow oxalis",1
+"18",176,"KLN","KLN-C","PBG","1","","yellow sweet clover",42
+"18",205,"KLN","KLN-C","PBG","1","","yellow sweet clover",6
+"18",188,"PYN","PYN-W","PBG","1","","yellow sweet clover",24
+"18",160,"RIS","RIS-N","PBG","1","","yellow sweet clover",34
+"18",194,"RIS","RIS-N","PBG","1","","yellow sweet clover",7
+"18",169,"PYN","PYN-N","PBG","2","","yellow sweet clover",3
