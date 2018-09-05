@@ -78,15 +78,23 @@ ggplot(bz.dn.avg, aes(x = Round, y = Species.Density, fill = YSB, color = YSB)) 
 # Analysis
 bz.r1.ab.mem <- glmer(Abundance ~ YSB * Height + 
                       (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
-                      data = bz.r1, family = poisson)
+                      data = test, family = poisson)
 summary(bz.r1.ab.mem)
   ## sig!
+
+plyr::count(bz.r1$Abundance)
 
 bz.r1.dn.mem <- glmer(Species.Density ~ YSB * Height +
                       (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
                       data = bz.r1, family = poisson)
 summary(bz.r1.dn.mem)
-  ## sig!
+  ## Variance explained by Post.ID and Patch is essentially 0, so drop 'em
+
+# Re-do
+bz.r1.dn.mem <- glmer(Species.Density ~ YSB * Height +
+                      (1|Bowl.Color) + (1|Site) + (1|factor(1:nrow(bz.r1))),
+                      data = bz.r1, family = poisson)
+summary(bz.r1.dn.mem)
 
 # Plotting
 ggplot(bz.r1, aes(x = YSB, y = Abundance, fill = YSB)) +
@@ -119,6 +127,8 @@ bz.r2.dn.mem <- glmer(Species.Density ~ YSB * Height +
 summary(bz.r2.dn.mem)
   ## failed to converge
 
+plyr::count(bz.r2$Species.Density)
+
 # Plotting
 ggplot(bz.r2, aes(x = YSB, y = Abundance, fill = YSB)) +
   geom_boxplot(outlier.shape = 21) +
@@ -142,7 +152,10 @@ bz.r3.ab.mem <- glmer(Abundance ~ YSB * Height +
                         (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
                       data = bz.r3, family = poisson)
 summary(bz.r3.ab.mem)
-## sig!
+## failure to converge
+
+plyr::count(bz.r3$Species.Density)
+
 
 bz.r3.dn.mem <- glmer(Species.Density ~ YSB * Height +
                         (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
