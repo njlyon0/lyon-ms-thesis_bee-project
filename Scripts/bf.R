@@ -46,39 +46,33 @@ bf$YSB <- factor(bf$YSB, levels = c(1, 0, 2))
 sort(unique(bf$YSB))
 
 # Re-analyze to get 1 vs. 2 YSB comparison
-bf.ab.mem.base1 <- glmer(Abundance ~ YSB +
-                           (1|Site) + (1|Patch) + (1|Date),
+bf.ab.mem.base1 <- glmer(Abundance ~ YSB + (1|Site) + (1|Patch) + (1|Date),
                          data = bf, family = poisson)
-summary(bf.ab.mem.base1)
 
-bf.dn.mem.base1 <- glmer(Species.Density ~ YSB +
-                           (1|Site) + (1|Patch) + (1|Date),
+bf.dn.mem.base1 <- glmer(Species.Density ~ YSB + (1|Site) + (1|Patch) + (1|Date),
                          data = bf, family = poisson)
-summary(bf.dn.mem.base1)
 
 # Manually re-set leveling
 bf$YSB <- factor(bf$YSB, levels = c(0, 1, 2))
 sort(unique(bf$YSB))
 
 # Analyze
-bf.ab.mem.base0 <- glmer(Abundance ~ YSB +
-                  (1|Site) + (1|Patch) + (1|Date),
+bf.ab.mem.base0 <- glmer(Abundance ~ YSB + (1|Site) + (1|Patch) + (1|Date),
                   data = bf, family = poisson)
+
+bf.dn.mem.base0 <- glmer(Species.Density ~ YSB + (1|Site) + (1|Patch) + (1|Date),
+                  data = bf, family = poisson)
+
+# Assess significance
 summary(bf.ab.mem.base0)
+summary(bf.ab.mem.base1)
+  ## NS
 
-bf.dn.mem.base0 <- glmer(Species.Density ~ YSB +
-                  (1|Site) + (1|Patch) + (1|Date),
-                  data = bf, family = poisson)
 summary(bf.dn.mem.base0)
+summary(bf.dn.mem.base1)
+  ## NS
 
-# Connected letter diagram?
-## Abundance
-# 0 YSB = A | 1 = A | 2 = A
-
-## Species Density
-# 0 YSB = A | 1 = A | 2 = A
-
-# Visualize the differences in interior floral resources
+# Visualize the difference in butterfly abundance & species density
 ggplot(bf, aes(x = YSB, y = Abundance, fill = YSB)) +
   geom_boxplot(outlier.shape = 21) +
   labs(x = "Years Since Burn", y = "Butterfly Abundance") + 

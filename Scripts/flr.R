@@ -98,37 +98,31 @@ bf.flr$YSB <- factor(bf.flr$YSB, levels = c(1, 0, 2))
 sort(unique(bf.flr$YSB))
 
 # Analyze to get 1 vs. 2 YSB comparison
-bf.flr.ab.mem.base1 <- glmer(Abundance ~ YSB +
-                           (1|Site) + (1|Patch) + (1|Date),
+bf.flr.ab.mem.base1 <- glmer(Abundance ~ YSB + (1|Site) + (1|Patch) + (1|Date),
                          data = bf.flr, family = poisson)
-summary(bf.flr.ab.mem.base1)
 
-bf.flr.dn.mem.base1 <- glmer(Species.Density ~ YSB +
-                           (1|Site) + (1|Patch) + (1|Date),
+bf.flr.dn.mem.base1 <- glmer(Species.Density ~ YSB + (1|Site) + (1|Patch) + (1|Date),
                          data = bf.flr, family = poisson)
-summary(bf.flr.dn.mem.base1)
 
 # Manually re-set leveling
 bf.flr$YSB <- factor(bf.flr$YSB, levels = c(0, 1, 2))
 sort(unique(bf.flr$YSB))
 
 # Analyze
-bf.flr.ab.mem.base0 <- glmer(Abundance ~ YSB +
-                           (1|Site) + (1|Patch) + (1|Date),
+bf.flr.ab.mem.base0 <- glmer(Abundance ~ YSB + (1|Site) + (1|Patch) + (1|Date),
                          data = bf.flr, family = poisson)
+
+bf.flr.dn.mem.base0 <- glmer(Species.Density ~ YSB + (1|Site) + (1|Patch) + (1|Date),
+                         data = bf.flr, family = poisson)
+
+# Assess significance
+summary(bf.flr.ab.mem.base1)
 summary(bf.flr.ab.mem.base0)
+  ## YSB 0 = A | YSB 1 = B(.) | YSB 2 = A
 
-bf.flr.dn.mem.base0 <- glmer(Species.Density ~ YSB +
-                           (1|Site) + (1|Patch) + (1|Date),
-                         data = bf.flr, family = poisson)
+summary(bf.flr.dn.mem.base1)
 summary(bf.flr.dn.mem.base0)
-
-# Connected letter diagram?
-## Abundance
-# 0 YSB = A | 1 = B | 2 = AB
-
-## Species Density
-# 0 YSB = A | 1 = A | 2 = A
+  ## NS
 
 # Visualize the differences in interior floral resources
 ggplot(bf.flr, aes(x = YSB, y = Abundance, fill = YSB)) +
