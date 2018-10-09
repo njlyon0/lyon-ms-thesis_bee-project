@@ -77,7 +77,6 @@
 "R1","RIS","RIS-N","RIS-N-P2","PBG","1","High","Blue","Andrena.cressonii",1
 "R1","RIS","RIS-C","RIS-C-P3","PBG","0","Low","Blue","Andrena.geranii",1
 "R1","RIS","RIS-C","RIS-C-P2","PBG","0","Low","White","Andrena.geranii",1
-"R2","KLN","KLN-C","KLN-C-P3","PBG","1","High","Yellow","Andrena.sp",1
 "R2","RIS","RIS-S","RIS-S-P4","PBG","2","High","Yellow","Apis.mellifera",1
 "R2","PYN","PYN-S","PYN-S-P6","PBG","0","High","Blue","Augochlorella.aurata",1
 "R1","RIS","RIS-C","RIS-C-P3","PBG","0","High","Blue","Augochlorella.aurata",6
@@ -235,7 +234,6 @@
 "R1","RIS","RIS-S","RIS-S-P4","PBG","2","Low","Yellow","Hoplitis.producta",1
 "R2","PYN","PYN-S","PYN-S-P6","PBG","0","High","Blue","Hoplitis.truncata",1
 "R1","PYN","PYN-W","PYN-W-P6","PBG","1","Low","Blue","Hylaeus.affinis",1
-"R2","KLN","KLN-E","KLN-E-P4","PBG","2","High","White","Hylaeus.sp",1
 "R2","PYN","PYN-S","PYN-S-P1","PBG","0","High","Blue","Lasioglossum.sp",1
 "R3","PYN","PYN-S","PYN-S-P2","PBG","0","High","Blue","Lasioglossum.sp",1
 "R2","PYN","PYN-S","PYN-S-P6","PBG","0","High","Blue","Lasioglossum.sp",1
@@ -345,7 +343,6 @@
 "R3","PYN","PYN-N","PYN-N-P1","PBG","2","Low","Blue","X.x",0
 "R2","PYN","PYN-N","PYN-N-P2","PBG","2","Low","Blue","X.x",0
 "R2","RIS","RIS-S","RIS-S-P6","PBG","2","Low","Blue","X.x",0
-"R3","PYN","PYN-S","PYN-S-P6","PBG","0","Low","Whie","X.x",0
 "R2","KLN","KLN-W","KLN-W-P1","PBG","0","High","White","X.x",0
 "R3","KLN","KLN-W","KLN-W-P1","PBG","0","High","White","X.x",0
 "R1","KLN","KLN-W","KLN-W-P2","PBG","0","High","White","X.x",0
@@ -381,6 +378,7 @@
 "R1","PYN","PYN-S","PYN-S-P1","PBG","0","Low","White","X.x",0
 "R2","PYN","PYN-S","PYN-S-P4","PBG","0","Low","White","X.x",0
 "R3","PYN","PYN-S","PYN-S-P5","PBG","0","Low","White","X.x",0
+"R3","PYN","PYN-S","PYN-S-P6","PBG","0","Low","White","X.x",0
 "R3","RIS","RIS-C","RIS-C-P2","PBG","0","Low","White","X.x",0
 "R2","RIS","RIS-C","RIS-C-P3","PBG","0","Low","White","X.x",0
 "R3","RIS","RIS-C","RIS-C-P4","PBG","0","Low","White","X.x",0
