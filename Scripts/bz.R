@@ -20,13 +20,6 @@ setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Be
 # Load libraries
 library(vegan); library(tidyr); library(Rmisc); library(ggplot2); library(lme4); library(emmeans)
 
-# Graphing shortcuts
-colors <- c("0" = "#9970ab", "1" = "#762a83", "2" = "#40004b") # shades of purple
-dodge <- position_dodge(width = 0.5)
-pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                    panel.background = element_blank(), axis.line = element_line("black"),
-                    legend.title = element_blank())
-
 # QUESTION (that I need to ask myself) ####
 # If I think the rare bees are adding to my overdispersion, and remove them bcz of that,
 # what do I gain from an aggregate "common bees" abundance that I don't get out of single-sp work?
@@ -34,39 +27,86 @@ pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = eleme
 # Maybe visit Katie again and ask about single species stuff?
   ## I.e. if overdispersion is a non-issue, what other statistical stuff do I need to consider
 
-##  ----------------------------------------------------------------------------------------------------------  ##
-                                  # Data Prep ####
-##  ----------------------------------------------------------------------------------------------------------  ##
-# NOTE ON DATA
-  ## Due to a high frequency of rare species (i.e. many species that occur in <10 samples)
-  ## --and the subsequent overdispersion of analyses including them--
-  ## The data used for analysis focuses only on these "Common" bees
-  ## Don't believe me? Check out the species totals for bees
-bz.tots <- read.csv("./Species Totals/bz.spp.csv")
-bz.tots
-  ## Let's use only bee species that account for ≥10% of the total bees observed, so:
+##  -----------------------------------------------------------------------------  ##
+                # Background Data Exploration ####
+##  -----------------------------------------------------------------------------  ##
+# DATA NOTE
+  ## The bee dataset is characterized by a few hyper-abundant species and many rare species.
+  ## This contributes to overdisperson and model failures to converge.
+  ## By quantifying this variation we can better account for it/modify questions accordingly
 
-# Now read in the clean data
-bz.cln <- read.csv("./Data/bz-long.csv")
+# Get cleaned data
+bz.v0 <- read.csv("./Data/bz-long.csv")
 
-# Subset for only the common bees
-bz.common.cln <- subset(bz.cln, bz.cln$Bee.Species == "Agapostemon.virescens" |
-                      bz.cln$Bee.Species == "Lasioglossum.sp" | 
-                      bz.cln$Bee.Species == "Augochlorella.aurata" |
-                      bz.cln$Bee.Species == "Ceratina.dupla" | 
-                      bz.cln$Bee.Species == "Halictus.ligatus" |
-                      bz.cln$Bee.Species == "X.x")
+# Remove placeholder entry for bowls collected without bees
+bz.v1 <- subset(bz.v0, bz.v0$Bee.Species != "X.x")
+
+# Get species totals
+bz.tot <- aggregate(Number ~ Bee.Species, data = bz.v1, FUN = sum)
+
+# Re-order bees by abundance and get a percent of total
+bz.ord <- bz.tot[order(bz.tot$Number, decreasing = T), ]
+
+# How many total bees were collected?
+bz.tot.num <- sum(bz.ord$Number); bz.tot.num
+
+# Calculate a percent of total for each of these species
+bz.ord$Percent.Total <- round(( bz.ord$Number / bz.tot.num ) * 100, digits = 3)
+
+# Save this dataframe
+write.csv(bz.ord, "./Summary Info/bz-spp-totals.csv", row.names = F)
+
+##  -----------------------------------------------------------------------------  ##
+              # "Common" versus "Rare" Bee Species
+##  -----------------------------------------------------------------------------  ##
+# Identify a list of the bees that count as "common" (≥ 10% of total bee abundance)
+bz.ord$Bee.Species[bz.ord$Percent.Total >= 10]
+
+# Subset the long-format dataframe based on this criterion
+bz.common <- subset(bz.v0, bz.v0$Bee.Species == "Agapostemon.virescens" |
+                      bz.v0$Bee.Species == "Lasioglossum.sp" | 
+                      bz.v0$Bee.Species == "Augochlorella.aurata" |
+                      bz.v0$Bee.Species == "Ceratina.dupla" | 
+                      bz.v0$Bee.Species == "Halictus.ligatus" |
+                      bz.v0$Bee.Species == "X.x")
 
 # Get the common bee frame into wide format
-bz <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.common.cln)
+bz.common.wide <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.common)
 
 # Calculate abundance 
+bz.common.wide$Abundance <- rowSums(bz.common.wide[,-c(1:8)])
   ## Species density doesn't mean a whole lot now that we removed most of the species
-bz$Abundance <- rowSums(bz[,-c(1:8)])
 
-# Make years since burn a factor
-bz$YSB <- as.factor(bz$YSB)
-unique(bz$YSB)
+# Now save both of these dataframes out
+write.csv(bz.common, "./Data/bz-long-common.csv", row.names = F)
+write.csv(bz.common.wide, "./Data/bz-wide-common.csv", row.names = F)
+
+# Get a dataframe of the rare species
+bz.rare <- subset(bz.v0, bz.v0$Bee.Species != "Agapostemon.virescens" &
+                    bz.v0$Bee.Species != "Lasioglossum.sp" & 
+                    bz.v0$Bee.Species != "Augochlorella.aurata" &
+                    bz.v0$Bee.Species != "Ceratina.dupla" & 
+                    bz.v0$Bee.Species != "Halictus.ligatus" &
+                    bz.v0$Bee.Species != "X.x")
+
+# And save this in case it is relevant
+write.csv(bz.rare, "./Data/bz-long-rare.csv", row.names = F)
+
+##  ----------------------------------------------------------------------------------------------------------  ##
+                               # Data Exploration ####
+##  ----------------------------------------------------------------------------------------------------------  ##
+# Get the ordination stuff from the other scripts into this section
+
+
+##  ----------------------------------------------------------------------------------------------------------  ##
+                            # Analysis & Plotting Prep ####
+##  ----------------------------------------------------------------------------------------------------------  ##
+# Clear the environment
+rm(list = ls())
+  ## Step is vital due to earlier work
+  
+# Get the clean data from the common bees
+bz <- read.csv("./Data/bz-wide-common.csv")
 
 # Get a dataframe for each round
 unique(bz$Round)
@@ -74,22 +114,13 @@ bz.r1 <- subset(bz, bz$Round == "R1")
 bz.r2 <- subset(bz, bz$Round == "R2")
 bz.r3 <- subset(bz, bz$Round == "R3")
 
-# Get a secondary dataframe for the rare bees (to qualitatively report)
-bz.rare.v0 <- subset(bz.cln, bz.cln$Bee.Species != "Agapostemon.virescens" &
-                    bz.cln$Bee.Species != "Lasioglossum.sp" & 
-                    bz.cln$Bee.Species != "Augochlorella.aurata" &
-                    bz.cln$Bee.Species != "Ceratina.dupla" & 
-                    bz.cln$Bee.Species != "Halictus.ligatus" &
-                    bz.cln$Bee.Species != "X.x")
+# ggplot graphing shortcut calls
+colors <- c("0" = "#9970ab", "1" = "#762a83", "2" = "#40004b") # shades of purple
+dodge <- position_dodge(width = 0.5)
+pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                    panel.background = element_blank(), axis.line = element_line("black"),
+                    legend.title = element_blank())
 
-# Sum through everything but YSB
-bz.rare.cln <- aggregate(Number ~ YSB + Bee.Species, data = bz.rare.v0, FUN = sum)
-
-# Push it to a more intuitive table format (i.e. wide format)
-bz.rare <- spread(key = YSB, value = Number, fill = NA, data = bz.rare.cln)
-
-# Save 
-write.csv(bz.rare, "./Summary Info/rare-bz.csv", row.names = F)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                                  # Bee Round 1 ####
