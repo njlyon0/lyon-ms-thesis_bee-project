@@ -95,6 +95,9 @@ write.csv(bz.rare, "./Data/bz-long-rare.csv", row.names = F)
 ##  ----------------------------------------------------------------------------------------------------------  ##
                                # Data Exploration ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
+##  -----------------------------------------------------------------------------  ##
+                     # Exploratory Ordinations
+##  -----------------------------------------------------------------------------  ##
 # Check out the variation in community composition among sites before assessing treatment effects
 
 # Get sums of the data that have the following as rows:
@@ -106,35 +109,26 @@ bz.patch.v1 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species,
 bz.bowl.v1 <- aggregate(Number ~ Site + Patch + YSB + Round + Height + Bee.Species, 
                         FUN = sum, data = bz.v1)
 
-  ## Round (rare bees):
-bz.rare.bowl.v1 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species, 
-                        FUN = sum, data = bz.rare)
-
 # Spread each of these into wide format
 bz.patch.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.patch.v1)
 bz.bowl.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.bowl.v1)
-bz.rare.bowl.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.rare.bowl.v1)
 
 # Get community matrices without identifier columns
 bz.patch.rsp <- bz.patch.v2[,-c(1:3)]
 bz.bowl.rsp <- bz.bowl.v2[,-c(1:5)]
-bz.rare.bowl.rsp <- bz.rare.bowl.v2[,-c(1:5)]
 
 # Get distance measures for each of these matrices
 bz.patch.dst <- vegdist(bz.patch.rsp, method = "jaccard")
 bz.bowl.dst <- vegdist(bz.bowl.rsp, method = "jaccard")
-bz.rare.bowl.dst <- vegdist(bz.rare.bowl.rsp, method = "jaccard")
 
 # Perform nonmetric multidimensional scaling ordination
 bz.patch.mds <- metaMDS(bz.patch.dst, distance = "jaccard", engine = "monoMDS",
                         autotransform = F, expand = F, k = 2, try = 100)
 bz.bowl.mds <- metaMDS(bz.bowl.dst, distance = "jaccard", engine = "monoMDS",
                        autotransform = F, expand = F, k = 2, try = 100)
-bz.rare.bowl.mds <- metaMDS(bz.rare.bowl.dst, distance = "jaccard", engine = "monoMDS",
-                            autotransform = F, expand = F, k = 2, try = 100)
 
 # Check stress (should be progressively worse the less-defined the community is)
-bz.patch.mds$stress; bz.bowl.mds$stress; bz.rare.bowl.mds$stress
+bz.patch.mds$stress; bz.bowl.mds$stress
 
 # Get an NMS function for each of the two scales of data
 nms.3.ord <- function(mod, groupcol, g1, g2, g3, lntp1 = 4, lntp2 = 2, lntp3 = 1, title = NA,
@@ -231,7 +225,7 @@ bowl.leg <- as.vector(sort(unique(bz.bowl.v2$Patch)))
 # Do the ordinations and save them out
 jpeg(file = "./Graphs/bz_ords.jpg", width = 600, height = 400, quality = 100)
 
-par(mfrow = c(1, 3), mar = c(1, 2, 2, 1))
+par(mfrow = c(1, 2), mar = c(1, 2, 2, 1))
 nms.3.ord(mod = bz.patch.mds, groupcol = bz.patch.v2$Site, g1 = "KLN", g2 = "PYN", g3 = "RIS",
           title = "Bee Sites", legcont = patch.leg)
 nms.ptc.ord(mod = bz.bowl.mds, groupcol = bz.bowl.v2$Patch,
@@ -239,15 +233,14 @@ nms.ptc.ord(mod = bz.bowl.mds, groupcol = bz.bowl.v2$Patch,
             g4 = "PYN-N", g5 = "PYN-S", g6 = "PYN-W",
             g7 = "RIS-C", g8 = "RIS-N", g9 = "RIS-S",
             title = "Bee Transects", legcont = bowl.leg)
-nms.3.ord(mod = bz.rare.bowl.mds, groupcol = bz.rare.bowl.v2$Site, g1 = "KLN", g2 = "PYN", g3 = "RIS",
-          title = "Bee Sites", legcont = patch.leg)
-#nms.ptc.ord(mod = bz.rare.bowl.mds, groupcol = bz.rare.bowl.v2$Patch,
- #           g1 = "KLN-C", g2 = "KLN-E", g3 = "KLN-W",
-  #          g4 = "PYN-N", g5 = "PYN-S", g6 = "PYN-W",
-   #         g7 = "RIS-C", g8 = "RIS-N", g9 = "RIS-S",
-    #        title = "Rare Bee Transects", legcont = bowl.leg)
 
 dev.off(); par(mfrow = c(1, 1))
+
+##  -----------------------------------------------------------------------------  ##
+                # Species Abundance Barplots
+##  -----------------------------------------------------------------------------  ##
+
+
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                             # Analysis & Plotting Prep ####
