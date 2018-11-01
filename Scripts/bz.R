@@ -95,8 +95,159 @@ write.csv(bz.rare, "./Data/bz-long-rare.csv", row.names = F)
 ##  ----------------------------------------------------------------------------------------------------------  ##
                                # Data Exploration ####
 ##  ----------------------------------------------------------------------------------------------------------  ##
-# Get the ordination stuff from the other scripts into this section
+# Check out the variation in community composition among sites before assessing treatment effects
 
+# Get sums of the data that have the following as rows:
+  ## Patch:
+bz.patch.v1 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species,
+                        FUN = sum, data = bz.v1)
+
+  ## Bowl (all bees):
+bz.bowl.v1 <- aggregate(Number ~ Site + Patch + YSB + Round + Height + Bee.Species, 
+                        FUN = sum, data = bz.v1)
+
+  ## Round (rare bees):
+bz.rare.bowl.v1 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species, 
+                        FUN = sum, data = bz.rare)
+
+# Spread each of these into wide format
+bz.patch.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.patch.v1)
+bz.bowl.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.bowl.v1)
+bz.rare.bowl.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.rare.bowl.v1)
+
+# Get community matrices without identifier columns
+bz.patch.rsp <- bz.patch.v2[,-c(1:3)]
+bz.bowl.rsp <- bz.bowl.v2[,-c(1:5)]
+bz.rare.bowl.rsp <- bz.rare.bowl.v2[,-c(1:5)]
+
+# Get distance measures for each of these matrices
+bz.patch.dst <- vegdist(bz.patch.rsp, method = "jaccard")
+bz.bowl.dst <- vegdist(bz.bowl.rsp, method = "jaccard")
+bz.rare.bowl.dst <- vegdist(bz.rare.bowl.rsp, method = "jaccard")
+
+# Perform nonmetric multidimensional scaling ordination
+bz.patch.mds <- metaMDS(bz.patch.dst, distance = "jaccard", engine = "monoMDS",
+                        autotransform = F, expand = F, k = 2, try = 100)
+bz.bowl.mds <- metaMDS(bz.bowl.dst, distance = "jaccard", engine = "monoMDS",
+                       autotransform = F, expand = F, k = 2, try = 100)
+bz.rare.bowl.mds <- metaMDS(bz.rare.bowl.dst, distance = "jaccard", engine = "monoMDS",
+                            autotransform = F, expand = F, k = 2, try = 100)
+
+# Check stress (should be progressively worse the less-defined the community is)
+bz.patch.mds$stress; bz.bowl.mds$stress; bz.rare.bowl.mds$stress
+
+# Get an NMS function for each of the two scales of data
+nms.3.ord <- function(mod, groupcol, g1, g2, g3, lntp1 = 4, lntp2 = 2, lntp3 = 1, title = NA,
+                      legcont, legpos = "topright") {
+  ## mod = object returned by metaMDS
+  ## groupcol = group column in the dataframe that contains those (not the community matrix)
+  ## g1 - g3 = how each group appears in your dataframe (in quotes)
+  ## lntp1 - 3 = what sort of line each ellipse will be made of (accepts integers between 1 and 6 for diff lines)
+  ## legcont = single object for what you want the content of the legend to be
+  ## legpos = legend position, either numeric vector of x/y coords or shorthand accepted by "legend" function
+  
+  # Create plot
+  plot(mod, display = 'sites', choice = c(1, 2), main = title, type = 'none', xlab = "", ylab = "")
+  
+  # Set colors (easier for you to modify if we set this now and call these objects later)
+  col1 <- "#d73027" # red
+  col2 <- "#fdae61" # orange
+  col3 <- "#4575b4" # blue
+  
+  # Add points for each group with a different color per group
+  points(mod$points[groupcol == g1, 1], mod$points[groupcol == g1, 2], pch = c(21:23), bg = col1)
+  points(mod$points[groupcol == g2, 1], mod$points[groupcol == g2, 2], pch = c(21:23), bg = col2)
+  points(mod$points[groupcol == g3, 1], mod$points[groupcol == g3, 2], pch = c(21:23), bg = col3)
+  ## As of right now the colors are colorblind safe and each group is also given its own shape
+  
+  # Get a single vector of your manually set line types for the ellipses
+  lntps <- c(lntp1, lntp2, lntp3)
+  
+  # Ordinate SD ellipses around the centroid
+  library(vegan) # need this package for the following function
+  ordiellipse(mod, groupcol, 
+              col = c(g1 = col1, g2 = col2, g3 = col3),
+              display = "sites", kind = "sd", lwd = 2, lty = lntps, label = F)
+  
+  # Add legend
+  legend(legpos, legend = legcont, bty = "n", 
+         pch = 22, cex = 1.15, 
+         pt.bg = c(col1, col2, col3))
+  
+}
+nms.ptc.ord <- function(mod, groupcol, g1, g2, g3, g4, g5, g6, g7, g8, g9, 
+                        lntp1 = 4, lntp2 = 2, lntp3 = 1, title = NA, legcont, legpos = "topright") {
+  ## mod = object returned by metaMDS
+  ## groupcol = group column in the dataframe that contains those (not the community matrix)
+  ## g1 - g9 = how each group appears in your dataframe (in quotes)
+  ## lntp1 - 3 = what sort of line each ellipse will be made of (accepts integers between 1 and 6 for diff lines)
+  ## legcont = single object for what you want the content of the legend to be
+  ## legpos = legend position, either numeric vector of x/y coords or shorthand accepted by "legend" function
+  
+  # Create plot
+  plot(mod, display = 'sites', choice = c(1, 2), main = title, type = 'none', xlab = "", ylab = "")
+  
+  # Set colors (easier for you to modify if we set this now and call these objects later)
+  col1 <- "#d73027" # red
+  col2 <- "#fdae61" # orange
+  col3 <- "#4575b4" # blue
+  
+  # Add points for each group with a different color per group
+  points(mod$points[groupcol == g1, 1], mod$points[groupcol == g1, 2], pch = c(21), bg = col1)
+  points(mod$points[groupcol == g2, 1], mod$points[groupcol == g2, 2], pch = c(22), bg = col1)
+  points(mod$points[groupcol == g3, 1], mod$points[groupcol == g3, 2], pch = c(23), bg = col1)
+  
+  points(mod$points[groupcol == g4, 1], mod$points[groupcol == g4, 2], pch = c(21), bg = col2)
+  points(mod$points[groupcol == g5, 1], mod$points[groupcol == g5, 2], pch = c(22), bg = col2)
+  points(mod$points[groupcol == g6, 1], mod$points[groupcol == g6, 2], pch = c(23), bg = col2)
+  
+  points(mod$points[groupcol == g7, 1], mod$points[groupcol == g7, 2], pch = c(21), bg = col3)
+  points(mod$points[groupcol == g8, 1], mod$points[groupcol == g8, 2], pch = c(22), bg = col3)
+  points(mod$points[groupcol == g9, 1], mod$points[groupcol == g9, 2], pch = c(23), bg = col3)
+  ## As of right now the colors are colorblind safe and each group is also given its own shape
+  
+  # Get a single vector of your manually set line types for the ellipses
+  lntps <- rep(c(lntp1, lntp2, lntp3), 3)
+  
+  # Ordinate SD ellipses around the centroid
+  library(vegan) # need this package for the following function
+  ordiellipse(mod, groupcol, 
+              col = c(g1 = col1, g2 = col1, g3 = col1,
+                      g4 = col2, g5 = col2, g6 = col2,
+                      g7 = col3, g8 = col3, g9 = col3),
+              display = "sites", kind = "sd", lwd = 2, lty = lntps, label = F)
+  
+  # Add legend
+  legend(legpos, legend = legcont, bty = "n", 
+         pch = rep(c(21, 22, 23), 3), cex = 1.15, 
+         pt.bg = c(rep(col1, 3), rep(col2, 3), rep(col3, 3)))
+  
+}
+
+# Get legend shortcuts
+patch.leg <- c("KLN", "PYN", "RIS")
+bowl.leg <- as.vector(sort(unique(bz.bowl.v2$Patch)))
+
+# Do the ordinations and save them out
+jpeg(file = "./Graphs/bz_ords.jpg", width = 600, height = 400, quality = 100)
+
+par(mfrow = c(1, 3), mar = c(1, 2, 2, 1))
+nms.3.ord(mod = bz.patch.mds, groupcol = bz.patch.v2$Site, g1 = "KLN", g2 = "PYN", g3 = "RIS",
+          title = "Bee Sites", legcont = patch.leg)
+nms.ptc.ord(mod = bz.bowl.mds, groupcol = bz.bowl.v2$Patch,
+            g1 = "KLN-C", g2 = "KLN-E", g3 = "KLN-W",
+            g4 = "PYN-N", g5 = "PYN-S", g6 = "PYN-W",
+            g7 = "RIS-C", g8 = "RIS-N", g9 = "RIS-S",
+            title = "Bee Transects", legcont = bowl.leg)
+nms.3.ord(mod = bz.rare.bowl.mds, groupcol = bz.rare.bowl.v2$Site, g1 = "KLN", g2 = "PYN", g3 = "RIS",
+          title = "Bee Sites", legcont = patch.leg)
+#nms.ptc.ord(mod = bz.rare.bowl.mds, groupcol = bz.rare.bowl.v2$Patch,
+ #           g1 = "KLN-C", g2 = "KLN-E", g3 = "KLN-W",
+  #          g4 = "PYN-N", g5 = "PYN-S", g6 = "PYN-W",
+   #         g7 = "RIS-C", g8 = "RIS-N", g9 = "RIS-S",
+    #        title = "Rare Bee Transects", legcont = bowl.leg)
+
+dev.off(); par(mfrow = c(1, 1))
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                             # Analysis & Plotting Prep ####
