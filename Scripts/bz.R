@@ -237,10 +237,47 @@ nms.ptc.ord(mod = bz.bowl.mds, groupcol = bz.bowl.v2$Patch,
 dev.off(); par(mfrow = c(1, 1))
 
 ##  -----------------------------------------------------------------------------  ##
-                # Species Abundance Barplots
+                  # Species Abundance Barplots
 ##  -----------------------------------------------------------------------------  ##
+# Get a dataframe of the rare bees in each patch and common bees (separately)
+common.v2 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species, FUN = sum, data = bz.common)
+rare.v2 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species, FUN = sum, data = bz.rare)
 
+# Remove the placeholder rows from the common dataframe
+common.v2.5 <- subset(common.v2, common.v2$Bee.Species != "X.x")
 
+# Save new versions just in case
+common.v3 <- common.v2.5
+rare.v3 <- rare.v2
+
+# Re-order the factor levels of "Bee.Species" to reflect the relative abundances
+levels(common.v3$Bee.Species); levels(rare.v3$Bee.Species)
+common.v3$Bee.Species <- factor(common.v3$Bee.Species, levels = bz.ord$Bee.Species)
+rare.v3$Bee.Species <- factor(rare.v3$Bee.Species, levels = bz.ord$Bee.Species)
+levels(common.v3$Bee.Species); levels(rare.v3$Bee.Species)
+
+# Get some graphing shortcuts
+site.cols <- c("KLN" = "#d73027", "PYN" = "#fdae61", "RIS" = "#4575b4")
+spp.plt.pref.theme <- theme(panel.grid.major = element_line("gray95"), axis.line = element_line("black"),
+                    legend.title = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1),
+                    legend.position = "none")
+
+# Graph 'em!
+ggplot(common.v3, aes(x = Bee.Species, y = Number, fill = Site)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = site.cols) +
+  labs(x = "Bee Species", y = "Abundance") +
+  facet_grid(Site ~ .) +
+  spp.plt.pref.theme
+ggsave("./Graphs/bz_common_spp.pdf", plot = last_plot(), width = 6, height = 4)
+
+ggplot(rare.v3, aes(x = Bee.Species, y = Number, fill = Site)) +
+  geom_bar(stat = 'identity') +
+  scale_fill_manual(values = site.cols) +
+  labs(x = "Bee Species", y = "Abundance") +
+  facet_grid(Site ~ .) +
+  spp.plt.pref.theme
+ggsave("./Graphs/bz_rare_spp.pdf", plot = last_plot(), width = 6, height = 4)
 
 ##  ----------------------------------------------------------------------------------------------------------  ##
                             # Analysis & Plotting Prep ####
