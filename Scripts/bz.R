@@ -227,12 +227,12 @@ jpeg(file = "./Graphs/bz_ords.jpg", width = 600, height = 400, quality = 100)
 
 par(mfrow = c(1, 2), mar = c(1, 2, 2, 1))
 nms.3.ord(mod = bz.patch.mds, groupcol = bz.patch.v2$Site, g1 = "KLN", g2 = "PYN", g3 = "RIS",
-          title = "Bee Sites", legcont = patch.leg)
+          title = "Bee Sites", legcont = patch.leg, legpos = "topleft")
 nms.ptc.ord(mod = bz.bowl.mds, groupcol = bz.bowl.v2$Patch,
             g1 = "KLN-C", g2 = "KLN-E", g3 = "KLN-W",
             g4 = "PYN-N", g5 = "PYN-S", g6 = "PYN-W",
             g7 = "RIS-C", g8 = "RIS-N", g9 = "RIS-S",
-            title = "Bee Transects", legcont = bowl.leg)
+            title = "Bee Transects", legcont = bowl.leg, legpos = "topleft")
 
 dev.off(); par(mfrow = c(1, 1))
 
@@ -288,6 +288,11 @@ rm(list = ls())
   
 # Get the clean data from the common bees
 bz <- read.csv("./Data/bz-wide-common.csv")
+
+# Make YSB a factor
+sort(unique(bz$YSB))
+bz$YSB <- as.factor(bz$YSB)
+sort(unique(bz$YSB))
 
 # Get a dataframe for each round
 unique(bz$Round)
