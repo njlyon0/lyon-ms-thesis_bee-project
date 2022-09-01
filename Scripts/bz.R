@@ -1,415 +1,184 @@
-##  --------------------------------------------------------------------------------------------------------------------------------------  ##
-                               # Lyon Thesis -- Chapter 2: Pollinators and PBG
-##  --------------------------------------------------------------------------------------------------------------------------------------  ##
-# Written by Nicholas Lyon
+## --------------------------------------------------- ##
+    # Lyon MS Thesis - Native Bee Project - Bee Data
+## --------------------------------------------------- ##
+# Written by Nicholas L Lyon
 
-# Big-Picture Question:
-  ## How do pollinator communities (e.g. bee and butterfly) and their floral resources
-  ## vary among  patches of patch-burn graze (hereafter PBG) sites?
-
-# Script taxon: BEES
-
-# START ####
+# Load libraries
+# install.packages("librarian")
+librarian::shelf(tidyverse, vegan, AICcmodavg, lme4, emmeans, njlyon0/helpR)
 
 # Clear environment
 rm(list = ls())
 
-# Set working directory
-setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Bee.Project")
+## --------------------------------------------------- ##
+                # Data Wrangling - Broad ----
+## --------------------------------------------------- ##
+# Load data
+bees_v0 <- read.csv(file.path("data", "bee-proj_2018_bees-long.csv"))
 
-# Load libraries
-library(vegan); library(tidyr); library(Rmisc); library(ggplot2); library(lme4); library(emmeans)
+# Take a look
+dplyr::glimpse(bees_v0)
 
-# QUESTION (that I need to ask myself) ####
-# If I think the rare bees are adding to my overdispersion, and remove them bcz of that,
-# what do I gain from an aggregate "common bees" abundance that I don't get out of single-sp work?
+# Make a version where we reclaim genus ID
+bees_v1 <- bees_v0 %>%
+  tidyr::separate(col = Bee_Species, sep = "\\.", remove = F,
+                  into = c("Bee_Genus", "Bee_Epithet")) %>%
+  # Drop epithet
+  dplyr::select(-Bee_Epithet) %>%
+  # Also tidy some other columns
+  dplyr::rename(Bowl_Height = Height,
+                Bee_Family = Family)
 
-# Maybe visit Katie again and ask about single species stuff?
-  ## I.e. if overdispersion is a non-issue, what other statistical stuff do I need to consider
+# Check it out
+dplyr::glimpse(bees_v1)
 
-##  -----------------------------------------------------------------------------  ##
-                # Background Data Exploration ####
-##  -----------------------------------------------------------------------------  ##
-# DATA NOTE
-  ## The bee dataset is characterized by a few hyper-abundant species and many rare species.
-  ## This contributes to overdisperson and model failures to converge.
-  ## By quantifying this variation we can better account for it/modify questions accordingly
+# Create a plotting shortcut
+bee_theme <- theme_classic() + 
+  theme(legend.background = element_blank(),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14))
 
-# Get cleaned data
-bz.v0 <- read.csv("./Data/bz-long.csv")
+## --------------------------------------------------- ##
+                  # Data Exploration ----
+## --------------------------------------------------- ##
+# Note: There are many random effects, bee counts / bowl are quite low, and over dispersion is a likely threat to model convergence. Let's do some exploratory plotting to help tease these apart.
 
-# Remove placeholder entry for bowls collected without bees
-bz.v1 <- subset(bz.v0, bz.v0$Bee.Species != "X.x")
+# Drop bee identity and sum within other variables
+per_bowl <- bees_v1 %>%
+  dplyr::group_by(across(Sampling_Event_ID:Bowl_Status)) %>%
+  dplyr::summarize(Number = sum(Number, na.rm = T)) %>%
+  dplyr::ungroup() %>%
+  # Also split post position off
+  tidyr::separate(col = Post_ID, remove = F, sep = "-",
+                  into = c("Site_delete", "Patch_delete",
+                           "Bowl_Position")) %>%
+  dplyr::select(-dplyr::ends_with("_delete"))
 
-# Get species totals
-bz.tot <- aggregate(Number ~ Bee.Species, data = bz.v1, FUN = sum)
+# This creates a total bees per bowl count
+glimpse(per_bowl)
 
-# Re-order bees by abundance and get a percent of total
-bz.ord <- bz.tot[order(bz.tot$Number, decreasing = T), ]
+# Create exploratory plots folder
+dir.create("exploratory_plots", showWarnings = F)
 
-# How many total bees were collected?
-bz.tot.num <- sum(bz.ord$Number); bz.tot.num
+# Plot bowl size to see if it (visually) differs
+ggplot(per_bowl, aes(fill = Bowl_Size_oz, x = Round, y = Number)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.3) + 
+  facet_wrap(. ~ Site) +
+  bee_theme
 
-# Calculate a percent of total for each of these species
-bz.ord$Percent.Total <- round(( bz.ord$Number / bz.tot.num ) * 100, digits = 3)
+# Export
+ggsave(file.path("exploratory_plots", "bees_bowl-size.png"))
 
-# Save this dataframe
-write.csv(bz.ord, "./Summary Info/bz-spp-totals.csv", row.names = F)
+# Now bowl color
+ggplot(per_bowl, aes(fill = Bowl_Color, x = Round, y = Number)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.3) + 
+  facet_wrap(. ~ Site) +
+  scale_fill_manual(values = c("blue", "white", "orange")) + 
+  bee_theme
 
-##  -----------------------------------------------------------------------------  ##
-              # "Common" versus "Rare" Bee Species
-##  -----------------------------------------------------------------------------  ##
-# Identify a list of the bees that count as "common" (≥ 10% of total bee abundance)
-bz.ord$Bee.Species[bz.ord$Percent.Total >= 10]
+# Export
+ggsave(file.path("exploratory_plots", "bees_bowl-color.png"))
 
-# Subset the long-format dataframe based on this criterion
-bz.common <- subset(bz.v0, bz.v0$Bee.Species == "Agapostemon.virescens" |
-                      bz.v0$Bee.Species == "Lasioglossum.sp" | 
-                      bz.v0$Bee.Species == "Augochlorella.aurata" |
-                      bz.v0$Bee.Species == "Ceratina.dupla" | 
-                      bz.v0$Bee.Species == "Halictus.ligatus" |
-                      bz.v0$Bee.Species == "X.x")
+# Now bowl position
+ggplot(per_bowl, aes(fill = Bowl_Position, x = Round, y = Number)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.3) + 
+  facet_wrap(. ~ Site) +
+  bee_theme
 
-# Get the common bee frame into wide format
-bz.common.wide <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.common)
+# Export
+ggsave(file.path("exploratory_plots", "bees_bowl-position.png"))
 
-# Calculate abundance 
-bz.common.wide$Abundance <- rowSums(bz.common.wide[,-c(1:8)])
-  ## Species density doesn't mean a whole lot now that we removed most of the species
+# Finally, bowl height
+ggplot(per_bowl, aes(fill = Bowl_Height, x = Round, y = Number)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.3) + 
+  facet_wrap(. ~ Site) +
+  bee_theme
 
-# Now save both of these dataframes out
-write.csv(bz.common, "./Data/bz-long-common.csv", row.names = F)
-write.csv(bz.common.wide, "./Data/bz-wide-common.csv", row.names = F)
+# Export
+ggsave(file.path("exploratory_plots", "bees_bowl-height.png"))
 
-# Get a dataframe of the rare species
-bz.rare <- subset(bz.v0, bz.v0$Bee.Species != "Agapostemon.virescens" &
-                    bz.v0$Bee.Species != "Lasioglossum.sp" & 
-                    bz.v0$Bee.Species != "Augochlorella.aurata" &
-                    bz.v0$Bee.Species != "Ceratina.dupla" & 
-                    bz.v0$Bee.Species != "Halictus.ligatus" &
-                    bz.v0$Bee.Species != "X.x")
+# Take aways:
+## 1) bowl size exactly correlates to sampling round so any model including round basically includes size
+## 2) bowl color seems to matter because blue bowls got more bees
+## 3) bowl position is a dog's breakfast (which is fine because I had no a priori reason to think it would matter)
+## 4) does look like high bowls get more bees
 
-# And save this in case it is relevant
-write.csv(bz.rare, "./Data/bz-long-rare.csv", row.names = F)
+## --------------------------------------------------- ##
+            # Data Wrangling - Specific ----
+## --------------------------------------------------- ##
+# Time to implement some final wrangling with inference from our exploration
 
-##  ----------------------------------------------------------------------------------------------------------  ##
-                               # Data Exploration ####
-##  ----------------------------------------------------------------------------------------------------------  ##
-##  -----------------------------------------------------------------------------  ##
-                     # Exploratory Ordinations
-##  -----------------------------------------------------------------------------  ##
-# Check out the variation in community composition among sites before assessing treatment effects
-
-# Get sums of the data that have the following as rows:
-  ## Patch:
-bz.patch.v1 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species,
-                        FUN = sum, data = bz.v1)
-
-  ## Bowl (all bees):
-bz.bowl.v1 <- aggregate(Number ~ Site + Patch + YSB + Round + Height + Bee.Species, 
-                        FUN = sum, data = bz.v1)
-
-# Spread each of these into wide format
-bz.patch.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.patch.v1)
-bz.bowl.v2 <- spread(key = Bee.Species, value = Number, fill = 0, data = bz.bowl.v1)
-
-# Get community matrices without identifier columns
-bz.patch.rsp <- bz.patch.v2[,-c(1:3)]
-bz.bowl.rsp <- bz.bowl.v2[,-c(1:5)]
-
-# Get distance measures for each of these matrices
-bz.patch.dst <- vegdist(bz.patch.rsp, method = "jaccard")
-bz.bowl.dst <- vegdist(bz.bowl.rsp, method = "jaccard")
-
-# Perform nonmetric multidimensional scaling ordination
-bz.patch.mds <- metaMDS(bz.patch.dst, distance = "jaccard", engine = "monoMDS",
-                        autotransform = F, expand = F, k = 2, try = 100)
-bz.bowl.mds <- metaMDS(bz.bowl.dst, distance = "jaccard", engine = "monoMDS",
-                       autotransform = F, expand = F, k = 2, try = 100)
-
-# Check stress (should be progressively worse the less-defined the community is)
-bz.patch.mds$stress; bz.bowl.mds$stress
-
-# Get an NMS function for each of the two scales of data
-nms.3.ord <- function(mod, groupcol, g1, g2, g3, lntp1 = 4, lntp2 = 2, lntp3 = 1, title = NA,
-                      legcont, legpos = "topright") {
-  ## mod = object returned by metaMDS
-  ## groupcol = group column in the dataframe that contains those (not the community matrix)
-  ## g1 - g3 = how each group appears in your dataframe (in quotes)
-  ## lntp1 - 3 = what sort of line each ellipse will be made of (accepts integers between 1 and 6 for diff lines)
-  ## legcont = single object for what you want the content of the legend to be
-  ## legpos = legend position, either numeric vector of x/y coords or shorthand accepted by "legend" function
+bees_actual <- bees_v1 %>%
+  # Can drop bowl position and bowl size
+  dplyr::select(Capture_Date, Round, Site, Patch,
+                Adaptive_Mgmt:Herbicide_Trt,
+                Bowl_Height, Bowl_Color, dplyr::contains("Bee_"),
+                Number) %>%
+  # That done, summarize within everything else
+  dplyr::group_by(across(Capture_Date:Bee_Genus)) %>%
+  dplyr::summarize(Bee_Count = sum(Number, na.rm = T)) %>%
+  dplyr::ungroup()
   
-  # Create plot
-  plot(mod, display = 'sites', choice = c(1, 2), main = title, type = 'none', xlab = "", ylab = "")
-  
-  # Set colors (easier for you to modify if we set this now and call these objects later)
-  col1 <- "#d73027" # red
-  col2 <- "#fdae61" # orange
-  col3 <- "#4575b4" # blue
-  
-  # Add points for each group with a different color per group
-  points(mod$points[groupcol == g1, 1], mod$points[groupcol == g1, 2], pch = c(21:23), bg = col1)
-  points(mod$points[groupcol == g2, 1], mod$points[groupcol == g2, 2], pch = c(21:23), bg = col2)
-  points(mod$points[groupcol == g3, 1], mod$points[groupcol == g3, 2], pch = c(21:23), bg = col3)
-  ## As of right now the colors are colorblind safe and each group is also given its own shape
-  
-  # Get a single vector of your manually set line types for the ellipses
-  lntps <- c(lntp1, lntp2, lntp3)
-  
-  # Ordinate SD ellipses around the centroid
-  library(vegan) # need this package for the following function
-  ordiellipse(mod, groupcol, 
-              col = c(g1 = col1, g2 = col2, g3 = col3),
-              display = "sites", kind = "sd", lwd = 2, lty = lntps, label = F)
-  
-  # Add legend
-  legend(legpos, legend = legcont, bty = "n", 
-         pch = 22, cex = 1.15, 
-         pt.bg = c(col1, col2, col3))
-  
-}
-nms.ptc.ord <- function(mod, groupcol, g1, g2, g3, g4, g5, g6, g7, g8, g9, 
-                        lntp1 = 4, lntp2 = 2, lntp3 = 1, title = NA, legcont, legpos = "topright") {
-  ## mod = object returned by metaMDS
-  ## groupcol = group column in the dataframe that contains those (not the community matrix)
-  ## g1 - g9 = how each group appears in your dataframe (in quotes)
-  ## lntp1 - 3 = what sort of line each ellipse will be made of (accepts integers between 1 and 6 for diff lines)
-  ## legcont = single object for what you want the content of the legend to be
-  ## legpos = legend position, either numeric vector of x/y coords or shorthand accepted by "legend" function
-  
-  # Create plot
-  plot(mod, display = 'sites', choice = c(1, 2), main = title, type = 'none', xlab = "", ylab = "")
-  
-  # Set colors (easier for you to modify if we set this now and call these objects later)
-  col1 <- "#d73027" # red
-  col2 <- "#fdae61" # orange
-  col3 <- "#4575b4" # blue
-  
-  # Add points for each group with a different color per group
-  points(mod$points[groupcol == g1, 1], mod$points[groupcol == g1, 2], pch = c(21), bg = col1)
-  points(mod$points[groupcol == g2, 1], mod$points[groupcol == g2, 2], pch = c(22), bg = col1)
-  points(mod$points[groupcol == g3, 1], mod$points[groupcol == g3, 2], pch = c(23), bg = col1)
-  
-  points(mod$points[groupcol == g4, 1], mod$points[groupcol == g4, 2], pch = c(21), bg = col2)
-  points(mod$points[groupcol == g5, 1], mod$points[groupcol == g5, 2], pch = c(22), bg = col2)
-  points(mod$points[groupcol == g6, 1], mod$points[groupcol == g6, 2], pch = c(23), bg = col2)
-  
-  points(mod$points[groupcol == g7, 1], mod$points[groupcol == g7, 2], pch = c(21), bg = col3)
-  points(mod$points[groupcol == g8, 1], mod$points[groupcol == g8, 2], pch = c(22), bg = col3)
-  points(mod$points[groupcol == g9, 1], mod$points[groupcol == g9, 2], pch = c(23), bg = col3)
-  ## As of right now the colors are colorblind safe and each group is also given its own shape
-  
-  # Get a single vector of your manually set line types for the ellipses
-  lntps <- rep(c(lntp1, lntp2, lntp3), 3)
-  
-  # Ordinate SD ellipses around the centroid
-  library(vegan) # need this package for the following function
-  ordiellipse(mod, groupcol, 
-              col = c(g1 = col1, g2 = col1, g3 = col1,
-                      g4 = col2, g5 = col2, g6 = col2,
-                      g7 = col3, g8 = col3, g9 = col3),
-              display = "sites", kind = "sd", lwd = 2, lty = lntps, label = F)
-  
-  # Add legend
-  legend(legpos, legend = legcont, bty = "n", 
-         pch = rep(c(21, 22, 23), 3), cex = 1.15, 
-         pt.bg = c(rep(col1, 3), rep(col2, 3), rep(col3, 3)))
-  
-}
+# Check it out
+glimpse(bees_actual)
 
-# Get legend shortcuts
-patch.leg <- c("KLN", "PYN", "RIS")
-bowl.leg <- as.vector(sort(unique(bz.bowl.v2$Patch)))
+## --------------------------------------------------- ##
+                  # Model Selection ----
+## --------------------------------------------------- ##
+# We still have a lot of variables so let's do model selection
 
-# Do the ordinations and save them out
-jpeg(file = "./Graphs/bz_ords.jpg", width = 600, height = 400, quality = 100)
+# Fit a model with the kitchen sink in it (i.e., everything)
+lm_sink <- lm(Bee_Count ~ Capture_Date + Round + Site + Adaptive_Mgmt + Years_Since_Burn + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Family + Bee_Species, data = bees_actual)
 
-par(mfrow = c(1, 2), mar = c(1, 2, 2, 1))
-nms.3.ord(mod = bz.patch.mds, groupcol = bz.patch.v2$Site, g1 = "KLN", g2 = "PYN", g3 = "RIS",
-          title = "Bee Sites", legcont = patch.leg, legpos = "topleft")
-nms.ptc.ord(mod = bz.bowl.mds, groupcol = bz.bowl.v2$Patch,
-            g1 = "KLN-C", g2 = "KLN-E", g3 = "KLN-W",
-            g4 = "PYN-N", g5 = "PYN-S", g6 = "PYN-W",
-            g7 = "RIS-C", g8 = "RIS-N", g9 = "RIS-S",
-            title = "Bee Transects", legcont = bowl.leg, legpos = "topleft")
+# Fit one for my actual hypothesis
+lm_hope <- lm(Bee_Count ~ Adaptive_Mgmt + Years_Since_Burn + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Species, data = bees_actual)
 
-dev.off(); par(mfrow = c(1, 1))
+# Fit one where we don't think species or YSB matters
+lm_fam <- lm(Bee_Count ~ Adaptive_Mgmt + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Family, data = bees_actual)
 
-##  -----------------------------------------------------------------------------  ##
-                  # Species Abundance Barplots
-##  -----------------------------------------------------------------------------  ##
-# Get a dataframe of the rare bees in each patch and common bees (separately)
-common.v2 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species, FUN = sum, data = bz.common)
-rare.v2 <- aggregate(Number ~ Site + Patch + YSB + Bee.Species, FUN = sum, data = bz.rare)
+# One where only site-level characters matter
+lm_site <- lm(Bee_Count ~ Site + Adaptive_Mgmt + Bee_Species, data = bees_actual)
 
-# Remove the placeholder rows from the common dataframe
-common.v2.5 <- subset(common.v2, common.v2$Bee.Species != "X.x")
+# One where only patch-level characters matter
+lm_patch <- lm(Bee_Count ~ Round + Years_Since_Burn + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Species, data = bees_actual)
 
-# Save new versions just in case
-common.v3 <- common.v2.5
-rare.v3 <- rare.v2
+# One where its pure seasonality and site
+lm_time <- lm(Bee_Count ~ Capture_Date + Round + Site + Bee_Species, data = bees_actual)
 
-# Re-order the factor levels of "Bee.Species" to reflect the relative abundances
-levels(common.v3$Bee.Species); levels(rare.v3$Bee.Species)
-common.v3$Bee.Species <- factor(common.v3$Bee.Species, levels = bz.ord$Bee.Species)
-rare.v3$Bee.Species <- factor(rare.v3$Bee.Species, levels = bz.ord$Bee.Species)
-levels(common.v3$Bee.Species); levels(rare.v3$Bee.Species)
+# Last one, where it's just bee taxa
+lm_spp <- lm(Bee_Count ~ Bowl_Color + Bee_Family + Bee_Species, data = bees_actual)
 
-# Get some graphing shortcuts
-site.cols <- c("KLN" = "#d73027", "PYN" = "#fdae61", "RIS" = "#4575b4")
-spp.plt.pref.theme <- theme(panel.grid.major = element_line("gray95"), axis.line = element_line("black"),
-                    legend.title = element_blank(), axis.text.x = element_text(angle = 90, hjust = 1),
-                    legend.position = "none")
+# List the models
+model_list <- list(lm_sink, lm_hope, lm_fam, lm_site, lm_patch, lm_spp, lm_time)
 
-# Graph 'em!
-ggplot(common.v3, aes(x = Bee.Species, y = Number, fill = Site)) +
-  geom_bar(stat = 'identity') +
-  scale_fill_manual(values = site.cols) +
-  labs(x = "Bee Species", y = "Abundance") +
-  facet_grid(Site ~ .) +
-  spp.plt.pref.theme
-ggsave("./Graphs/bz_common_spp.pdf", plot = last_plot(), width = 6, height = 4)
+# Compare model explanatory power using Akaike (AIC!)
+AICcmodavg::aictab(cand.set = model_list, sort = T,
+                   modnames = c("Sink", "Hypothesis", "Family", "Site",
+                                "Patch", "Taxa", "Seasonality"))
 
-ggplot(rare.v3, aes(x = Bee.Species, y = Number, fill = Site)) +
-  geom_bar(stat = 'identity') +
-  scale_fill_manual(values = site.cols) +
-  labs(x = "Bee Species", y = "Abundance") +
-  facet_grid(Site ~ .) +
-  spp.plt.pref.theme
-ggsave("./Graphs/bz_rare_spp.pdf", plot = last_plot(), width = 6, height = 4)
+# More content to come...
 
-##  ----------------------------------------------------------------------------------------------------------  ##
-                            # Analysis & Plotting Prep ####
-##  ----------------------------------------------------------------------------------------------------------  ##
-# Clear the environment
-rm(list = ls())
-  ## Step is vital due to earlier work
-  
-# Get the clean data from the common bees
-bz <- read.csv("./Data/bz-wide-common.csv")
+## --------------------------------------------------- ##
+              # Treatment Clarification ----
+## --------------------------------------------------- ##
 
-# Make YSB a factor
-sort(unique(bz$YSB))
-bz$YSB <- as.factor(bz$YSB)
-sort(unique(bz$YSB))
+# Let's create a simple treatment table per patch/site for reference
+treatments <- bees_actual %>%
+  # Pare down to needed columns
+  dplyr::select(Site, Patch, Adaptive_Mgmt:Herbicide_Trt) %>%
+  # Get only unique combinations
+  unique()
 
-# Get a dataframe for each round
-unique(bz$Round)
-bz.r1 <- subset(bz, bz$Round == "R1")
-bz.r2 <- subset(bz, bz$Round == "R2")
-bz.r3 <- subset(bz, bz$Round == "R3")
+# Check it
+treatments
 
-# ggplot graphing shortcut calls
-colors <- c("0" = "#9970ab", "1" = "#762a83", "2" = "#40004b") # shades of purple
-dodge <- position_dodge(width = 0.5)
-pref.theme <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                    panel.background = element_blank(), axis.line = element_line("black"),
-                    legend.title = element_blank())
+# Save it
+dir.create("reference", showWarnings = F)
+write.csv(treatments, row.names = F,
+          file.path("reference", "treatment_table.csv"))
 
-
-##  ----------------------------------------------------------------------------------------------------------  ##
-                                 # Bee Round 1 ####
-##  ----------------------------------------------------------------------------------------------------------  ##
-
-# Stats-Recommended Model
-glmer(Abundance ~ Height * YSB + Site:Height + Site:YSB + Site + Bowl.Color +
-        (1|Patch) + (1|Post.ID) + (1|Observation), data = bz.r1, family = poisson)
-
-
-# Analysis
-bz.r1.ab.mem <- glmer(Abundance ~ YSB * Height + 
-                      (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
-                      data = test, family = poisson)
-summary(bz.r1.ab.mem)
-  ## sig!
-
-plyr::count(bz.r1$Abundance)
-
-bz.r1.dn.mem <- glmer(Species.Density ~ YSB * Height +
-                      (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
-                      data = bz.r1, family = poisson)
-summary(bz.r1.dn.mem)
-  ## Variance explained by Post.ID and Patch is essentially 0, so drop 'em
-
-# Re-do
-bz.r1.dn.mem <- glmer(Species.Density ~ YSB * Height +
-                      (1|Bowl.Color) + (1|Site) + (1|factor(1:nrow(bz.r1))),
-                      data = bz.r1, family = poisson)
-summary(bz.r1.dn.mem)
-
-# Plotting
-ggplot(bz.r1, aes(x = YSB, y = Abundance, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Bee Abundance") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Height ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-ggplot(bz.r1, aes(x = YSB, y = Species.Density, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Bee Species Density") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Height ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-##  ----------------------------------------------------------------------------------------------------------  ##
-                                   # Bee Round 2 ####
-##  ----------------------------------------------------------------------------------------------------------  ##
-# Analysis
-bz.r2.ab.mem <- glmer(Abundance ~ YSB * Height + 
-                        (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
-                      data = bz.r2, family = poisson)
-summary(bz.r2.ab.mem)
-  ## sig!
-
-bz.r2.dn.mem <- glmer(Species.Density ~ YSB * Height +
-                        (1|Bowl.Color) + (1|Site) + (1|Patch) + (1|Post.ID),
-                      data = bz.r2, family = poisson)
-summary(bz.r2.dn.mem)
-  ## failed to converge
-
-plyr::count(bz.r2$Species.Density)
-
-# Plotting
-ggplot(bz.r2, aes(x = YSB, y = Abundance, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Bee Abundance") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Height ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-ggplot(bz.r2, aes(x = YSB, y = Species.Density, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Bee Species Density") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Height ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-##  ----------------------------------------------------------------------------------------------------------  ##
-                                # Bee Round 3 ####
-##  ----------------------------------------------------------------------------------------------------------  ##
-# Not enough non-zero data to have meaningful analyses, so instead will just get summary values
-aggregate(Abundance ~ YSB + Height, FUN = sum, data = bz.r3)
-summarySE(data = bz.r3, measurevar = "Species.Density", groupvars = c("YSB", "Height"))
-
-
-
-
-# Plotting
-ggplot(bz.r3, aes(x = YSB, y = Abundance, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Bee Abundance") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Height ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-ggplot(bz.r3, aes(x = YSB, y = Species.Density, fill = YSB)) +
-  geom_boxplot(outlier.shape = 21) +
-  labs(x = "Years Since Burn", y = "Bee Species Density") + 
-  scale_fill_manual(values = colors) +
-  facet_grid(Height ~ .) +
-  pref.theme + theme(legend.position = "none")
-
-# END ####
-
+# End ----
