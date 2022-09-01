@@ -5,3 +5,6 @@
 
 # R project file
 *.Rproj
+
+# Various folders
+exploratory_plots/
