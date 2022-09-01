@@ -135,7 +135,7 @@ glimpse(bees_actual)
 lm_sink <- lm(Bee_Count ~ Capture_Date + Round + Site + Adaptive_Mgmt + Years_Since_Burn + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Family + Bee_Species, data = bees_actual)
 
 # Fit one for my actual hypothesis
-lm_hope <- lm(Bee_Count ~ Adaptive_Mgmt + Years_Since_Burn + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Species, data = bees_actual)
+lm_hope <- lm(Bee_Count ~ Years_Since_Burn + Herbicide_Trt + Bowl_Height + Bee_Species + Bowl_Color, data = bees_actual)
 
 # Fit one where we don't think species or YSB matters
 lm_fam <- lm(Bee_Count ~ Adaptive_Mgmt + Herbicide_Trt + Bowl_Height + Bowl_Color + Bee_Family, data = bees_actual)
