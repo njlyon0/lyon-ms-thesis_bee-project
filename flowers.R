@@ -1,24 +1,52 @@
-##  --------------------------------------------------------------------------------------------------------------------------------------  ##
-                               # Lyon Thesis -- Chapter 2: Pollinators and PBG
-##  --------------------------------------------------------------------------------------------------------------------------------------  ##
-# Written by Nicholas Lyon
+### --------------------------------------------------- ##
+# Lyon MS Thesis - Native Bee Project - Bee Data
+## --------------------------------------------------- ##
+# Written by Nicholas L Lyon
 
-# Big-Picture Question:
-  ## How do pollinator communities (e.g. bee and butterfly) and their floral resources
-  ## vary among  patches of patch-burn graze (hereafter PBG) sites?
-
-# Script taxon: FLOWERS (nectar-producing)
-
-# START ####
+# Load libraries
+# install.packages("librarian")
+librarian::shelf(tidyverse, vegan, AICcmodavg, lme4, emmeans, njlyon0/helpR)
 
 # Clear environment
 rm(list = ls())
 
-# Set working directory
-setwd("~/Documents/School/1. Iowa State/_MS Project/_AFRI Project/Lyon.Thesis-Bee.Project")
+## --------------------------------------------------- ##
+# Data Wrangling - Broad ----
+## --------------------------------------------------- ##
+# Load data
+flowers_v0 <- read.csv(file.path("data", "bee-proj_ALL_floral-long.csv"))
 
-# Load libraries
-library(vegan); library(ggplot2); library(lme4); library(emmeans)
+# Take a look
+dplyr::glimpse(flowers_v0)
+
+# Do some filtering
+flowers_v1 <- flowers_v0 %>% 
+  ## Remove 2017 flowers
+  dplyr::filter(Capture_Year != 2017)
+  
+# Check it out
+dplyr::glimpse(flowers_v1)
+
+# Create a plotting shortcut
+flower_theme <- theme_classic() + 
+  theme(legend.background = element_blank(),
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14))
+
+
+
+
+
+
+
+
+
+
+
+
+
+# End ----
+
 
 # Get cleaned data
 bz.flr <- read.csv("./Data/bz-flr-wide.csv")
