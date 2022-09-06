@@ -4,6 +4,10 @@
 
 This repository contains analysis of native bee and floral resource community data. These data were collected between May and August of 2017 and 2018 in the Grand River Grasslands (GRG) of Ringgold Co. Iowa and Harrison Co. Missouri. Data tidying are performed in a dedicated repository that tidies data across several other projects conducted in the GRG. The [tidying repository](https://github.com/njlyon0/lyon-ms-thesis_field-tidy) is set to "Private" but if you need access to it for some reason, please contact Nick Lyon to begin that conversation.
 
+## Data Availability
+
+While the data are embedded directly in this repository, the metadata is not as consistently recorded as I would like (sorry about that!). To help facilitate others in using these data, I have published the dataset on the [Environmental Data Initiative](https://environmentaldatainitiative.org/)'s (EDI) Data Portal with full metadata documentation. See [here](https://portal.edirepository.org/nis/mapbrowse?scope=edi&identifier=1210&revision=1) for the full dataset with metadata and citation information.
+
 ## Experimental Design
 
 This project was meant to explore native bee response within two different management methods. For both of the sub-projects, each "site" (i.e., full pasture) was divided into three equal "patches" and this is the scale at which management intervention was applied.
@@ -27,3 +31,4 @@ In this sub-project, I was curious whether native bee communities differed among
 In addition to the PBG sites, some sites were simply 'graze and burn' where the entire site is burned once every three years and cattle have free access to the site every year. Within these sites tall fescue (*Schedonorus arundinaceus*) was a problematic, invasive grass species that was managed against at the patch level. One patch was left as a control, another patch was sprayed with the herbicide glyphosate in fall 2014, and the final patch was both sprayed with glyphosate and seeded with a prairie plant seedmix the following spring.
 
 Vegetation characteristics differ among these patches, and I hypothesized that native bee community might also differ in substantive ways.
+
