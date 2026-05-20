@@ -170,8 +170,18 @@ flr_v04 %>%
 # Check structure
 dplyr::glimpse(flr_v04)
 
+##  ------------------------------------------  ##
+# Export ----
+##  ------------------------------------------  ##
+
+# Make a final object
+flr_v99 <- flr_v04
+
+# Check structure
+dplyr::glimpse(flr_v99)
+
 # Export this tidied data!
-write.csv(x = flr_v04, row.names = FALSE, na = '',
+write.csv(x = flr_v99, row.names = FALSE, na = '',
           file = file.path("data", "01_nectar-community-tidy.csv"))
 
 # End ----
