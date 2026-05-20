@@ -194,7 +194,53 @@ dplyr::glimpse(bz_v03)
 ##  ------------------------------------------  ##
 
 # Add management info explicitly
-bz_v04 <- bz_v03
+bz_v04 <- bz_v03 %>% 
+  dplyr::mutate(
+    treatment_mgmt = dplyr::case_when(
+      pasture %in% toupper(c("kln", "pyn", "ris")) ~ "patch-burn-graze",
+      pasture %in% toupper(c("gil", "ltr", "ste", "pyw")) ~ "graze-and-burn",
+      TRUE ~ NA),
+    treatment_herbicide = dplyr::case_when(
+      pasture %in% toupper(c("kln", "pyn", "ris")) ~ "none",
+      patch %in% toupper(c("gil-s", "ltr-w", "ste-w", "pyw-s")) ~ "control",
+      patch %in% toupper(c("gil-n", "ltr-c", "ste-n")) ~ "spray-only",
+      patch %in% toupper(c("gil-c", "ltr-e", "ste-s")) ~ "spray-and-seed",
+      TRUE ~ NA),
+    time.since.fire_years = dplyr::case_when(
+      capture.year == 2017 & pasture %in% toupper(c("gil", "ltr", "pyw")) ~ 2,
+      capture.year == 2017 & pasture == toupper("ste") ~ 1,
+      capture.year == 2017 & patch %in% toupper(c("kln-c", "pyn-w", "ris-n")) ~ 0,
+      capture.year == 2017 & patch %in% toupper(c("kln-e", "pyn-n", "ris-s")) ~ 1,
+      capture.year == 2017 & patch %in% toupper(c("kln-w", "pyn-s", "ris-c")) ~ 2,
+      capture.year == 2018 & pasture %in% toupper(c("gil", "ltr", "ste", "pyw")) ~ 0,
+      capture.year == 2018 & pasture == toupper("ste") ~ 2,
+      capture.year == 2018 & patch %in% toupper(c("kln-w", "pyn-s", "ris-c")) ~ 0,
+      capture.year == 2018 & patch %in% toupper(c("kln-c", "pyn-w", "ris-n")) ~ 1,
+      capture.year == 2018 & patch %in% toupper(c("kln-e", "pyn-n", "ris-s")) ~ 2,
+      TRUE ~ NA),
+    .after = patch)
+
+# Check management categories
+bz_v04 %>% 
+  dplyr::select(pasture, treatment_mgmt) %>% 
+  dplyr::distinct()
+
+# Check herbicide categories
+bz_v04 %>% 
+  dplyr::group_by(treatment_herbicide) %>% 
+  dplyr::summarize(ct = dplyr::n(),
+    patches = paste(unique(patch), collapse = "; "),
+    .groups = "drop")
+
+# Check TSF values
+bz_v04 %>% 
+  dplyr::group_by(time.since.fire_years) %>% 
+  dplyr::summarize(ct = dplyr::n(),
+    patches = paste(unique(paste0(patch, "-", capture.year)), collapse = "; "),
+    .groups = "drop")
+
+# Check structure
+dplyr::glimpse(bz_v04)
 
 ##  ------------------------------------------  ##
 # Export ----
