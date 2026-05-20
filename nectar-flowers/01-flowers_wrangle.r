@@ -116,8 +116,62 @@ flr_v03 <- flr_v02 %>%
 # Re-check structure
 dplyr::glimpse(flr_v03)
 
+##  ------------------------------------------  ##
+# Integrate Treatment Info ----
+##  ------------------------------------------  ##
+
+# Add management info explicitly
+flr_v04 <- flr_v03 %>% 
+  dplyr::mutate(
+    treatment_mgmt = dplyr::case_when(
+      pasture %in% toupper(c("kln", "pyn", "ris")) ~ "patch-burn-graze",
+      pasture %in% toupper(c("gil", "ltr", "ste", "pyw", "pys")) ~ "graze-and-burn",
+      TRUE ~ NA),
+    treatment_herbicide = dplyr::case_when(
+      pasture %in% toupper(c("kln", "pyn", "ris")) ~ "none",
+      patch == toupper("pys-w") ~ "none",
+      patch %in% toupper(c("gil-s", "ltr-w", "ste-w", "pyw-s")) ~ "control",
+      patch %in% toupper(c("gil-n", "ltr-c", "ste-n", "pyw-c")) ~ "spray-only",
+      patch %in% toupper(c("gil-c", "ltr-e", "ste-s", "pyw-n")) ~ "spray-and-seed",
+      TRUE ~ NA),
+    time.since.fire_years = dplyr::case_when(
+      capture.year == 2017 & pasture %in% toupper(c("gil", "ltr", "pyw")) ~ 2,
+      capture.year == 2017 & pasture == toupper("ste") ~ 1,
+      capture.year == 2017 & patch %in% toupper(c("kln-c", "pyn-w", "ris-n")) ~ 0,
+      capture.year == 2017 & patch %in% toupper(c("kln-e", "pyn-n", "ris-s", "pys-w")) ~ 1,
+      capture.year == 2017 & patch %in% toupper(c("kln-w", "pyn-s", "ris-c")) ~ 2,
+      capture.year == 2018 & pasture %in% toupper(c("gil", "ltr", "ste", "pyw")) ~ 0,
+      capture.year == 2018 & pasture == toupper("ste") ~ 2,
+      capture.year == 2018 & patch %in% toupper(c("kln-w", "pyn-s", "ris-c")) ~ 0,
+      capture.year == 2018 & patch %in% toupper(c("kln-c", "pyn-w", "ris-n")) ~ 1,
+      capture.year == 2018 & patch %in% toupper(c("kln-e", "pyn-n", "ris-s")) ~ 2,
+      TRUE ~ NA),
+    .after = patch)
+
+# Check management categories
+flr_v04 %>% 
+  dplyr::select(pasture, treatment_mgmt) %>% 
+  dplyr::distinct()
+
+# Check herbicide categories
+flr_v04 %>% 
+  dplyr::group_by(treatment_herbicide) %>% 
+  dplyr::summarize(ct = dplyr::n(),
+    patches = paste(unique(patch), collapse = "; "),
+    .groups = "drop")
+
+# Check TSF values
+flr_v04 %>% 
+  dplyr::group_by(time.since.fire_years) %>% 
+  dplyr::summarize(ct = dplyr::n(),
+    patches = paste(unique(paste0(patch, "-", capture.year)), collapse = "; "),
+    .groups = "drop")
+
+# Check structure
+dplyr::glimpse(flr_v04)
+
 # Export this tidied data!
-write.csv(x = flr_v03, row.names = FALSE, na = '',
+write.csv(x = flr_v04, row.names = FALSE, na = '',
           file = file.path("data", "01_nectar-community-tidy.csv"))
 
 # End ----
