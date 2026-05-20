@@ -19,13 +19,13 @@ rm(list = ls()); gc()
 ##  ------------------------------------------  ##
 
 # Read in data
-bz.17_v0 <- read.csv(file = file.path("data", "raw", "bee-project_raw-bees_2017.csv"))
+bz.17_v00 <- read.csv(file = file.path("data", "raw", "bee-project_raw-bees_2017.csv"))
 
 # Check structure
-dplyr::glimpse(bz.17_v0)
+dplyr::glimpse(bz.17_v00)
 
 # Simplify/standardize column names, remove placeholder rows, and make qualitative variables quantitative
-bz.17_v1 <- bz.17_v0 %>% 
+bz.17_v01 <- bz.17_v00 %>% 
   dplyr::filter(is.na(Capture.Year) != T) %>% 
   dplyr::mutate(height_cm = ifelse(test = (Height == "Low"),
                                    yes = 2.5, no = 100),
@@ -48,10 +48,10 @@ bz.17_v1 <- bz.17_v0 %>%
                 number = Number)
 
 # Re-check structure
-dplyr::glimpse(bz.17_v1)
+dplyr::glimpse(bz.17_v01)
 
 # Summarize within bee species
-bz.17_v2 <- bz.17_v1 %>% 
+bz.17_v02 <- bz.17_v01 %>% 
   dplyr::mutate(species = ifelse(test = genus == "Lasioglossum",
                                  yes = "Lasioglossum.sp", no = species)) %>% 
   dplyr::group_by(capture.year, capture.date, pasture, patch, height_cm,
@@ -60,30 +60,30 @@ bz.17_v2 <- bz.17_v1 %>%
                    .groups = "drop")
 
 # Re-check structure
-dplyr::glimpse(bz.17_v2)
+dplyr::glimpse(bz.17_v02)
 
 # Remove instances where bees were not found or otherwise not recorded
-bz.17_v3 <- bz.17_v2 %>% 
+bz.17_v03 <- bz.17_v02 %>% 
   dplyr::filter(!species %in% c("X.X", "."))
 
 # Check what was lost
-supportR::diff_check(old = unique(bz.17_v2$species), new = unique(bz.17_v3$species))
+supportR::diff_check(old = unique(bz.17_v02$species), new = unique(bz.17_v03$species))
 
 # Final structure check
-dplyr::glimpse(bz.17_v3)
+dplyr::glimpse(bz.17_v03)
 
 ##  ------------------------------------------  ##      
             # 2018 Standardization ----
 ##  ------------------------------------------  ##      
 
 # Read in data
-bz.18_v0 <- read.csv(file = file.path("data", "raw", "bee-project_raw-bees_2018.csv"))
+bz.18_v00 <- read.csv(file = file.path("data", "raw", "bee-project_raw-bees_2018.csv"))
 
 # Check structure
-dplyr::glimpse(bz.18_v0)
+dplyr::glimpse(bz.18_v00)
 
 # Simplify/standardize column names, remove placeholder rows, and make qualitative variables quantitative
-bz.18_v1 <- bz.18_v0 %>% 
+bz.18_v01 <- bz.18_v00 %>% 
   dplyr::filter(is.na(Capture.Year) != T) %>% 
   dplyr::mutate(height_cm = ifelse(test = (Height == "Low"),
                                    yes = 2.5, no = 100),
@@ -110,10 +110,10 @@ bz.18_v1 <- bz.18_v0 %>%
                 number = Number)
 
 # Check structure
-dplyr::glimpse(bz.18_v1)
+dplyr::glimpse(bz.18_v01)
 
 # QC column contents and remove bad rows
-bz.18_v2 <- bz.18_v1 %>% 
+bz.18_v02 <- bz.18_v01 %>% 
   dplyr::mutate(dplyr::across(.cols = dplyr::all_of(c("bowl.color", "bowl.status")),
                               .fns = tolower)) %>% 
   dplyr::mutate(bowl.color = dplyr::case_when(
@@ -134,10 +134,10 @@ bz.18_v2 <- bz.18_v1 %>%
   dplyr::select(-bowls.recovered_ct)
 
 # Check structure
-dplyr::glimpse(bz.18_v2)
+dplyr::glimpse(bz.18_v02)
 
 # Remove 'bad' species and summarize within critical columns
-bz.18_v3 <- bz.18_v2 %>%
+bz.18_v03 <- bz.18_v02 %>%
   dplyr::filter(!species %in% c("X.x", ".", "Andrena.sp", "Hylaeus.sp")) %>% 
   dplyr::group_by(capture.year, capture.date, pasture, patch, height_cm,
                   bowls.recovered_percent, bowl.color, bowl.size_oz, 
@@ -146,34 +146,34 @@ bz.18_v3 <- bz.18_v2 %>%
                    .groups = "drop")
 
 # Final structure check
-dplyr::glimpse(bz.18_v3)
+dplyr::glimpse(bz.18_v03)
 
 ##  ------------------------------------------  ##      
 # Combine Years ----
 ##  ------------------------------------------  ##      
 
 # Combine the two data files
-bz.both_v1 <- dplyr::bind_rows(bz.18_v3, bz.17_v3)
+bz_v01 <- dplyr::bind_rows(bz.18_v03, bz.17_v03)
 
 # Check structure
-dplyr::glimpse(bz.both_v1)
+dplyr::glimpse(bz_v01)
 
 # There should be 6 bowls / transect / "height"; check distribution
-hist(x = bz.both_v1$bowls.recovered_percent)
+hist(x = bz_v01$bowls.recovered_percent)
 
 # Drop instances where insufficiently many bowls were recovered
-bz.both_v2 <- bz.both_v1 %>% 
+bz_v02 <- bz_v01 %>% 
   dplyr::filter(bowls.recovered_percent >= 80) %>%
   dplyr::select(-bowls.recovered_percent)
 
 # How many rows were lost?
-nrow(bz.both_v1) - nrow(bz.both_v2)
+nrow(bz_v01) - nrow(bz_v02)
 
 # Check structure
-dplyr::glimpse(bz.both_v2)
+dplyr::glimpse(bz_v02)
 
 # Fill in some last critical information
-bz.both_v3 <- bz.both_v2 %>% 
+bz_v03 <- bz_v02 %>% 
   dplyr::mutate(
     bowl.color = dplyr::case_when(
       capture.year == 2017 & is.na(bowl.color) == TRUE ~ "unrecorded",
@@ -187,10 +187,27 @@ bz.both_v3 <- bz.both_v2 %>%
                               .fns = as.numeric))
 
 # Check structure
-dplyr::glimpse(bz.both_v3)
+dplyr::glimpse(bz_v03)
+
+##  ------------------------------------------  ##
+# Integrate Treatment Info ----
+##  ------------------------------------------  ##
+
+# Add management info explicitly
+bz_v04 <- bz_v03
+
+##  ------------------------------------------  ##
+# Export ----
+##  ------------------------------------------  ##
+
+# Make a final object
+bz_v99 <- bz_v04
+
+# Check structure
+dplyr::glimpse(bz_v99)
 
 # Export this tidied data!
-write.csv(x = bz.both_v3, row.names = F, na = '',
+write.csv(x = bz_v99, row.names = FALSE, na = '',
           file = file.path("data", "01_bee-community-tidy.csv"))
 
 # End ----
